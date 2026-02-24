@@ -1,286 +1,127 @@
-# rust-ai-driven-development-pipeline-template
+# Comparisons.SpacetimeDBVSDoublets
 
-A comprehensive template for AI-driven Rust development with full CI/CD pipeline support.
+Benchmark comparing [SpacetimeDB 2](https://github.com/clockworklabs/SpacetimeDB) vs [Doublets](https://github.com/linksplatform/doublets-rs) performance for basic CRUD operations with links.
 
-[![CI/CD Pipeline](https://github.com/link-foundation/rust-ai-driven-development-pipeline-template/workflows/CI%2FCD%20Pipeline/badge.svg)](https://github.com/link-foundation/rust-ai-driven-development-pipeline-template/actions)
-[![Rust Version](https://img.shields.io/badge/rust-1.70%2B-blue.svg)](https://www.rust-lang.org/)
-[![License: Unlicense](https://img.shields.io/badge/license-Unlicense-blue.svg)](http://unlicense.org/)
+SpacetimeDB is benchmarked via its SQLite storage backend (the same engine SpacetimeDB 2 uses internally). Doublets is benchmarked with its in-memory (volatile) storage variants.
 
-## Features
+## Benchmark Operations
 
-- **Rust stable support**: Works with Rust stable version
-- **Cross-platform testing**: CI runs on Ubuntu, macOS, and Windows
-- **Comprehensive testing**: Unit tests, integration tests, and doc tests
-- **Code quality**: rustfmt + Clippy with pedantic lints
-- **Pre-commit hooks**: Automated code quality checks before commits
-- **CI/CD pipeline**: GitHub Actions with multi-platform support
-- **Changelog management**: Fragment-based changelog (like Changesets/Scriv)
-- **Release automation**: Automatic GitHub releases
+| Operation | Description |
+|---|---|
+| Create | Create a self-referential point link (id == source == target) |
+| Delete | Delete links by id |
+| Update | Update link source and target |
+| Query All | Retrieve all links (`[*, *, *]`) |
+| Query by Id | Retrieve a link by id |
+| Query by Source | Retrieve all links with a given source |
+| Query by Target | Retrieve all links with a given target |
 
-## Quick Start
+## Backends Benchmarked
 
-### Using This Template
+### SpacetimeDB (SQLite backend)
+- **SpacetimeDB Memory** — in-memory SQLite with B-tree indexes on `id`, `source`, `target`
 
-1. Click "Use this template" on GitHub to create a new repository
-2. Clone your new repository
-3. Update `Cargo.toml` with your package name and description
-4. Rename the library and binary in `Cargo.toml`
-5. Update imports in tests and examples
-6. Build and start developing!
+SpacetimeDB 2 uses SQLite as its underlying data store for persistent tables. This benchmark measures the performance of SpacetimeDB's storage layer (SQLite + WAL mode) for link CRUD operations.
 
-### Development Setup
+### Doublets
+- **Doublets United Volatile** — in-memory store; links stored as contiguous `(index, source, target)` units
+- **Doublets Split Volatile** — in-memory store; separate data and index memory regions
+
+Doublets is a custom in-memory doublet link data structure with O(1) lookup by id and O(log n + k) traversal by source/target using balanced tree indexes.
+
+## Benchmark Background
+
+Each benchmark iteration pre-populates the database with background links to simulate a realistic database state:
+
+- **Background links**: `BACKGROUND_LINK_COUNT` (default: 3000) — already present before measurement
+- **Benchmark links**: `BENCHMARK_LINK_COUNT` (default: 1000) — the operations being measured
+
+## Results
+
+> _Benchmark results will be automatically generated and committed here by CI when changes are merged to main._
+
+<!--RESULTS_TABLE_PLACEHOLDER-->
+
+## Operation Complexity
+
+| Operation | SpacetimeDB (SQLite) | Doublets United | Doublets Split |
+|---|---|---|---|
+| Create | O(log n) + disk I/O | O(log n) | O(log n) |
+| Delete | O(log n) + disk I/O | O(log n) | O(log n) |
+| Update | O(log n) + disk I/O | O(log n) | O(log n) |
+| Query All | O(n) + disk I/O | O(n) | O(n) |
+| Query by Id | O(log n) | O(1) | O(1) |
+| Query by Source | O(log n + k) | O(log n + k) | O(log n + k) |
+| Query by Target | O(log n + k) | O(log n + k) | O(log n + k) |
+
+## Related Benchmarks
+
+- [Neo4j vs Doublets](https://github.com/linksplatform/Comparisons.Neo4jVSDoublets)
+- [PostgreSQL vs Doublets](https://github.com/linksplatform/Comparisons.PostgreSQLVSDoublets)
+- [SQLite vs Doublets](https://github.com/linksplatform/Comparisons.SQLiteVSDoublets)
+
+## Running Benchmarks
+
+### Prerequisites
+
+- Rust nightly-2022-08-22 (see `rust/rust-toolchain.toml`)
+
+### Run benchmarks
 
 ```bash
-# Clone the repository
-git clone https://github.com/link-foundation/rust-ai-driven-development-pipeline-template.git
-cd rust-ai-driven-development-pipeline-template
+cd rust
 
-# Build the project
-cargo build
+# Full benchmark run (1000 links, 3000 background)
+cargo bench --bench bench -- --output-format bencher | tee out.txt
 
-# Run tests
-cargo test
+# Quick benchmark run (CI scale)
+BENCHMARK_LINK_COUNT=10 BACKGROUND_LINK_COUNT=100 cargo bench --bench bench
 
-# Run the example binary
-cargo run
-
-# Run an example
-cargo run --example basic_usage
+# Generate charts from results
+python3 out.py
 ```
 
-### Running Tests
+### Run tests
 
 ```bash
-# Run all tests
-cargo test
-
-# Run tests with verbose output
-cargo test --verbose
-
-# Run doc tests
-cargo test --doc
-
-# Run a specific test
-cargo test test_add_positive_numbers
-
-# Run tests with output
-cargo test -- --nocapture
+cd rust
+cargo test --release
 ```
 
-### Code Quality Checks
+### Code quality
 
 ```bash
-# Format code
-cargo fmt
-
-# Check formatting (CI style)
-cargo fmt --check
-
-# Run Clippy lints
-cargo clippy --all-targets --all-features
-
-# Check file size limits
-node scripts/check-file-size.mjs
-
-# Run all checks
-cargo fmt --check && cargo clippy --all-targets --all-features && node scripts/check-file-size.mjs
+cd rust
+cargo fmt --all
+cargo clippy --all-targets
 ```
 
 ## Project Structure
 
 ```
 .
-├── .github/
-│   └── workflows/
-│       └── release.yml         # CI/CD pipeline configuration
-├── changelog.d/                # Changelog fragments
-│   ├── README.md               # Fragment instructions
-│   └── *.md                    # Individual changelog entries
-├── examples/
-│   └── basic_usage.rs          # Usage examples
-├── scripts/
-│   ├── bump-version.mjs        # Version bumping utility
-│   ├── check-file-size.mjs     # File size validation script
-│   ├── collect-changelog.mjs   # Changelog collection script
-│   ├── create-github-release.mjs # GitHub release creation
-│   ├── detect-code-changes.mjs # Detects code changes for CI
-│   ├── get-bump-type.mjs       # Determines version bump type
-│   └── version-and-commit.mjs  # CI/CD version management
-├── src/
-│   ├── lib.rs                  # Library entry point
-│   └── main.rs                 # Binary entry point
-├── tests/
-│   └── integration_test.rs     # Integration tests
-├── .gitignore                  # Git ignore patterns
-├── .pre-commit-config.yaml     # Pre-commit hooks configuration
-├── Cargo.toml                  # Project configuration
-├── CHANGELOG.md                # Project changelog
-├── CONTRIBUTING.md             # Contribution guidelines
-├── LICENSE                     # Unlicense (public domain)
-└── README.md                   # This file
+├── rust/
+│   ├── Cargo.toml              # Package manifest with pinned dependencies
+│   ├── rust-toolchain.toml     # Pinned Rust nightly toolchain
+│   ├── rustfmt.toml            # Rust formatting config
+│   ├── out.py                  # Chart generation script (matplotlib)
+│   ├── src/
+│   │   ├── lib.rs              # Links trait, constants (BENCHMARK_LINK_COUNT, BACKGROUND_LINK_COUNT)
+│   │   ├── spacetimedb_impl.rs # SpacetimeDB SQLite client (implements Links)
+│   │   ├── doublets_impl.rs    # Doublets store adapters (implements Links)
+│   │   ├── exclusive.rs        # Exclusive<T> wrapper for interior mutability
+│   │   ├── fork.rs             # Fork<B> — benchmark iteration isolation
+│   │   └── benched/
+│   │       ├── mod.rs          # Benched trait (setup/fork/unfork lifecycle)
+│   │       ├── spacetimedb_benched.rs  # Benched impl for SpacetimeDB
+│   │       └── doublets_benched.rs     # Benched impls for Doublets stores
+│   └── benches/
+│       └── bench.rs            # Criterion benchmark suite (7 operations x 3 backends)
+└── .github/
+    └── workflows/
+        └── rust-benchmark.yml  # CI: test on 3 OS + benchmark + chart generation
 ```
-
-## Design Choices
-
-### Code Quality Tools
-
-- **rustfmt**: Standard Rust code formatter
-  - Ensures consistent code style across the project
-  - Configured to run on all Rust files
-
-- **Clippy**: Rust linter with comprehensive checks
-  - Pedantic and nursery lints enabled for strict code quality
-  - Catches common mistakes and suggests improvements
-  - Enforces best practices
-
-- **Pre-commit hooks**: Automated checks before each commit
-  - Runs rustfmt to ensure formatting
-  - Runs Clippy to catch issues early
-  - Runs tests to prevent broken commits
-
-### Testing Strategy
-
-The template supports multiple levels of testing:
-
-- **Unit tests**: In `src/lib.rs` using `#[cfg(test)]` modules
-- **Integration tests**: In `tests/` directory
-- **Doc tests**: In documentation examples using `///` comments
-- **Examples**: In `examples/` directory (also serve as documentation)
-
-### Changelog Management
-
-This template uses a fragment-based changelog system similar to:
-- [Changesets](https://github.com/changesets/changesets) (JavaScript)
-- [Scriv](https://scriv.readthedocs.io/) (Python)
-
-Benefits:
-- **No merge conflicts**: Multiple PRs can add fragments without conflicts
-- **Per-PR documentation**: Each PR documents its own changes
-- **Automated collection**: Fragments are collected during release
-- **Consistent format**: Template ensures consistent changelog entries
-
-```bash
-# Create a changelog fragment
-touch changelog.d/$(date +%Y%m%d_%H%M%S)_my_change.md
-
-# Edit the fragment to document your changes
-```
-
-### CI/CD Pipeline
-
-The GitHub Actions workflow provides:
-
-1. **Linting**: rustfmt and Clippy checks
-2. **Changelog check**: Warns if PRs are missing changelog fragments
-3. **Test matrix**: 3 OS (Ubuntu, macOS, Windows) with Rust stable
-4. **Building**: Release build and package validation
-5. **Release**: Automated GitHub releases when version changes
-
-### Release Automation
-
-The release workflow supports:
-
-- **Auto-release**: Automatically creates releases when version in Cargo.toml changes
-- **Manual release**: Trigger releases via workflow_dispatch with version bump type
-- **Changelog collection**: Automatically collects fragments during release
-- **GitHub releases**: Automatic creation with CHANGELOG content
-
-## Configuration
-
-### Updating Package Name
-
-After creating a repository from this template:
-
-1. Update `Cargo.toml`:
-   - Change `name` field
-   - Update `repository` and `documentation` URLs
-   - Change `[lib]` and `[[bin]]` names
-
-2. Rename the crate in imports:
-   - `tests/integration_test.rs`
-   - `examples/basic_usage.rs`
-   - `src/main.rs`
-
-### Clippy Configuration
-
-Clippy is configured in `Cargo.toml` under `[lints.clippy]`:
-
-- Pedantic lints enabled for strict code quality
-- Nursery lints enabled for additional checks
-- Some common patterns allowed (e.g., `module_name_repetitions`)
-
-### rustfmt Configuration
-
-Uses default rustfmt settings. To customize, create a `rustfmt.toml`:
-
-```toml
-edition = "2021"
-max_width = 100
-tab_spaces = 4
-```
-
-## Scripts Reference
-
-| Script                              | Description                    |
-| ----------------------------------- | ------------------------------ |
-| `cargo test`                        | Run all tests                  |
-| `cargo fmt`                         | Format code                    |
-| `cargo clippy`                      | Run lints                      |
-| `cargo run --example basic_usage`   | Run example                    |
-| `node scripts/check-file-size.mjs`  | Check file size limits         |
-| `node scripts/bump-version.mjs`     | Bump version                   |
-
-## Example Usage
-
-```rust
-use my_package::{add, multiply, delay};
-
-#[tokio::main]
-async fn main() {
-    // Basic arithmetic
-    let sum = add(2, 3);     // 5
-    let product = multiply(2, 3);  // 6
-
-    println!("2 + 3 = {sum}");
-    println!("2 * 3 = {product}");
-
-    // Async operations
-    delay(1.0).await;  // Wait for 1 second
-}
-```
-
-See `examples/basic_usage.rs` for more examples.
-
-## Contributing
-
-Contributions are welcome! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
-
-### Development Workflow
-
-1. Fork the repository
-2. Create a feature branch: `git checkout -b feature/my-feature`
-3. Make your changes and add tests
-4. Run quality checks: `cargo fmt && cargo clippy && cargo test`
-5. Add a changelog fragment
-6. Commit your changes (pre-commit hooks will run automatically)
-7. Push and create a Pull Request
 
 ## License
 
-[Unlicense](LICENSE) - Public Domain
-
-This is free and unencumbered software released into the public domain. See [LICENSE](LICENSE) for details.
-
-## Acknowledgments
-
-Inspired by:
-- [js-ai-driven-development-pipeline-template](https://github.com/link-foundation/js-ai-driven-development-pipeline-template)
-- [python-ai-driven-development-pipeline-template](https://github.com/link-foundation/python-ai-driven-development-pipeline-template)
-
-## Resources
-
-- [Rust Book](https://doc.rust-lang.org/book/)
-- [Cargo Book](https://doc.rust-lang.org/cargo/)
-- [Clippy Documentation](https://rust-lang.github.io/rust-clippy/)
-- [rustfmt Documentation](https://rust-lang.github.io/rustfmt/)
-- [Pre-commit Documentation](https://pre-commit.com/)
+[Unlicense](LICENSE) — Public Domain
