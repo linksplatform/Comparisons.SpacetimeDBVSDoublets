@@ -27,10 +27,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Setup Rust (nightly-2022-08-22)
+      - name: Setup Rust (nightly)
         uses: dtolnay/rust-toolchain@master
         with:
-          toolchain: nightly-2022-08-22
+          toolchain: nightly
           components: rustfmt, clippy
 
       - name: Cache cargo registry
@@ -64,10 +64,10 @@ jobs:
           fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Setup Rust (nightly-2022-08-22)
+      - name: Setup Rust (nightly)
         uses: dtolnay/rust-toolchain@master
         with:
-          toolchain: nightly-2022-08-22
+          toolchain: nightly
 
       - name: Setup Python
         uses: actions/setup-python@v5

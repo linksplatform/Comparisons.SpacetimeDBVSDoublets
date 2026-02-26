@@ -10,34 +10,34 @@ name = "bench"
 harness = false
 
 [dependencies]
-rusqlite = { version = "=0.27.0", features = ["bundled"] }
-doublets = { git = "https://github.com/linksplatform/doublets-rs.git", rev = "5522d91c536654934b7181829f6efb570fb8bb44" }
+# SpacetimeDB 2.0 official Rust crate (embedded engine via test feature)
+spacetimedb-core = { git = "https://github.com/clockworklabs/SpacetimeDB", tag = "v2.0.1", features = ["test"] }
+spacetimedb-datastore = { git = "https://github.com/clockworklabs/SpacetimeDB", tag = "v2.0.1" }
+spacetimedb-sats = { git = "https://github.com/clockworklabs/SpacetimeDB", tag = "v2.0.1" }
+spacetimedb-primitives = { git = "https://github.com/clockworklabs/SpacetimeDB", tag = "v2.0.1" }
+spacetimedb-schema = { git = "https://github.com/clockworklabs/SpacetimeDB", tag = "v2.0.1" }
+# Use patched doublets that is compatible with modern nightly (>= 1.93.0).
+# The pinned git revision uses removed nightly features (generators, const_trait_impl,
+# const_deref, etc.) incompatible with Rust >= 1.80.0. The local patch:
+# - Removes unused #![feature(generators)] from doublets/src/lib.rs
+# - Patches dev-deps/data-rs to use non-const fn instead of removed ~const syntax
+# - Patches dev-deps/mem-rs to remove removed const feature flags
+doublets = { path = "doublets-patched/doublets" }
 once_cell = "1.14"
 
 [dev-dependencies]
 criterion = { version = "=0.3.6", default-features = false }
 
-# Pin dependencies for compatibility with nightly-2022-08-22 (rustc 1.65)
-serde_derive = "=1.0.136"
-proc-macro2 = "=1.0.36"
-quote = "=1.0.15"
-syn = "=1.0.86"
-bumpalo = "=3.11.1"
-rayon = "=1.6.1"
-rayon-core = "=1.10.2"
-itoa = "=1.0.5"
-ryu = "=1.0.12"
-unicode-width = "=0.1.10"
-tempfile = "=3.3.0"
-fastrand = "=1.8.0"
-getrandom = "=0.2.8"
-winapi-util = "=0.1.5"
-walkdir = "=2.3.2"
-same-file = "=1.0.6"
-regex = "=1.7.1"
-regex-automata = "=0.1.10"
-regex-syntax = "=0.6.28"
-
 [profile.release]
 lto = true
 codegen-units = 1
+
+# Patch bumpalo to implement BOTH std::alloc::Allocator (nightly) AND allocator_api2::Allocator
+# when both the "allocator_api" and "allocator-api2" features are enabled simultaneously.
+# This fixes a conflict between:
+#   - doublets-rs which uses bumpalo with "allocator_api" (nightly std Allocator)
+#   - regalloc2 (via SpacetimeDB/wasmtime/cranelift) which uses bumpalo with "allocator-api2"
+# When Cargo unifies features, bumpalo gets both features but originally only implemented the
+# nightly std Allocator trait, breaking regalloc2's allocator_api2::Allocator requirement.
+[patch.crates-io]
+bumpalo = { path = "bumpalo-patched" }
