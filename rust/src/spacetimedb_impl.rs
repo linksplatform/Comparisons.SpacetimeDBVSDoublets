@@ -78,7 +78,11 @@ impl SpacetimeDbLinks {
             })
             .expect("Failed to create links table");
 
-        Self { db, table_id, next_id: 1 }
+        Self {
+            db,
+            table_id,
+            next_id: 1,
+        }
     }
 
     /// Serialize a link row into BSATN bytes for insertion into the SpacetimeDB engine.
@@ -136,8 +140,10 @@ impl Links for SpacetimeDbLinks {
         self.db
             .with_auto_commit(Workload::Internal, |tx| {
                 // Find and delete the old row, then insert the updated row.
-                if let Some(row_ref) =
-                    self.db.iter_by_col_eq_mut(tx, table_id, COL_ID, &id_val)?.next()
+                if let Some(row_ref) = self
+                    .db
+                    .iter_by_col_eq_mut(tx, table_id, COL_ID, &id_val)?
+                    .next()
                 {
                     let ptr = row_ref.pointer();
                     self.db.delete(tx, table_id, [ptr]);
@@ -152,8 +158,10 @@ impl Links for SpacetimeDbLinks {
         let id_val = AlgebraicValue::U64(id);
         self.db
             .with_auto_commit(Workload::Internal, |tx| {
-                if let Some(row_ref) =
-                    self.db.iter_by_col_eq_mut(tx, table_id, COL_ID, &id_val)?.next()
+                if let Some(row_ref) = self
+                    .db
+                    .iter_by_col_eq_mut(tx, table_id, COL_ID, &id_val)?
+                    .next()
                 {
                     let ptr = row_ref.pointer();
                     self.db.delete(tx, table_id, [ptr]);

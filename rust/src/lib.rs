@@ -5,7 +5,6 @@
 
 #![feature(allocator_api)]
 
-
 pub mod benched;
 pub mod doublets_impl;
 pub mod exclusive;
