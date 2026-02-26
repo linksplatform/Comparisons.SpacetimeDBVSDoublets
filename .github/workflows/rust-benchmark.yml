@@ -20,6 +20,7 @@ jobs:
   test:
     name: Test (${{ matrix.os }})
     runs-on: ${{ matrix.os }}
+    timeout-minutes: 360
     strategy:
       fail-fast: false
       matrix:
@@ -34,15 +35,10 @@ jobs:
           components: rustfmt, clippy
 
       - name: Cache cargo registry
-        uses: actions/cache@v4
+        uses: Swatinem/rust-cache@v2
         with:
-          path: |
-            ~/.cargo/registry
-            ~/.cargo/git
-            rust/target
-          key: ${{ runner.os }}-cargo-${{ hashFiles('rust/Cargo.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-cargo-
+          workspaces: rust -> target
+          cache-on-failure: "true"
 
       - name: Check formatting
         run: cargo fmt --all -- --check
@@ -51,7 +47,7 @@ jobs:
         run: cargo clippy --all-targets
 
       - name: Run tests
-        run: cargo test --release
+        run: cargo test
 
   benchmark:
     name: Benchmark
@@ -78,15 +74,10 @@ jobs:
         run: pip install matplotlib numpy
 
       - name: Cache cargo registry
-        uses: actions/cache@v4
+        uses: Swatinem/rust-cache@v2
         with:
-          path: |
-            ~/.cargo/registry
-            ~/.cargo/git
-            rust/target
-          key: ubuntu-cargo-bench-${{ hashFiles('rust/Cargo.lock') }}
-          restore-keys: |
-            ubuntu-cargo-bench-
+          workspaces: rust -> target
+          cache-on-failure: "true"
 
       - name: Build benchmark
         run: cargo build --release
