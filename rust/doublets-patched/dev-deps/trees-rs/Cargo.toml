@@ -1,0 +1,15 @@
+[package]
+name = "platform-trees"
+version = "0.1.0-beta.1"
+edition = "2018"
+authors = ["uselesssgoddess", "Linksplatform Team <linksplatformtechnologies@gmail.com>"]
+license = "LGPL-3.0"
+repository = "https://github.com/linksplatform/Collections.Methods"
+homepage = "https://github.com/linksplatform/Collections.Methods/rust"
+description = """
+Trees methods for linksplatform
+"""
+
+[dependencies]
+funty = "2.0"
+platform-data = { version = "0.1.0-beta.3", path = "../data-rs" }
