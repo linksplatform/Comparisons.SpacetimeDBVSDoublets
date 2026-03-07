@@ -1,7 +1,13 @@
 //! SpacetimeDB vs Doublets benchmark suite.
 //!
 //! Runs criterion benchmarks for basic CRUD operations with links,
-//! comparing SpacetimeDB's SQLite backend against Doublets in-memory stores.
+//! comparing SpacetimeDB 2.0 (via official `spacetimedb-sdk`) against Doublets in-memory stores.
+//!
+//! Requires a running SpacetimeDB server with the links module published:
+//! ```bash
+//! spacetime start &
+//! spacetime publish --project-path spacetime-module benchmark-links
+//! ```
 //!
 //! Run benchmarks:
 //! ```bash
@@ -11,14 +17,15 @@
 //! Configure scale via environment variables:
 //! - `BENCHMARK_LINK_COUNT` — links to create/update/delete per iteration (default: 1000)
 //! - `BACKGROUND_LINK_COUNT` — pre-populated links for realistic DB state (default: 3000)
+//! - `SPACETIMEDB_URI` — SpacetimeDB server URI (default: `http://localhost:3000`)
+//! - `SPACETIMEDB_DB` — database name (default: `benchmark-links`)
 
 #![feature(allocator_api)]
 
 use criterion::{criterion_group, criterion_main, BenchmarkId, Criterion};
 use spacetimedb_vs_doublets::{
     benched::{
-        Benched, DoubletsSplitVolatileBenched, DoubletsUnitedVolatileBenched,
-        SpacetimeDbMemoryBenched,
+        Benched, DoubletsSplitVolatileBenched, DoubletsUnitedVolatileBenched, SpacetimeDbBenched,
     },
     Links, BACKGROUND_LINK_COUNT, BENCHMARK_LINK_COUNT,
 };
@@ -40,9 +47,9 @@ macro_rules! setup_background {
 
 fn spacetimedb_create(c: &mut Criterion) {
     let count = *BENCHMARK_LINK_COUNT;
-    let mut benched = SpacetimeDbMemoryBenched::setup(());
+    let mut benched = SpacetimeDbBenched::setup(());
     c.bench_with_input(
-        BenchmarkId::new("create/SpacetimeDB_Memory", count),
+        BenchmarkId::new("create/SpacetimeDB", count),
         &count,
         |b, &n| {
             b.iter_custom(|iters| {
@@ -114,9 +121,9 @@ fn doublets_split_create(c: &mut Criterion) {
 
 fn spacetimedb_delete(c: &mut Criterion) {
     let count = *BENCHMARK_LINK_COUNT;
-    let mut benched = SpacetimeDbMemoryBenched::setup(());
+    let mut benched = SpacetimeDbBenched::setup(());
     c.bench_with_input(
-        BenchmarkId::new("delete/SpacetimeDB_Memory", count),
+        BenchmarkId::new("delete/SpacetimeDB", count),
         &count,
         |b, &n| {
             b.iter_custom(|iters| {
@@ -191,9 +198,9 @@ fn doublets_split_delete(c: &mut Criterion) {
 
 fn spacetimedb_update(c: &mut Criterion) {
     let count = *BENCHMARK_LINK_COUNT;
-    let mut benched = SpacetimeDbMemoryBenched::setup(());
+    let mut benched = SpacetimeDbBenched::setup(());
     c.bench_with_input(
-        BenchmarkId::new("update/SpacetimeDB_Memory", count),
+        BenchmarkId::new("update/SpacetimeDB", count),
         &count,
         |b, &n| {
             b.iter_custom(|iters| {
@@ -277,9 +284,9 @@ fn doublets_split_update(c: &mut Criterion) {
 
 fn spacetimedb_query_all(c: &mut Criterion) {
     let count = *BENCHMARK_LINK_COUNT;
-    let mut benched = SpacetimeDbMemoryBenched::setup(());
+    let mut benched = SpacetimeDbBenched::setup(());
     c.bench_with_input(
-        BenchmarkId::new("query_all/SpacetimeDB_Memory", count),
+        BenchmarkId::new("query_all/SpacetimeDB", count),
         &count,
         |b, &n| {
             b.iter_custom(|iters| {
@@ -354,9 +361,9 @@ fn doublets_split_query_all(c: &mut Criterion) {
 
 fn spacetimedb_query_by_id(c: &mut Criterion) {
     let count = *BENCHMARK_LINK_COUNT;
-    let mut benched = SpacetimeDbMemoryBenched::setup(());
+    let mut benched = SpacetimeDbBenched::setup(());
     c.bench_with_input(
-        BenchmarkId::new("query_by_id/SpacetimeDB_Memory", count),
+        BenchmarkId::new("query_by_id/SpacetimeDB", count),
         &count,
         |b, &n| {
             b.iter_custom(|iters| {
@@ -431,9 +438,9 @@ fn doublets_split_query_by_id(c: &mut Criterion) {
 
 fn spacetimedb_query_by_source(c: &mut Criterion) {
     let count = *BENCHMARK_LINK_COUNT;
-    let mut benched = SpacetimeDbMemoryBenched::setup(());
+    let mut benched = SpacetimeDbBenched::setup(());
     c.bench_with_input(
-        BenchmarkId::new("query_by_source/SpacetimeDB_Memory", count),
+        BenchmarkId::new("query_by_source/SpacetimeDB", count),
         &count,
         |b, &n| {
             b.iter_custom(|iters| {
@@ -517,9 +524,9 @@ fn doublets_split_query_by_source(c: &mut Criterion) {
 
 fn spacetimedb_query_by_target(c: &mut Criterion) {
     let count = *BENCHMARK_LINK_COUNT;
-    let mut benched = SpacetimeDbMemoryBenched::setup(());
+    let mut benched = SpacetimeDbBenched::setup(());
     c.bench_with_input(
-        BenchmarkId::new("query_by_target/SpacetimeDB_Memory", count),
+        BenchmarkId::new("query_by_target/SpacetimeDB", count),
         &count,
         |b, &n| {
             b.iter_custom(|iters| {

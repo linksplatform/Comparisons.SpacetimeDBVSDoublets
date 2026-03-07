@@ -9,6 +9,7 @@ pub mod benched;
 pub mod doublets_impl;
 pub mod exclusive;
 pub mod fork;
+pub mod module_bindings;
 pub mod spacetimedb_impl;
 
 pub use benched::Benched;

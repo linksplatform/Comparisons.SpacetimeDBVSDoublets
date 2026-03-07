@@ -2,7 +2,7 @@
 
 Benchmark comparing [SpacetimeDB 2](https://github.com/clockworklabs/SpacetimeDB) vs [Doublets](https://github.com/linksplatform/doublets-rs) performance for basic CRUD operations with links.
 
-SpacetimeDB is benchmarked via its SQLite storage backend (the same engine SpacetimeDB 2 uses internally). Doublets is benchmarked with its in-memory (volatile) storage variants.
+SpacetimeDB is benchmarked using the official `spacetimedb-sdk` Rust crate connected to a running SpacetimeDB 2.0 server. Doublets is benchmarked with its in-memory (volatile) storage variants.
 
 ## Benchmark Operations
 
@@ -18,10 +18,10 @@ SpacetimeDB is benchmarked via its SQLite storage backend (the same engine Space
 
 ## Backends Benchmarked
 
-### SpacetimeDB (SQLite backend)
-- **SpacetimeDB Memory** — in-memory SQLite with B-tree indexes on `id`, `source`, `target`
+### SpacetimeDB
+- **SpacetimeDB** — connects to a running SpacetimeDB 2.0 server via the official `spacetimedb-sdk` Rust crate; uses the `links` table defined in the `spacetime-module` WebAssembly module
 
-SpacetimeDB 2 uses SQLite as its underlying data store for persistent tables. This benchmark measures the performance of SpacetimeDB's storage layer (SQLite + WAL mode) for link CRUD operations.
+The benchmark uses the official SpacetimeDB Rust client SDK, calling reducers to mutate data and reading from the client-side subscription cache.
 
 ### Doublets
 - **Doublets United Volatile** — in-memory store; links stored as contiguous `(index, source, target)` units
@@ -44,15 +44,15 @@ Each benchmark iteration pre-populates the database with background links to sim
 
 ## Operation Complexity
 
-| Operation | SpacetimeDB (SQLite) | Doublets United | Doublets Split |
+| Operation | SpacetimeDB | Doublets United | Doublets Split |
 |---|---|---|---|
-| Create | O(log n) + disk I/O | O(log n) | O(log n) |
-| Delete | O(log n) + disk I/O | O(log n) | O(log n) |
-| Update | O(log n) + disk I/O | O(log n) | O(log n) |
-| Query All | O(n) + disk I/O | O(n) | O(n) |
-| Query by Id | O(log n) | O(1) | O(1) |
-| Query by Source | O(log n + k) | O(log n + k) | O(log n + k) |
-| Query by Target | O(log n + k) | O(log n + k) | O(log n + k) |
+| Create | O(log n) + network | O(log n) | O(log n) |
+| Delete | O(log n) + network | O(log n) | O(log n) |
+| Update | O(log n) + network | O(log n) | O(log n) |
+| Query All | O(n) cache read | O(n) | O(n) |
+| Query by Id | O(n) cache scan | O(1) | O(1) |
+| Query by Source | O(n) cache scan | O(log n + k) | O(log n + k) |
+| Query by Target | O(n) cache scan | O(log n + k) | O(log n + k) |
 
 ## Related Benchmarks
 
@@ -64,7 +64,19 @@ Each benchmark iteration pre-populates the database with background links to sim
 
 ### Prerequisites
 
-- Rust nightly-2022-08-22 (see `rust/rust-toolchain.toml`)
+- Rust nightly (see `rust/rust-toolchain.toml`)
+- SpacetimeDB CLI: `curl -sSf https://install.spacetimedb.com | sh`
+
+### Start SpacetimeDB server and publish module
+
+```bash
+# Start the local SpacetimeDB server
+spacetime start &
+
+# Build and publish the links module
+spacetime build --project-path spacetime-module
+spacetime publish --project-path spacetime-module benchmark-links
+```
 
 ### Run benchmarks
 
@@ -72,10 +84,13 @@ Each benchmark iteration pre-populates the database with background links to sim
 cd rust
 
 # Full benchmark run (1000 links, 3000 background)
-cargo bench --bench bench -- --output-format bencher | tee out.txt
+SPACETIMEDB_URI=http://localhost:3000 SPACETIMEDB_DB=benchmark-links \
+  cargo bench --bench bench -- --output-format bencher | tee out.txt
 
 # Quick benchmark run (CI scale)
-BENCHMARK_LINK_COUNT=10 BACKGROUND_LINK_COUNT=100 cargo bench --bench bench
+BENCHMARK_LINK_COUNT=10 BACKGROUND_LINK_COUNT=100 \
+SPACETIMEDB_URI=http://localhost:3000 SPACETIMEDB_DB=benchmark-links \
+  cargo bench --bench bench
 
 # Generate charts from results
 python3 out.py
@@ -85,7 +100,7 @@ python3 out.py
 
 ```bash
 cd rust
-cargo test --release
+SPACETIMEDB_URI=http://localhost:3000 SPACETIMEDB_DB=benchmark-links cargo test
 ```
 
 ### Code quality
@@ -100,6 +115,10 @@ cargo clippy --all-targets
 
 ```
 .
+├── spacetime-module/           # SpacetimeDB WASM module (links table + reducers)
+│   ├── Cargo.toml
+│   └── src/
+│       └── lib.rs              # Table definition and reducers using `spacetimedb` crate
 ├── rust/
 │   ├── Cargo.toml              # Package manifest with pinned dependencies
 │   ├── rust-toolchain.toml     # Pinned Rust nightly toolchain
@@ -107,7 +126,8 @@ cargo clippy --all-targets
 │   ├── out.py                  # Chart generation script (matplotlib)
 │   ├── src/
 │   │   ├── lib.rs              # Links trait, constants (BENCHMARK_LINK_COUNT, BACKGROUND_LINK_COUNT)
-│   │   ├── spacetimedb_impl.rs # SpacetimeDB SQLite client (implements Links)
+│   │   ├── module_bindings/    # spacetimedb-sdk client bindings for the links module
+│   │   ├── spacetimedb_impl.rs # SpacetimeDB SDK client (implements Links)
 │   │   ├── doublets_impl.rs    # Doublets store adapters (implements Links)
 │   │   ├── exclusive.rs        # Exclusive<T> wrapper for interior mutability
 │   │   ├── fork.rs             # Fork<B> — benchmark iteration isolation

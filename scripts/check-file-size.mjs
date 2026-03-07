@@ -13,7 +13,7 @@ import { join, relative, extname } from 'path';
 
 const MAX_LINES = 1000;
 const FILE_EXTENSIONS = ['.rs'];
-const EXCLUDE_PATTERNS = ['target', '.git', 'node_modules', 'bumpalo-patched', 'doublets-patched'];
+const EXCLUDE_PATTERNS = ['target', '.git', 'node_modules', 'doublets-patched', 'module_bindings'];
 
 /**
  * Check if a path should be excluded

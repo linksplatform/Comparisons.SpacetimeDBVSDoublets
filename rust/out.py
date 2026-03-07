@@ -52,13 +52,13 @@ OPERATION_LABELS = {
 }
 
 VARIANTS = {
-    'SpacetimeDB_Memory': 'SpacetimeDB (SQLite/Memory)',
+    'SpacetimeDB': 'SpacetimeDB 2.0',
     'Doublets_United_Volatile': 'Doublets (United/Volatile)',
     'Doublets_Split_Volatile': 'Doublets (Split/Volatile)',
 }
 
 COLORS = {
-    'SpacetimeDB_Memory': '#e74c3c',
+    'SpacetimeDB': '#e74c3c',
     'Doublets_United_Volatile': '#2ecc71',
     'Doublets_Split_Volatile': '#3498db',
 }
@@ -161,7 +161,7 @@ def generate_charts(results):
 
 def generate_markdown_table(results):
     """Generate a Markdown results table with speedup ratios."""
-    baseline = 'SpacetimeDB_Memory'
+    baseline = 'SpacetimeDB'
     doublets_variants = ['Doublets_United_Volatile', 'Doublets_Split_Volatile']
 
     header = (

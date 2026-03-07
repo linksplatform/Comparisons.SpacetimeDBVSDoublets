@@ -10,12 +10,8 @@ name = "bench"
 harness = false
 
 [dependencies]
-# SpacetimeDB 2.0 official Rust crate (embedded engine via test feature)
-spacetimedb-core = { git = "https://github.com/clockworklabs/SpacetimeDB", tag = "v2.0.1", features = ["test"] }
-spacetimedb-datastore = { git = "https://github.com/clockworklabs/SpacetimeDB", tag = "v2.0.1" }
-spacetimedb-sats = { git = "https://github.com/clockworklabs/SpacetimeDB", tag = "v2.0.1" }
-spacetimedb-primitives = { git = "https://github.com/clockworklabs/SpacetimeDB", tag = "v2.0.1" }
-spacetimedb-schema = { git = "https://github.com/clockworklabs/SpacetimeDB", tag = "v2.0.1" }
+# SpacetimeDB 2.0 official Rust client SDK.
+spacetimedb-sdk = "2"
 # Use patched doublets that is compatible with modern nightly (>= 1.93.0).
 # The pinned git revision uses removed nightly features (generators, const_trait_impl,
 # const_deref, etc.) incompatible with Rust >= 1.80.0. The local patch:
@@ -31,13 +27,3 @@ criterion = { version = "=0.3.6", default-features = false }
 [profile.release]
 lto = true
 codegen-units = 1
-
-# Patch bumpalo to implement BOTH std::alloc::Allocator (nightly) AND allocator_api2::Allocator
-# when both the "allocator_api" and "allocator-api2" features are enabled simultaneously.
-# This fixes a conflict between:
-#   - doublets-rs which uses bumpalo with "allocator_api" (nightly std Allocator)
-#   - regalloc2 (via SpacetimeDB/wasmtime/cranelift) which uses bumpalo with "allocator-api2"
-# When Cargo unifies features, bumpalo gets both features but originally only implemented the
-# nightly std Allocator trait, breaking regalloc2's allocator_api2::Allocator requirement.
-[patch.crates-io]
-bumpalo = { path = "bumpalo-patched" }
