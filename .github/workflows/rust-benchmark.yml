@@ -47,19 +47,28 @@ jobs:
       - name: Run Clippy
         run: cargo clippy --all-targets
 
-      - name: Install SpacetimeDB CLI
+      - name: Install SpacetimeDB CLI (Unix)
+        if: runner.os != 'Windows'
         shell: bash
         run: |
           curl -sSf https://install.spacetimedb.com | sh -s -- -y
           echo "$HOME/.local/bin" >> $GITHUB_PATH
         working-directory: .
 
-      - name: Build SpacetimeDB module (WASM)
-        shell: bash
-        run: spacetime build --project-path spacetime-module
+      - name: Install SpacetimeDB CLI (Windows)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          iwr https://windows.spacetimedb.com -useb | iex
+          echo "$env:LOCALAPPDATA\SpacetimeDB\bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
         working-directory: .
 
-      - name: Start SpacetimeDB server
+      - name: Build SpacetimeDB module (WASM)
+        run: cargo build --release --target wasm32-unknown-unknown
+        working-directory: rust/spacetime-module
+
+      - name: Start SpacetimeDB server (Unix)
+        if: runner.os != 'Windows'
         shell: bash
         run: |
           spacetime start &
@@ -73,10 +82,36 @@ jobs:
           done
         working-directory: .
 
-      - name: Publish SpacetimeDB module
-        shell: bash
-        run: spacetime publish --project-path spacetime-module benchmark-links
+      - name: Start SpacetimeDB server (Windows)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          Start-Process spacetime -ArgumentList "start" -NoNewWindow
+          Write-Host "Waiting for SpacetimeDB server to be ready..."
+          for ($i = 0; $i -lt 30; $i++) {
+            try {
+              $r = Invoke-WebRequest -Uri http://localhost:3000/ -UseBasicParsing -ErrorAction Stop
+              Write-Host "SpacetimeDB server is ready"
+              break
+            } catch {
+              Start-Sleep -Seconds 1
+            }
+          }
         working-directory: .
+
+      - name: Publish SpacetimeDB module (Unix)
+        if: runner.os != 'Windows'
+        shell: bash
+        run: |
+          spacetime publish --bin-path target/wasm32-unknown-unknown/release/spacetime_module.wasm benchmark-links
+        working-directory: rust/spacetime-module
+
+      - name: Publish SpacetimeDB module (Windows)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          spacetime publish --bin-path target/wasm32-unknown-unknown/release/spacetime_module.wasm benchmark-links
+        working-directory: rust/spacetime-module
 
       - name: Run tests
         env:
@@ -122,8 +157,8 @@ jobs:
         working-directory: .
 
       - name: Build SpacetimeDB module (WASM)
-        run: spacetime build --project-path spacetime-module
-        working-directory: .
+        run: cargo build --release --target wasm32-unknown-unknown
+        working-directory: rust/spacetime-module
 
       - name: Start SpacetimeDB server
         run: |
@@ -138,8 +173,9 @@ jobs:
         working-directory: .
 
       - name: Publish SpacetimeDB module
-        run: spacetime publish --project-path spacetime-module benchmark-links
-        working-directory: .
+        run: |
+          spacetime publish --bin-path target/wasm32-unknown-unknown/release/spacetime_module.wasm benchmark-links
+        working-directory: rust/spacetime-module
 
       - name: Build benchmark
         run: cargo build --release
