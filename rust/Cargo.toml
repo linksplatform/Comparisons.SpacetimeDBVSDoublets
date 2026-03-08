@@ -19,6 +19,9 @@ spacetimedb-sdk = "2"
 # - Patches dev-deps/data-rs to use non-const fn instead of removed ~const syntax
 # - Patches dev-deps/mem-rs to remove removed const feature flags
 doublets = { path = "doublets-patched/doublets" }
+# platform-mem is the memory abstraction layer used by doublets; we depend on it
+# directly to access FileMapped for file-backed (non-volatile) doublets stores.
+platform-mem = { path = "doublets-patched/dev-deps/mem-rs", package = "platform-mem" }
 once_cell = "1.14"
 
 [dev-dependencies]

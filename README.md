@@ -2,7 +2,7 @@
 
 Benchmark comparing [SpacetimeDB 2](https://github.com/clockworklabs/SpacetimeDB) vs [Doublets](https://github.com/linksplatform/doublets-rs) performance for basic CRUD operations with links.
 
-SpacetimeDB is benchmarked using the official `spacetimedb-sdk` Rust crate connected to a running SpacetimeDB 2.0 server. Doublets is benchmarked with its in-memory (volatile) storage variants.
+SpacetimeDB is benchmarked using the official `spacetimedb-sdk` Rust crate connected to a running SpacetimeDB 2.0 server. Doublets is benchmarked with both in-memory (volatile) and file-backed (non-volatile) storage variants.
 
 ## Benchmark Operations
 
@@ -26,8 +26,10 @@ The benchmark uses the official SpacetimeDB Rust client SDK, calling reducers to
 ### Doublets
 - **Doublets United Volatile** — in-memory store; links stored as contiguous `(index, source, target)` units
 - **Doublets Split Volatile** — in-memory store; separate data and index memory regions
+- **Doublets United NonVolatile** — file-backed store; same contiguous layout but memory-mapped to a single file; data persists to disk
+- **Doublets Split NonVolatile** — file-backed store; separate data and index files; both memory-mapped; data persists to disk
 
-Doublets is a custom in-memory doublet link data structure with O(1) lookup by id and O(log n + k) traversal by source/target using balanced tree indexes.
+Doublets uses a recursive-less size-balanced tree for O(1) lookup by id and O(log n + k) traversal by source/target. The file-backed variants use `memmap2` for memory-mapped file I/O, flushing changes to disk on drop via `sync_all()`. See [`rust/doublets-patched/PATCHES.md`](rust/doublets-patched/PATCHES.md) for why a local patched copy is used instead of the published crates.io version.
 
 ## Benchmark Background
 
@@ -53,6 +55,8 @@ Each benchmark iteration pre-populates the database with background links to sim
 | Query by Id | O(n) cache scan | O(1) | O(1) |
 | Query by Source | O(n) cache scan | O(log n + k) | O(log n + k) |
 | Query by Target | O(n) cache scan | O(log n + k) | O(log n + k) |
+
+The algorithmic complexity is the same for volatile and non-volatile Doublets variants. The non-volatile variants have additional I/O overhead due to memory-mapped file writes (flushed to disk on drop).
 
 ## Related Benchmarks
 
@@ -121,6 +125,8 @@ cargo clippy --all-targets
 │       └── lib.rs              # Table definition and reducers using `spacetimedb` crate
 ├── rust/
 │   ├── Cargo.toml              # Package manifest with pinned dependencies
+│   ├── doublets-patched/       # Local patches to doublets-rs for modern nightly compatibility
+│   │   └── PATCHES.md          # Documents why patches are needed and what was changed
 │   ├── rust-toolchain.toml     # Pinned Rust nightly toolchain
 │   ├── rustfmt.toml            # Rust formatting config
 │   ├── out.py                  # Chart generation script (matplotlib)
@@ -136,7 +142,7 @@ cargo clippy --all-targets
 │   │       ├── spacetimedb_benched.rs  # Benched impl for SpacetimeDB
 │   │       └── doublets_benched.rs     # Benched impls for Doublets stores
 │   └── benches/
-│       └── bench.rs            # Criterion benchmark suite (7 operations x 3 backends)
+│       └── bench.rs            # Criterion benchmark suite (7 operations x 5 backends)
 └── .github/
     └── workflows/
         └── rust-benchmark.yml  # CI: test on 3 OS + benchmark + chart generation

@@ -1,16 +1,20 @@
 //! Doublets storage implementation for links.
 //!
-//! Adapts the Doublets in-memory link store to the shared `Links` trait
-//! used in benchmarks.
+//! Adapts the Doublets link store to the shared `Links` trait used in benchmarks.
 //!
 //! # Doublets Storage Types
 //!
-//! Two in-memory storage layouts are benchmarked:
+//! Four storage layouts are benchmarked: volatile (in-memory) and non-volatile
+//! (file-backed) variants of united and split stores.
 //!
 //! - **United Volatile**: Each link stored as a contiguous unit `(index, source, target)`.
-//!   Single allocation; best cache locality for small stores.
+//!   Single allocation; best cache locality for small stores. Data lives in RAM only.
 //! - **Split Volatile**: Data part and index part in separate memory regions.
-//!   Better cache efficiency for index-heavy workloads.
+//!   Better cache efficiency for index-heavy workloads. Data lives in RAM only.
+//! - **United NonVolatile**: Same layout as United Volatile but backed by a memory-mapped
+//!   file. Data persists to disk on drop via `sync_all()`.
+//! - **Split NonVolatile**: Same layout as Split Volatile but backed by two memory-mapped
+//!   files (one for data, one for the index). Data persists to disk on drop via `sync_all()`.
 //!
 //! # Operation Complexity
 //!
@@ -32,6 +36,7 @@ use doublets::{
     unit::{self, LinkPart},
     Doublets, DoubletsExt,
 };
+use platform_mem::FileMapped;
 use std::alloc::Global;
 
 /// In-memory united (single contiguous region) doublets store.
@@ -40,6 +45,13 @@ pub type DoubletsUnitedVolatile<T = usize> = unit::Store<T, Alloc<LinkPart<T>, G
 /// In-memory split (separate data and index regions) doublets store.
 pub type DoubletsSplitVolatile<T = usize> =
     split::Store<T, Alloc<DataPart<T>, Global>, Alloc<IndexPart<T>, Global>>;
+
+/// File-backed united (single contiguous region) doublets store.
+pub type DoubletsUnitedNonVolatile<T = usize> = unit::Store<T, FileMapped<LinkPart<T>>>;
+
+/// File-backed split (separate data and index regions) doublets store.
+pub type DoubletsSplitNonVolatile<T = usize> =
+    split::Store<T, FileMapped<DataPart<T>>, FileMapped<IndexPart<T>>>;
 
 /// Wrapper adapting a `doublets::Doublets` store to the shared `Links` trait.
 pub struct DoubletsLinks<S> {
@@ -146,6 +158,28 @@ pub fn create_split_volatile() -> DoubletsLinks<DoubletsSplitVolatile> {
     DoubletsLinks::new(store)
 }
 
+/// Create a new file-backed doublets united store at the given path.
+pub fn create_united_non_volatile(path: &str) -> DoubletsLinks<DoubletsUnitedNonVolatile> {
+    let mem = FileMapped::from_path(path).expect("Failed to open united links file");
+    let store = DoubletsUnitedNonVolatile::new(mem)
+        .expect("Failed to create doublets united non-volatile store");
+    DoubletsLinks::new(store)
+}
+
+/// Create a new file-backed doublets split store at the given paths.
+///
+/// `data_path` stores the link data (source, target), `index_path` stores the tree index.
+pub fn create_split_non_volatile(
+    data_path: &str,
+    index_path: &str,
+) -> DoubletsLinks<DoubletsSplitNonVolatile> {
+    let data_mem = FileMapped::from_path(data_path).expect("Failed to open split data file");
+    let index_mem = FileMapped::from_path(index_path).expect("Failed to open split index file");
+    let store = DoubletsSplitNonVolatile::new(data_mem, index_mem)
+        .expect("Failed to create doublets split non-volatile store");
+    DoubletsLinks::new(store)
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -229,5 +263,42 @@ mod tests {
         assert_eq!(db.count(), 10);
         db.delete_all();
         assert_eq!(db.count(), 0);
+    }
+
+    #[test]
+    fn test_create_and_query_united_non_volatile() {
+        let path = "/tmp/test_united_non_volatile.links";
+        // Remove any leftover file from previous runs
+        let _ = std::fs::remove_file(path);
+        {
+            let mut db = create_united_non_volatile(path);
+            let id = db.create_point();
+            assert_eq!(id, 1);
+            let link = db.query_by_id(id).unwrap();
+            assert_eq!(link.source, id);
+            assert_eq!(link.target, id);
+        }
+        // Clean up
+        let _ = std::fs::remove_file(path);
+    }
+
+    #[test]
+    fn test_create_and_query_split_non_volatile() {
+        let data_path = "/tmp/test_split_non_volatile_data.links";
+        let index_path = "/tmp/test_split_non_volatile_index.links";
+        // Remove any leftover files from previous runs
+        let _ = std::fs::remove_file(data_path);
+        let _ = std::fs::remove_file(index_path);
+        {
+            let mut db = create_split_non_volatile(data_path, index_path);
+            let id = db.create_point();
+            assert_eq!(id, 1);
+            let link = db.query_by_id(id).unwrap();
+            assert_eq!(link.source, id);
+            assert_eq!(link.target, id);
+        }
+        // Clean up
+        let _ = std::fs::remove_file(data_path);
+        let _ = std::fs::remove_file(index_path);
     }
 }

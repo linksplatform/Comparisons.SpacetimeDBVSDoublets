@@ -2133,6 +2133,7 @@ dependencies = [
  "criterion",
  "doublets",
  "once_cell",
+ "platform-mem",
  "spacetimedb-sdk",
 ]
 

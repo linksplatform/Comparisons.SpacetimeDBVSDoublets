@@ -13,7 +13,16 @@ import { join, relative, extname } from 'path';
 
 const MAX_LINES = 1000;
 const FILE_EXTENSIONS = ['.rs'];
-const EXCLUDE_PATTERNS = ['target', '.git', 'node_modules', 'doublets-patched', 'module_bindings'];
+const EXCLUDE_PATTERNS = [
+  'target',
+  '.git',
+  'node_modules',
+  'doublets-patched',
+  'module_bindings',
+  // Benchmark files contain intentional repetition (one function per backend per operation)
+  // and are excluded from the line limit check.
+  'benches',
+];
 
 /**
  * Check if a path should be excluded
