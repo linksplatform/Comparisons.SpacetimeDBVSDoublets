@@ -103,14 +103,22 @@ jobs:
         if: runner.os != 'Windows'
         shell: bash
         run: |
-          spacetime publish --bin-path target/wasm32-unknown-unknown/release/spacetime_module.wasm benchmark-links
+          spacetime publish \
+            --server http://localhost:3000 \
+            --bin-path target/wasm32-unknown-unknown/release/spacetime_module.wasm \
+            --yes \
+            benchmark-links
         working-directory: rust/spacetime-module
 
       - name: Publish SpacetimeDB module (Windows)
         if: runner.os == 'Windows'
         shell: pwsh
         run: |
-          spacetime publish --bin-path target/wasm32-unknown-unknown/release/spacetime_module.wasm benchmark-links
+          spacetime publish `
+            --server http://localhost:3000 `
+            --bin-path target/wasm32-unknown-unknown/release/spacetime_module.wasm `
+            --yes `
+            benchmark-links
         working-directory: rust/spacetime-module
 
       - name: Run tests
@@ -174,7 +182,11 @@ jobs:
 
       - name: Publish SpacetimeDB module
         run: |
-          spacetime publish --bin-path target/wasm32-unknown-unknown/release/spacetime_module.wasm benchmark-links
+          spacetime publish \
+            --server http://localhost:3000 \
+            --bin-path target/wasm32-unknown-unknown/release/spacetime_module.wasm \
+            --yes \
+            benchmark-links
         working-directory: rust/spacetime-module
 
       - name: Build benchmark
