@@ -114,7 +114,10 @@ impl SpacetimeDbLinks {
 
         eprintln!("[SpacetimeDB] Subscription ready, client cache populated");
 
-        Self { conn, _thread: thread }
+        Self {
+            conn,
+            _thread: thread,
+        }
     }
 
     /// Wait for a reducer to complete by using its `_then` callback with a condvar.
@@ -212,7 +215,12 @@ impl Links for SpacetimeDbLinks {
     }
 
     fn query_by_id(&self, id: u64) -> Option<Link> {
-        self.conn.db.links().iter().find(|l| l.id == id).map(Self::to_link)
+        self.conn
+            .db
+            .links()
+            .iter()
+            .find(|l| l.id == id)
+            .map(Self::to_link)
     }
 
     fn query_by_source(&self, source: u64) -> Vec<Link> {
@@ -265,7 +273,9 @@ mod tests {
             format!("{addr}:3000")
         };
         std::net::TcpStream::connect_timeout(
-            &addr.parse().unwrap_or_else(|_| "127.0.0.1:3000".parse().unwrap()),
+            &addr
+                .parse()
+                .unwrap_or_else(|_| "127.0.0.1:3000".parse().unwrap()),
             Duration::from_secs(1),
         )
         .is_ok()
