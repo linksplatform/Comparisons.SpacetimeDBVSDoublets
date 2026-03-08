@@ -114,15 +114,30 @@ impl SpacetimeDbLinks {
 
         eprintln!("[SpacetimeDB] Subscription ready, client cache populated");
 
-        Self {
-            conn,
-            _thread: thread,
-        }
+        Self { conn, _thread: thread }
     }
 
-    /// Drain pending WebSocket messages to synchronize the client cache.
-    fn sync(&self) {
-        while self.conn.advance_one_message().unwrap_or(false) {}
+    /// Wait for a reducer to complete by using its `_then` callback with a condvar.
+    ///
+    /// The background thread (from `run_threaded()`) processes messages and triggers
+    /// the callback. We wait on the condvar until the callback signals completion.
+    fn wait_for_reducer<F>(&self, invoke: F)
+    where
+        F: FnOnce(Arc<(Mutex<bool>, Condvar)>),
+    {
+        let done = Arc::new((Mutex::new(false), Condvar::new()));
+        invoke(Arc::clone(&done));
+        let (lock, cvar) = &*done;
+        let mut finished = lock.lock().unwrap();
+        while !*finished {
+            let result = cvar
+                .wait_timeout(finished, Duration::from_secs(30))
+                .expect("Reducer wait interrupted");
+            finished = result.0;
+            if result.1.timed_out() {
+                panic!("[SpacetimeDB] Timed out waiting for reducer to complete");
+            }
+        }
     }
 
     fn to_link(row: SdbLink) -> Link {
@@ -132,11 +147,16 @@ impl SpacetimeDbLinks {
 
 impl Links for SpacetimeDbLinks {
     fn create(&mut self, source: u64, target: u64) -> u64 {
-        self.conn
-            .reducers
-            .create_link(source, target)
-            .expect("create_link reducer failed");
-        self.sync();
+        self.wait_for_reducer(|done| {
+            self.conn
+                .reducers
+                .create_link_then(source, target, move |_ctx, _result| {
+                    let (lock, cvar) = &*done;
+                    *lock.lock().unwrap() = true;
+                    cvar.notify_all();
+                })
+                .expect("create_link reducer failed");
+        });
         // Return the id of the newly inserted link (max id matching source+target).
         self.conn
             .db
@@ -149,27 +169,42 @@ impl Links for SpacetimeDbLinks {
     }
 
     fn update(&mut self, id: u64, source: u64, target: u64) {
-        self.conn
-            .reducers
-            .update_link(id, source, target)
-            .expect("update_link reducer failed");
-        self.sync();
+        self.wait_for_reducer(|done| {
+            self.conn
+                .reducers
+                .update_link_then(id, source, target, move |_ctx, _result| {
+                    let (lock, cvar) = &*done;
+                    *lock.lock().unwrap() = true;
+                    cvar.notify_all();
+                })
+                .expect("update_link reducer failed");
+        });
     }
 
     fn delete(&mut self, id: u64) {
-        self.conn
-            .reducers
-            .delete_link(id)
-            .expect("delete_link reducer failed");
-        self.sync();
+        self.wait_for_reducer(|done| {
+            self.conn
+                .reducers
+                .delete_link_then(id, move |_ctx, _result| {
+                    let (lock, cvar) = &*done;
+                    *lock.lock().unwrap() = true;
+                    cvar.notify_all();
+                })
+                .expect("delete_link reducer failed");
+        });
     }
 
     fn delete_all(&mut self) {
-        self.conn
-            .reducers
-            .delete_all_links()
-            .expect("delete_all_links reducer failed");
-        self.sync();
+        self.wait_for_reducer(|done| {
+            self.conn
+                .reducers
+                .delete_all_links_then(move |_ctx, _result| {
+                    let (lock, cvar) = &*done;
+                    *lock.lock().unwrap() = true;
+                    cvar.notify_all();
+                })
+                .expect("delete_all_links reducer failed");
+        });
     }
 
     fn query_all(&self) -> Vec<Link> {
@@ -177,12 +212,7 @@ impl Links for SpacetimeDbLinks {
     }
 
     fn query_by_id(&self, id: u64) -> Option<Link> {
-        self.conn
-            .db
-            .links()
-            .iter()
-            .find(|l| l.id == id)
-            .map(Self::to_link)
+        self.conn.db.links().iter().find(|l| l.id == id).map(Self::to_link)
     }
 
     fn query_by_source(&self, source: u64) -> Vec<Link> {
@@ -235,9 +265,7 @@ mod tests {
             format!("{addr}:3000")
         };
         std::net::TcpStream::connect_timeout(
-            &addr
-                .parse()
-                .unwrap_or_else(|_| "127.0.0.1:3000".parse().unwrap()),
+            &addr.parse().unwrap_or_else(|_| "127.0.0.1:3000".parse().unwrap()),
             Duration::from_secs(1),
         )
         .is_ok()
