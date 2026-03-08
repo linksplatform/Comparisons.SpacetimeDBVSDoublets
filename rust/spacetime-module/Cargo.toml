@@ -1,0 +1,13 @@
+[package]
+name = "spacetime-module"
+version = "0.1.0"
+edition = "2021"
+license = "Unlicense"
+description = "SpacetimeDB module defining the links table and reducers for benchmarking"
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+spacetimedb = "2"
+log = "0.4"

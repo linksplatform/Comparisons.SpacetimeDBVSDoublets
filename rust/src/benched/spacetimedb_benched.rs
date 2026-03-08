@@ -1,22 +1,22 @@
-//! `Benched` implementation for SpacetimeDB (SQLite backend).
+//! `Benched` implementation for SpacetimeDB.
 
 use crate::{benched::Benched, spacetimedb_impl::SpacetimeDbLinks, Fork, Links};
 use std::ops::{Deref, DerefMut};
 
-/// Benchmark subject for SpacetimeDB with in-memory SQLite backend.
+/// Benchmark subject for SpacetimeDB using the official `spacetimedb-sdk` Rust crate.
 ///
-/// Uses SpacetimeDB's SQLite storage layer directly, which is the same
-/// storage engine SpacetimeDB 2 uses internally for its tables.
-pub struct SpacetimeDbMemoryBenched {
+/// Connects to a running SpacetimeDB server and benchmarks link operations
+/// via the official client SDK.
+pub struct SpacetimeDbBenched {
     links: SpacetimeDbLinks,
 }
 
-impl Benched for SpacetimeDbMemoryBenched {
+impl Benched for SpacetimeDbBenched {
     type Builder = ();
 
     fn setup(_builder: Self::Builder) -> Self {
         Self {
-            links: SpacetimeDbLinks::new_memory(),
+            links: SpacetimeDbLinks::connect(),
         }
     }
 
@@ -29,7 +29,7 @@ impl Benched for SpacetimeDbMemoryBenched {
     }
 }
 
-impl Deref for SpacetimeDbMemoryBenched {
+impl Deref for SpacetimeDbBenched {
     type Target = SpacetimeDbLinks;
 
     fn deref(&self) -> &Self::Target {
@@ -37,7 +37,7 @@ impl Deref for SpacetimeDbMemoryBenched {
     }
 }
 
-impl DerefMut for SpacetimeDbMemoryBenched {
+impl DerefMut for SpacetimeDbBenched {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.links
     }

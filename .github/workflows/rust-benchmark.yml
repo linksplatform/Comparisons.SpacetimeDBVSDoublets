@@ -3,10 +3,10 @@ name: Rust Benchmark
 on:
   push:
     branches: [main, master]
-    paths: ['rust/**', '.github/workflows/rust-benchmark.yml']
+    paths: ['rust/**', 'spacetime-module/**', '.github/workflows/rust-benchmark.yml']
   pull_request:
     branches: [main, master]
-    paths: ['rust/**', '.github/workflows/rust-benchmark.yml']
+    paths: ['rust/**', 'spacetime-module/**', '.github/workflows/rust-benchmark.yml']
 
 env:
   CARGO_TERM_COLOR: always
@@ -20,29 +20,26 @@ jobs:
   test:
     name: Test (${{ matrix.os }})
     runs-on: ${{ matrix.os }}
+    timeout-minutes: 360
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
+        os: [ubuntu-latest, macos-latest]
     steps:
       - uses: actions/checkout@v4
 
-      - name: Setup Rust (nightly-2022-08-22)
+      - name: Setup Rust (nightly)
         uses: dtolnay/rust-toolchain@master
         with:
-          toolchain: nightly-2022-08-22
+          toolchain: nightly
           components: rustfmt, clippy
+          targets: wasm32-unknown-unknown
 
       - name: Cache cargo registry
-        uses: actions/cache@v4
+        uses: Swatinem/rust-cache@v2
         with:
-          path: |
-            ~/.cargo/registry
-            ~/.cargo/git
-            rust/target
-          key: ${{ runner.os }}-cargo-${{ hashFiles('rust/Cargo.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-cargo-
+          workspaces: rust -> target
+          cache-on-failure: "true"
 
       - name: Check formatting
         run: cargo fmt --all -- --check
@@ -50,8 +47,47 @@ jobs:
       - name: Run Clippy
         run: cargo clippy --all-targets
 
+      - name: Install SpacetimeDB CLI
+        shell: bash
+        run: |
+          curl -sSf https://install.spacetimedb.com | sh -s -- -y
+          echo "$HOME/.local/bin" >> $GITHUB_PATH
+        working-directory: .
+
+      - name: Build SpacetimeDB module (WASM)
+        run: cargo build --release --target wasm32-unknown-unknown
+        working-directory: rust/spacetime-module
+
+      - name: Start SpacetimeDB server
+        shell: bash
+        run: |
+          spacetime start &
+          echo "Waiting for SpacetimeDB server to be ready..."
+          for i in $(seq 1 30); do
+            if curl -sf http://localhost:3000/ > /dev/null 2>&1; then
+              echo "SpacetimeDB server is ready"
+              break
+            fi
+            sleep 1
+          done
+        working-directory: .
+
+      - name: Publish SpacetimeDB module
+        shell: bash
+        run: |
+          spacetime publish \
+            --server http://localhost:3000 \
+            --bin-path target/wasm32-unknown-unknown/release/spacetime_module.wasm \
+            --yes \
+            benchmark-links
+        working-directory: rust/spacetime-module
+
       - name: Run tests
-        run: cargo test --release
+        env:
+          SPACETIMEDB_URI: http://localhost:3000
+          SPACETIMEDB_DB: benchmark-links
+        # Run tests sequentially to avoid parallel interference with shared SpacetimeDB state.
+        run: cargo test -- --test-threads=1
 
   benchmark:
     name: Benchmark
@@ -64,10 +100,11 @@ jobs:
           fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Setup Rust (nightly-2022-08-22)
+      - name: Setup Rust (nightly)
         uses: dtolnay/rust-toolchain@master
         with:
-          toolchain: nightly-2022-08-22
+          toolchain: nightly
+          targets: wasm32-unknown-unknown
 
       - name: Setup Python
         uses: actions/setup-python@v5
@@ -78,15 +115,41 @@ jobs:
         run: pip install matplotlib numpy
 
       - name: Cache cargo registry
-        uses: actions/cache@v4
+        uses: Swatinem/rust-cache@v2
         with:
-          path: |
-            ~/.cargo/registry
-            ~/.cargo/git
-            rust/target
-          key: ubuntu-cargo-bench-${{ hashFiles('rust/Cargo.lock') }}
-          restore-keys: |
-            ubuntu-cargo-bench-
+          workspaces: rust -> target
+          cache-on-failure: "true"
+
+      - name: Install SpacetimeDB CLI
+        run: |
+          curl -sSf https://install.spacetimedb.com | sh -s -- -y
+          echo "$HOME/.local/bin" >> $GITHUB_PATH
+        working-directory: .
+
+      - name: Build SpacetimeDB module (WASM)
+        run: cargo build --release --target wasm32-unknown-unknown
+        working-directory: rust/spacetime-module
+
+      - name: Start SpacetimeDB server
+        run: |
+          spacetime start &
+          for i in $(seq 1 30); do
+            if curl -sf http://localhost:3000/ > /dev/null 2>&1; then
+              echo "SpacetimeDB server is ready"
+              break
+            fi
+            sleep 1
+          done
+        working-directory: .
+
+      - name: Publish SpacetimeDB module
+        run: |
+          spacetime publish \
+            --server http://localhost:3000 \
+            --bin-path target/wasm32-unknown-unknown/release/spacetime_module.wasm \
+            --yes \
+            benchmark-links
+        working-directory: rust/spacetime-module
 
       - name: Build benchmark
         run: cargo build --release
@@ -95,6 +158,8 @@ jobs:
         env:
           BENCHMARK_LINK_COUNT: 1000
           BACKGROUND_LINK_COUNT: 3000
+          SPACETIMEDB_URI: http://localhost:3000
+          SPACETIMEDB_DB: benchmark-links
         run: cargo bench --bench bench -- --output-format bencher | tee out.txt
 
       - name: Generate charts
