@@ -1,6 +1,6 @@
 use spacetimedb::{reducer, table, ReducerContext, Table};
 
-#[table(name = links, public)]
+#[table(accessor = links, public)]
 pub struct Link {
     #[primary_key]
     #[auto_inc]
@@ -27,7 +27,7 @@ pub fn create_link(ctx: &ReducerContext, source: u64, target: u64) {
 
 #[reducer]
 pub fn update_link(ctx: &ReducerContext, id: u64, source: u64, target: u64) {
-    if let Some(link) = ctx.db.links().id().find(id) {
+    if let Some(link) = ctx.db.links().id().find(&id) {
         ctx.db.links().id().update(Link {
             id: link.id,
             source,
@@ -38,13 +38,13 @@ pub fn update_link(ctx: &ReducerContext, id: u64, source: u64, target: u64) {
 
 #[reducer]
 pub fn delete_link(ctx: &ReducerContext, id: u64) {
-    ctx.db.links().id().delete(id);
+    ctx.db.links().id().delete(&id);
 }
 
 #[reducer]
 pub fn delete_all_links(ctx: &ReducerContext) {
     let ids: Vec<u64> = ctx.db.links().iter().map(|l| l.id).collect();
     for id in ids {
-        ctx.db.links().id().delete(id);
+        ctx.db.links().id().delete(&id);
     }
 }
