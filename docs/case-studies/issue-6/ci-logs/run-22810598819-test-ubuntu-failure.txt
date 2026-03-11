@@ -1,0 +1,1407 @@
+Test (ubuntu-latest)	UNKNOWN STEP	﻿2026-03-08T00:41:25.4125685Z Current runner version: '2.332.0'
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:25.4149215Z ##[group]Runner Image Provisioner
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:25.4149996Z Hosted Compute Agent
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:25.4150643Z Version: 20260213.493
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:25.4151255Z Commit: 5c115507f6dd24b8de37d8bbe0bb4509d0cc0fa3
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:25.4151911Z Build Date: 2026-02-13T00:28:41Z
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:25.4153038Z Worker ID: {4bc72ef6-c619-4c21-9892-1212af1c3e85}
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:25.4153792Z Azure Region: northcentralus
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:25.4154346Z ##[endgroup]
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:25.4155854Z ##[group]Operating System
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:25.4156444Z Ubuntu
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:25.4156961Z 24.04.3
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:25.4157427Z LTS
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:25.4157946Z ##[endgroup]
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:25.4158405Z ##[group]Runner Image
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:25.4158992Z Image: ubuntu-24.04
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:25.4159541Z Version: 20260302.42.1
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:25.4160678Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20260302.42/images/ubuntu/Ubuntu2404-Readme.md
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:25.4162658Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20260302.42
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:25.4163612Z ##[endgroup]
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:25.4164782Z ##[group]GITHUB_TOKEN Permissions
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:25.4166564Z Contents: read
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:25.4167076Z Metadata: read
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:25.4167735Z Packages: read
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:25.4168252Z ##[endgroup]
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:25.4170167Z Secret source: Actions
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:25.4170997Z Prepare workflow directory
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:25.4739233Z Prepare all required actions
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:25.4794653Z Getting action download info
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:25.8177196Z Download action repository 'actions/checkout@v4' (SHA:34e114876b0b11c390a56381ad16ebd13914f8d5)
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:25.9481791Z Download action repository 'dtolnay/rust-toolchain@master' (SHA:efa25f7f19611383d5b0ccf2d1c8914531636bf9)
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:26.1867696Z Download action repository 'Swatinem/rust-cache@v2' (SHA:779680da715d629ac1d338a641029a2f4372abb5)
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:26.7435121Z Complete job name: Test (ubuntu-latest)
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:26.8221715Z ##[group]Run actions/checkout@v4
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:26.8223014Z with:
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:26.8223657Z   repository: linksplatform/Comparisons.SpacetimeDBVSDoublets
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:26.8224572Z   token: ***
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:26.8225024Z   ssh-strict: true
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:26.8225511Z   ssh-user: git
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:26.8225999Z   persist-credentials: true
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:26.8226529Z   clean: true
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:26.8227016Z   sparse-checkout-cone-mode: true
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:26.8227576Z   fetch-depth: 1
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:26.8228036Z   fetch-tags: false
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:26.8228506Z   show-progress: true
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:26.8228971Z   lfs: false
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:26.8229417Z   submodules: false
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:26.8229898Z   set-safe-directory: true
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:26.8230640Z env:
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:26.8231100Z   CARGO_TERM_COLOR: always
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:26.8231617Z   RUST_BACKTRACE: 1
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:26.8232287Z ##[endgroup]
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:26.9329917Z Syncing repository: linksplatform/Comparisons.SpacetimeDBVSDoublets
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:26.9331917Z ##[group]Getting Git version info
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:26.9333275Z Working directory is '/home/runner/work/Comparisons.SpacetimeDBVSDoublets/Comparisons.SpacetimeDBVSDoublets'
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:26.9334786Z [command]/usr/bin/git version
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:26.9446422Z git version 2.53.0
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:26.9473074Z ##[endgroup]
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:26.9487521Z Temporarily overriding HOME='/home/runner/work/_temp/d6f0ebb7-989c-4c27-a5f9-e82b17491178' before making global git config changes
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:26.9489315Z Adding repository directory to the temporary git global config as a safe directory
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:26.9493257Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/Comparisons.SpacetimeDBVSDoublets/Comparisons.SpacetimeDBVSDoublets
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:26.9535120Z Deleting the contents of '/home/runner/work/Comparisons.SpacetimeDBVSDoublets/Comparisons.SpacetimeDBVSDoublets'
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:26.9538152Z ##[group]Initializing the repository
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:26.9543038Z [command]/usr/bin/git init /home/runner/work/Comparisons.SpacetimeDBVSDoublets/Comparisons.SpacetimeDBVSDoublets
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:26.9688604Z hint: Using 'master' as the name for the initial branch. This default branch name
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:26.9690307Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:26.9691718Z hint: to use in all of your new repositories, which will suppress this warning,
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:26.9693003Z hint: call:
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:26.9693595Z hint:
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:26.9694322Z hint: 	git config --global init.defaultBranch <name>
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:26.9695400Z hint:
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:26.9697016Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:26.9699616Z hint: 'development'. The just-created branch can be renamed via this command:
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:26.9701659Z hint:
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:26.9702935Z hint: 	git branch -m <name>
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:26.9704054Z hint:
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:26.9705112Z hint: Disable this message with "git config set advice.defaultBranchName false"
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:26.9707365Z Initialized empty Git repository in /home/runner/work/Comparisons.SpacetimeDBVSDoublets/Comparisons.SpacetimeDBVSDoublets/.git/
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:26.9710385Z [command]/usr/bin/git remote add origin https://github.com/linksplatform/Comparisons.SpacetimeDBVSDoublets
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:26.9746980Z ##[endgroup]
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:26.9748612Z ##[group]Disabling automatic garbage collection
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:26.9751485Z [command]/usr/bin/git config --local gc.auto 0
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:26.9791496Z ##[endgroup]
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:26.9793127Z ##[group]Setting up auth
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:26.9794517Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:26.9826658Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:27.0205741Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:27.0240967Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:27.0475773Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:27.0508945Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:27.0747958Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:27.0785432Z ##[endgroup]
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:27.0787164Z ##[group]Fetching the repository
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:27.0796241Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +081becd62bedf6c17aa7e2368d19286e363e4880:refs/remotes/pull/5/merge
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:27.4065487Z From https://github.com/linksplatform/Comparisons.SpacetimeDBVSDoublets
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:27.4067165Z  * [new ref]         081becd62bedf6c17aa7e2368d19286e363e4880 -> pull/5/merge
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:27.4104694Z ##[endgroup]
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:27.4106692Z ##[group]Determining the checkout info
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:27.4108887Z ##[endgroup]
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:27.4113260Z [command]/usr/bin/git sparse-checkout disable
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:27.4163028Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:27.4195111Z ##[group]Checking out the ref
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:27.4197399Z [command]/usr/bin/git checkout --progress --force refs/remotes/pull/5/merge
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:27.4510973Z Note: switching to 'refs/remotes/pull/5/merge'.
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:27.4514523Z 
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:27.4516804Z You are in 'detached HEAD' state. You can look around, make experimental
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:27.4520266Z changes and commit them, and you can discard any commits you make in this
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:27.4523509Z state without impacting any branches by switching back to a branch.
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:27.4525312Z 
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:27.4526481Z If you want to create a new branch to retain commits you create, you may
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:27.4529351Z do so (now or later) by using -c with the switch command. Example:
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:27.4531154Z 
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:27.4532207Z   git switch -c <new-branch-name>
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:27.4533466Z 
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:27.4534098Z Or undo this operation with:
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:27.4535189Z 
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:27.4535765Z   git switch -
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:27.4536624Z 
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:27.4538263Z Turn off this advice by setting config variable advice.detachedHead to false
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:27.4540562Z 
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:27.4543408Z HEAD is now at 081becd Merge 29e94b76024e0073503f004a530a58a8e60ccb87 into 32aafd00e7340957afcdcc90d700e5bbc8cb25e7
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:27.4550625Z ##[endgroup]
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:27.4565507Z [command]/usr/bin/git log -1 --format=%H
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:27.4590510Z 081becd62bedf6c17aa7e2368d19286e363e4880
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:27.5269221Z ##[group]Run dtolnay/rust-toolchain@master
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:27.5270380Z with:
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:27.5271150Z   toolchain: nightly
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:27.5272210Z   components: rustfmt, clippy
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:27.5273240Z   targets: wasm32-unknown-unknown
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:27.5274243Z env:
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:27.5274999Z   CARGO_TERM_COLOR: always
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:27.5275923Z   RUST_BACKTRACE: 1
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:27.5276747Z ##[endgroup]
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:27.5453146Z ##[group]Run : parse toolchain version
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:27.5454320Z [36;1m: parse toolchain version[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:27.5455359Z [36;1mif [[ -z $toolchain ]]; then[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:27.5457226Z [36;1m  # GitHub does not enforce `required: true` inputs itself. https://github.com/actions/runner/issues/1070[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:27.5459250Z [36;1m  echo "'toolchain' is a required input" >&2[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:27.5460411Z [36;1m  exit 1[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:27.5461703Z [36;1melif [[ $toolchain =~ ^stable' '[0-9]+' '(year|month|week|day)s?' 'ago$ ]]; then[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:27.5463533Z [36;1m  if [[ Linux == macOS ]]; then[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:27.5465473Z [36;1m    echo "toolchain=1.$((($(date -v-$(sed 's/stable \([0-9]*\) \(.\).*/\1\2/' <<< $toolchain) +%s)/60/60/24-16569)/7/6))" >> $GITHUB_OUTPUT[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:27.5467406Z [36;1m  else[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:27.5468911Z [36;1m    echo "toolchain=1.$((($(date --date "${toolchain#stable }" +%s)/60/60/24-16569)/7/6))" >> $GITHUB_OUTPUT[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:27.5470662Z [36;1m  fi[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:27.5471768Z [36;1melif [[ $toolchain =~ ^stable' 'minus' '[0-9]+' 'releases?$ ]]; then[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:27.5473943Z [36;1m  echo "toolchain=1.$((($(date +%s)/60/60/24-16569)/7/6-${toolchain//[^0-9]/}))" >> $GITHUB_OUTPUT[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:27.5475697Z [36;1melif [[ $toolchain =~ ^1\.[0-9]+$ ]]; then[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:27.5477682Z [36;1m  echo "toolchain=1.$((i=${toolchain#1.}, c=($(date +%s)/60/60/24-16569)/7/6, i+9*i*(10*i<=c)+90*i*(100*i<=c)))" >> $GITHUB_OUTPUT[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:27.5479581Z [36;1melse[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:27.5480505Z [36;1m  echo "toolchain=$toolchain" >> $GITHUB_OUTPUT[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:27.5481645Z [36;1mfi[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:27.5538169Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:27.5539413Z env:
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:27.5540130Z   CARGO_TERM_COLOR: always
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:27.5541003Z   RUST_BACKTRACE: 1
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:27.5541790Z   toolchain: nightly
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:27.5542904Z ##[endgroup]
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:27.5849918Z ##[group]Run : construct rustup command line
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:27.5851094Z [36;1m: construct rustup command line[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:27.5852964Z [36;1mecho "targets=$(for t in ${targets//,/ }; do echo -n ' --target' $t; done)" >> $GITHUB_OUTPUT[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:27.5855301Z [36;1mecho "components=$(for c in ${components//,/ }; do echo -n ' --component' $c; done)" >> $GITHUB_OUTPUT[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:27.5857536Z [36;1mecho "downgrade= --allow-downgrade" >> $GITHUB_OUTPUT[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:27.5905911Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:27.5907129Z env:
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:27.5907816Z   CARGO_TERM_COLOR: always
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:27.5908671Z   RUST_BACKTRACE: 1
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:27.5909473Z   targets: wasm32-unknown-unknown
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:27.5910440Z   components: rustfmt, clippy
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:27.5911307Z ##[endgroup]
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:27.6048122Z ##[group]Run : set $CARGO_HOME
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:27.6049058Z [36;1m: set $CARGO_HOME[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:27.6050251Z [36;1mecho CARGO_HOME=${CARGO_HOME:-"$HOME/.cargo"} >> $GITHUB_ENV[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:27.6097848Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:27.6099079Z env:
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:27.6099769Z   CARGO_TERM_COLOR: always
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:27.6100637Z   RUST_BACKTRACE: 1
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:27.6101398Z ##[endgroup]
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:27.6238373Z ##[group]Run : install rustup if needed
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:27.6239450Z [36;1m: install rustup if needed[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:27.6240709Z [36;1mif ! command -v rustup &>/dev/null; then[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:27.6243648Z [36;1m  curl --proto '=https' --tlsv1.2 --retry 10 --retry-connrefused --location --silent --show-error --fail https://sh.rustup.rs | sh -s -- --default-toolchain none -y[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:27.6246347Z [36;1m  echo "$CARGO_HOME/bin" >> $GITHUB_PATH[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:27.6247408Z [36;1mfi[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:27.6295178Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:27.6296386Z env:
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:27.6297072Z   CARGO_TERM_COLOR: always
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:27.6297931Z   RUST_BACKTRACE: 1
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:27.6298739Z   CARGO_HOME: /home/runner/.cargo
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:27.6299656Z ##[endgroup]
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:27.6439596Z ##[group]Run rustup toolchain install nightly --target wasm32-unknown-unknown --component rustfmt --component clippy --profile minimal --allow-downgrade --no-self-update
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:27.6444011Z [36;1mrustup toolchain install nightly --target wasm32-unknown-unknown --component rustfmt --component clippy --profile minimal --allow-downgrade --no-self-update[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:27.6493212Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:27.6494416Z env:
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:27.6495108Z   CARGO_TERM_COLOR: always
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:27.6495967Z   RUST_BACKTRACE: 1
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:27.6496758Z   CARGO_HOME: /home/runner/.cargo
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:27.6497718Z   RUSTUP_PERMIT_COPY_RENAME: 1
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:27.6498605Z ##[endgroup]
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:28.0935165Z info: syncing channel updates for 'nightly-x86_64-unknown-linux-gnu'
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:28.2538329Z info: latest update on 2026-03-07, rust version 1.96.0-nightly (80282b130 2026-03-06)
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:28.2540746Z info: downloading component 'cargo'
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:28.2997429Z info: downloading component 'clippy'
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:28.3450298Z info: downloading component 'rust-std' for 'wasm32-unknown-unknown'
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:28.9284372Z info: downloading component 'rust-std'
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:29.0139105Z info: downloading component 'rustc'
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:29.4035241Z info: downloading component 'rustfmt'
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:29.4292288Z info: installing component 'cargo'
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:30.4905605Z info: installing component 'clippy'
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:31.0231171Z info: installing component 'rust-std' for 'wasm32-unknown-unknown'
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:32.4226153Z info: installing component 'rust-std'
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:34.3123933Z info: installing component 'rustc'
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:38.9450297Z info: installing component 'rustfmt'
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.2357170Z 
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.2455223Z   nightly-x86_64-unknown-linux-gnu installed - rustc 1.96.0-nightly (80282b130 2026-03-06)
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.2456060Z 
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.2527649Z ##[group]Run rustup default nightly
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.2527949Z [36;1mrustup default nightly[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.2579587Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.2580176Z env:
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.2580357Z   CARGO_TERM_COLOR: always
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.2580578Z   RUST_BACKTRACE: 1
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.2580780Z   CARGO_HOME: /home/runner/.cargo
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.2581007Z ##[endgroup]
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.2714335Z info: using existing install for 'nightly-x86_64-unknown-linux-gnu'
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.3012697Z info: default toolchain set to 'nightly-x86_64-unknown-linux-gnu'
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.3013211Z 
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.3104401Z   nightly-x86_64-unknown-linux-gnu unchanged - rustc 1.96.0-nightly (80282b130 2026-03-06)
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.3104837Z 
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.3158441Z ##[group]Run : create cachekey
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.3158710Z [36;1m: create cachekey[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.3159200Z [36;1mDATE=$(rustc +nightly --version --verbose | sed -ne 's/^commit-date: \(20[0-9][0-9]\)-\([01][0-9]\)-\([0-3][0-9]\)$/\1\2\3/p')[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.3159828Z [36;1mHASH=$(rustc +nightly --version --verbose | sed -ne 's/^commit-hash: //p')[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.3160551Z [36;1mecho "cachekey=$(echo $DATE$HASH | head -c12)" >> $GITHUB_OUTPUT[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.3212502Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.3212832Z env:
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.3213009Z   CARGO_TERM_COLOR: always
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.3213213Z   RUST_BACKTRACE: 1
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.3213460Z   CARGO_HOME: /home/runner/.cargo
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.3213675Z ##[endgroup]
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.3651343Z ##[group]Run : disable incremental compilation
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.3651687Z [36;1m: disable incremental compilation[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.3652286Z [36;1mif [ -z "${CARGO_INCREMENTAL+set}" ]; then[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.3652666Z [36;1m  echo CARGO_INCREMENTAL=0 >> $GITHUB_ENV[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.3652931Z [36;1mfi[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.3705823Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.3706154Z env:
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.3706323Z   CARGO_TERM_COLOR: always
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.3706549Z   RUST_BACKTRACE: 1
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.3706744Z   CARGO_HOME: /home/runner/.cargo
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.3706986Z ##[endgroup]
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.3832361Z ##[group]Run : enable colors in Cargo output
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.3832674Z [36;1m: enable colors in Cargo output[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.3832962Z [36;1mif [ -z "${CARGO_TERM_COLOR+set}" ]; then[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.3833270Z [36;1m  echo CARGO_TERM_COLOR=always >> $GITHUB_ENV[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.3833532Z [36;1mfi[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.3882467Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.3882788Z env:
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.3882958Z   CARGO_TERM_COLOR: always
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.3883159Z   RUST_BACKTRACE: 1
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.3883355Z   CARGO_HOME: /home/runner/.cargo
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.3883570Z   CARGO_INCREMENTAL: 0
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.3883756Z ##[endgroup]
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.4034255Z ##[group]Run : enable Cargo sparse registry
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.4034570Z [36;1m: enable Cargo sparse registry[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.4034928Z [36;1m# implemented in 1.66, stabilized in 1.68, made default in 1.70[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.4035625Z [36;1mif [ -z "${CARGO_REGISTRIES_CRATES_IO_PROTOCOL+set}" -o -f "/home/runner/work/_temp"/.implicit_cargo_registries_crates_io_protocol ]; then[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.4036337Z [36;1m  if rustc +nightly --version --verbose | grep -q '^release: 1\.6[89]\.'; then[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.4036886Z [36;1m    touch "/home/runner/work/_temp"/.implicit_cargo_registries_crates_io_protocol || true[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.4037394Z [36;1m    echo CARGO_REGISTRIES_CRATES_IO_PROTOCOL=sparse >> $GITHUB_ENV[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.4037870Z [36;1m  elif rustc +nightly --version --verbose | grep -q '^release: 1\.6[67]\.'; then[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.4038408Z [36;1m    touch "/home/runner/work/_temp"/.implicit_cargo_registries_crates_io_protocol || true[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.4038900Z [36;1m    echo CARGO_REGISTRIES_CRATES_IO_PROTOCOL=git >> $GITHUB_ENV[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.4039420Z [36;1m  fi[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.4039585Z [36;1mfi[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.4088465Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.4088785Z env:
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.4088959Z   CARGO_TERM_COLOR: always
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.4089162Z   RUST_BACKTRACE: 1
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.4089357Z   CARGO_HOME: /home/runner/.cargo
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.4089583Z   CARGO_INCREMENTAL: 0
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.4089771Z ##[endgroup]
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.4494479Z ##[group]Run : work around spurious network errors in curl 8.0
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.4494916Z [36;1m: work around spurious network errors in curl 8.0[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.4495451Z [36;1m# https://rust-lang.zulipchat.com/#narrow/stream/246057-t-cargo/topic/timeout.20investigation[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.4496064Z [36;1mif rustc +nightly --version --verbose | grep -q '^release: 1\.7[01]\.'; then[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.4496504Z [36;1m  echo CARGO_HTTP_MULTIPLEXING=false >> $GITHUB_ENV[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.4496785Z [36;1mfi[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.4549647Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.4549981Z env:
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.4550329Z   CARGO_TERM_COLOR: always
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.4550549Z   RUST_BACKTRACE: 1
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.4550744Z   CARGO_HOME: /home/runner/.cargo
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.4550970Z   CARGO_INCREMENTAL: 0
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.4551154Z ##[endgroup]
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.4798932Z ##[group]Run rustc +nightly --version --verbose
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.4799285Z [36;1mrustc +nightly --version --verbose[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.4850692Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.4851009Z env:
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.4851185Z   CARGO_TERM_COLOR: always
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.4851389Z   RUST_BACKTRACE: 1
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.4851589Z   CARGO_HOME: /home/runner/.cargo
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.4851818Z   CARGO_INCREMENTAL: 0
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.4852266Z ##[endgroup]
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.5047758Z rustc 1.96.0-nightly (80282b130 2026-03-06)
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.5048481Z binary: rustc
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.5048965Z commit-hash: 80282b130679a654eaa22f028a908c51be53d436
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.5049550Z commit-date: 2026-03-06
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.5050039Z host: x86_64-unknown-linux-gnu
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.5050495Z release: 1.96.0-nightly
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.5050920Z LLVM version: 22.1.0
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.5186260Z ##[group]Run Swatinem/rust-cache@v2
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.5186544Z with:
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.5186734Z   workspaces: rust -> target
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.5186971Z   cache-on-failure: true
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.5187180Z   prefix-key: v0-rust
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.5187390Z   add-job-id-key: true
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.5187616Z   add-rust-environment-hash-key: true
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.5187870Z   cache-targets: true
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.5188076Z   cache-all-crates: false
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.5188296Z   cache-workspace-crates: false
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.5188523Z   save-if: true
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.5188711Z   cache-provider: github
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.5188919Z   cache-bin: true
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.5189102Z   lookup-only: false
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.5189306Z env:
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.5189473Z   CARGO_TERM_COLOR: always
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.5189685Z   RUST_BACKTRACE: 1
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.5189886Z   CARGO_HOME: /home/runner/.cargo
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.5190119Z   CARGO_INCREMENTAL: 0
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.5190358Z ##[endgroup]
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.9669595Z ##[group]Cache Configuration
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.9669969Z Cache Provider:
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.9670146Z     github
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.9670318Z Workspaces:
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.9671456Z     /home/runner/work/Comparisons.SpacetimeDBVSDoublets/Comparisons.SpacetimeDBVSDoublets/rust
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.9672539Z Cache Paths:
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.9672881Z     /home/runner/.cargo/bin
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.9673283Z     /home/runner/.cargo/.crates.toml
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.9673629Z     /home/runner/.cargo/.crates2.json
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.9674010Z     /home/runner/.cargo/registry
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.9674234Z     /home/runner/.cargo/git
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.9674669Z     /home/runner/work/Comparisons.SpacetimeDBVSDoublets/Comparisons.SpacetimeDBVSDoublets/rust/target
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.9675430Z Restore Key:
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.9675614Z     v0-rust-test-Linux-x64-3d3b1465
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.9675903Z Cache Key:
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.9676194Z     v0-rust-test-Linux-x64-3d3b1465-4dc2b527
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.9676436Z .. Prefix:
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.9676608Z   - v0-rust-test-Linux-x64
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.9676833Z .. Environment considered:
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.9677229Z   - Rust Version: 1.96.0-nightly x86_64-unknown-linux-gnu (80282b130679a654eaa22f028a908c51be53d436)
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.9677645Z   - CARGO_HOME
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.9677824Z   - CARGO_INCREMENTAL
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.9678008Z   - CARGO_TERM_COLOR
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.9678177Z   - RUST_BACKTRACE
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.9678354Z .. Lockfiles considered:
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.9678797Z   - /home/runner/work/Comparisons.SpacetimeDBVSDoublets/Comparisons.SpacetimeDBVSDoublets/rust/Cargo.lock
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.9679764Z   - /home/runner/work/Comparisons.SpacetimeDBVSDoublets/Comparisons.SpacetimeDBVSDoublets/rust/Cargo.toml
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.9680578Z   - /home/runner/work/Comparisons.SpacetimeDBVSDoublets/Comparisons.SpacetimeDBVSDoublets/rust/rust-toolchain.toml
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.9681265Z ##[endgroup]
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.9681371Z 
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:39.9681450Z ... Restoring cache ...
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:40.0802756Z Cache hit for: v0-rust-test-Linux-x64-3d3b1465-4dc2b527
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:41.1765142Z Received 134217728 of 196180303 (68.4%), 127.6 MBs/sec
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:41.3877723Z Received 196180303 of 196180303 (100.0%), 154.1 MBs/sec
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:41.3879589Z Cache Size: ~187 MB (196180303 B)
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:41.3926333Z [command]/usr/bin/tar -xf /home/runner/work/_temp/cebdcd21-4026-4b88-b808-748e692a5307/cache.tzst -P -C /home/runner/work/Comparisons.SpacetimeDBVSDoublets/Comparisons.SpacetimeDBVSDoublets --use-compress-program unzstd
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:42.7334748Z Cache restored successfully
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:42.8362228Z Restored from cache key "v0-rust-test-Linux-x64-3d3b1465-4dc2b527" full match: true.
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:42.8495952Z ##[group]Run cargo fmt --all -- --check
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:42.8496279Z [36;1mcargo fmt --all -- --check[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:42.8545738Z shell: /usr/bin/bash -e {0}
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:42.8546271Z env:
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:42.8546479Z   CARGO_TERM_COLOR: always
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:42.8546718Z   RUST_BACKTRACE: 1
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:42.8546943Z   CARGO_HOME: /home/runner/.cargo
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:42.8547201Z   CARGO_INCREMENTAL: 0
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:42.8547414Z   CACHE_ON_FAILURE: true
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:42.8547640Z ##[endgroup]
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:43.0427837Z Warning: the `version` option is deprecated. Use `style_edition="2024"` instead.
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:43.0473385Z Warning: the `version` option is deprecated. Use `style_edition="2024"` instead.
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:43.0476905Z Warning: the `version` option is deprecated. Use `style_edition="2024"` instead.
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:43.0481217Z Warning: the `version` option is deprecated. Use `style_edition="2024"` instead.
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:43.0485625Z Warning: the `version` option is deprecated. Use `style_edition="2024"` instead.
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:43.0672519Z Warning: the `version` option is deprecated. Use `style_edition="2024"` instead.
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:43.0732620Z Warning: the `version` option is deprecated. Use `style_edition="2024"` instead.
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:43.0741550Z Warning: the `version` option is deprecated. Use `style_edition="2024"` instead.
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:43.0745733Z Warning: the `version` option is deprecated. Use `style_edition="2024"` instead.
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:43.0754348Z Warning: the `version` option is deprecated. Use `style_edition="2024"` instead.
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:43.1349577Z ##[group]Run cargo clippy --all-targets
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:43.1349907Z [36;1mcargo clippy --all-targets[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:43.1397998Z shell: /usr/bin/bash -e {0}
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:43.1398245Z env:
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:43.1398435Z   CARGO_TERM_COLOR: always
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:43.1398675Z   RUST_BACKTRACE: 1
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:43.1399073Z   CARGO_HOME: /home/runner/.cargo
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:43.1399342Z   CARGO_INCREMENTAL: 0
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:43.1399570Z   CACHE_ON_FAILURE: true
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:43.1399787Z ##[endgroup]
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:43.3544065Z [1m[92m    Updating[0m crates.io index
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:44.4125803Z [1m[92m    Checking[0m platform-data v0.1.0-beta.3 (/home/runner/work/Comparisons.SpacetimeDBVSDoublets/Comparisons.SpacetimeDBVSDoublets/rust/doublets-patched/dev-deps/data-rs)
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:44.4134076Z [1m[92m    Checking[0m platform-mem v0.1.0-pre+beta.2 (/home/runner/work/Comparisons.SpacetimeDBVSDoublets/Comparisons.SpacetimeDBVSDoublets/rust/doublets-patched/dev-deps/mem-rs)
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:44.4440139Z [1m[33mwarning[0m[1m: the feature `nonnull_slice_from_raw_parts` has been stable since 1.70.0 and no longer requires an attribute to enable[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:44.4443291Z  [1m[94m--> [0mdoublets-patched/dev-deps/mem-rs/src/lib.rs:1:12
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:44.4444070Z   [1m[94m|[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:44.4444897Z [1m[94m1[0m [1m[94m|[0m #![feature(nonnull_slice_from_raw_parts)]
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:44.4445940Z   [1m[94m|[0m            [1m[33m^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:44.4446930Z   [1m[94m|[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:44.4447700Z   [1m[94m= [0m[1mnote[0m: `#[warn(stable_features)]` on by default
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:44.4448207Z 
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:44.4818096Z [1m[33mwarning[0m[1m: feature `nonnull_slice_from_raw_parts` is declared but not used[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:44.4820743Z  [1m[94m--> [0mdoublets-patched/dev-deps/mem-rs/src/lib.rs:1:12
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:44.4898170Z   [1m[94m|[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:44.4898810Z [1m[94m1[0m [1m[94m|[0m #![feature(nonnull_slice_from_raw_parts)]
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:44.4899561Z   [1m[94m|[0m            [1m[33m^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:44.4900089Z   [1m[94m|[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:44.4900784Z   [1m[94m= [0m[1mnote[0m: `#[warn(unused_features)]` (part of `#[warn(unused)]`) on by default
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:44.4901355Z 
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:44.4901714Z [1m[33mwarning[0m: `platform-mem` (lib) generated 2 warnings
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:44.5479869Z [1m[92m    Checking[0m platform-trees v0.1.0-beta.1 (/home/runner/work/Comparisons.SpacetimeDBVSDoublets/Comparisons.SpacetimeDBVSDoublets/rust/doublets-patched/dev-deps/trees-rs)
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:44.6431573Z [1m[92m    Checking[0m doublets v0.1.0-pre+beta.15 (/home/runner/work/Comparisons.SpacetimeDBVSDoublets/Comparisons.SpacetimeDBVSDoublets/rust/doublets-patched/doublets)
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:44.6882787Z [1m[33mwarning[0m[1m: unused import: `mem::MaybeUninit`[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:44.6883496Z  [1m[94m--> [0mdoublets-patched/doublets/src/data/handler.rs:3:32
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:44.6883927Z   [1m[94m|[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:44.6884447Z [1m[94m3[0m [1m[94m|[0m use std::{marker::PhantomData, mem::MaybeUninit, ops::Try};
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:44.6885034Z   [1m[94m|[0m                                [1m[33m^^^^^^^^^^^^^^^^[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:44.6885412Z   [1m[94m|[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:44.6885902Z   [1m[94m= [0m[1mnote[0m: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:44.6886300Z 
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:44.6886557Z [1m[33mwarning[0m[1m: unused import: `bumpalo::Bump`[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:44.6887080Z  [1m[94m--> [0mdoublets-patched/doublets/src/data/traits.rs:1:5
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:44.6887475Z   [1m[94m|[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:44.6887784Z [1m[94m1[0m [1m[94m|[0m use bumpalo::Bump;
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:44.6888163Z   [1m[94m|[0m     [1m[33m^^^^^^^^^^^^^[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:44.6888377Z 
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:44.6979272Z [1m[33mwarning[0m[1m: the feature `nonnull_slice_from_raw_parts` has been stable since 1.70.0 and no longer requires an attribute to enable[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:44.6981015Z  [1m[94m--> [0mdoublets-patched/doublets/src/lib.rs:4:12
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:44.6981536Z   [1m[94m|[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:44.6982183Z [1m[94m4[0m [1m[94m|[0m #![feature(nonnull_slice_from_raw_parts)]
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:44.6982806Z   [1m[94m|[0m            [1m[33m^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:44.6983481Z   [1m[94m|[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:44.6983972Z   [1m[94m= [0m[1mnote[0m: `#[warn(stable_features)]` on by default
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:44.6984368Z 
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.0554393Z [1m[33mwarning[0m[1m: unused import: `error::Error`[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.0555275Z  [1m[94m--> [0mdoublets-patched/doublets/src/mem/split/store.rs:1:26
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.0555937Z   [1m[94m|[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.0556943Z [1m[94m1[0m [1m[94m|[0m use std::{cmp::Ordering, error::Error, mem::transmute, ptr::NonNull};
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.0558030Z   [1m[94m|[0m                          [1m[33m^^^^^^^^^^^^[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.0558571Z 
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.0559090Z [1m[33mwarning[0m[1m: unused import: `error::Error`[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.0560090Z   [1m[94m--> [0mdoublets-patched/doublets/src/mem/unit/store.rs:17:31
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.0560919Z    [1m[94m|[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.0562288Z [1m[94m17[0m [1m[94m|[0m use std::{cmp, cmp::Ordering, error::Error, mem::transmute, ptr::NonNull};
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.0563646Z    [1m[94m|[0m                               [1m[33m^^^^^^^^^^^^[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.0564239Z 
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.0564626Z [1m[33mwarning[0m[1m: unused import: `LinksTree`[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.0565658Z   [1m[94m--> [0mdoublets-patched/doublets/src/mem/split/store.rs:10:22
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.0566533Z    [1m[94m|[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.0567263Z [1m[94m10[0m [1m[94m|[0m         LinksHeader, LinksTree, SplitList, SplitTree, SplitUpdateMem,
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.0568167Z    [1m[94m|[0m                      [1m[33m^^^^^^^^^[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.0568561Z 
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.0569215Z [1m[33mwarning[0m[1m: unused import: `trees::RelativeCircularLinkedList`[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.0570219Z   [1m[94m--> [0mdoublets-patched/doublets/src/mem/split/store.rs:16:5
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.0570612Z    [1m[94m|[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.0570979Z [1m[94m16[0m [1m[94m|[0m use trees::RelativeCircularLinkedList;
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.0571410Z    [1m[94m|[0m     [1m[33m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.0571623Z 
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.1469763Z [1m[33mwarning[0m[1m: fields `break` and `continue` are never read[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.1471205Z   [1m[94m--> [0mdoublets-patched/doublets/src/mem/split/generic/external_recursion_less_base.rs:17:16
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.1472396Z    [1m[94m|[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.1473576Z [1m[94m14[0m [1m[94m|[0m pub struct ExternalRecursionlessSizeBalancedTreeBase<T: LinkType> {
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.1475167Z    [1m[94m|[0m            [1m[94m-----------------------------------------[0m [1m[94mfields in this struct[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.1475881Z [1m[94m...[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.1476313Z [1m[94m17[0m [1m[94m|[0m     pub(crate) r#break: T,
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.1476876Z    [1m[94m|[0m                [1m[33m^^^^^^^[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.1477485Z [1m[94m18[0m [1m[94m|[0m     pub(crate) r#continue: T,
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.1478098Z    [1m[94m|[0m                [1m[33m^^^^^^^^^^[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.1478535Z    [1m[94m|[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.1479121Z    [1m[94m= [0m[1mnote[0m: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.1479604Z 
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.1479968Z [1m[33mwarning[0m[1m: fields `break` and `continue` are never read[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.1480967Z   [1m[94m--> [0mdoublets-patched/doublets/src/mem/split/generic/internal_recursion_less_base.rs:16:16
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.1481735Z    [1m[94m|[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.1483017Z [1m[94m13[0m [1m[94m|[0m pub(crate) struct InternalRecursionlessSizeBalancedTreeBase<T: LinkType> {
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.1484152Z    [1m[94m|[0m                   [1m[94m-----------------------------------------[0m [1m[94mfields in this struct[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.1484849Z [1m[94m...[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.1485261Z [1m[94m16[0m [1m[94m|[0m     pub(crate) r#break: T,
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.1485935Z    [1m[94m|[0m                [1m[33m^^^^^^^[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.1486509Z [1m[94m17[0m [1m[94m|[0m     pub(crate) r#continue: T,
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.1487071Z    [1m[94m|[0m                [1m[33m^^^^^^^^^^[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.1487370Z 
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.1487714Z [1m[33mwarning[0m[1m: method `get_mut_data_part` is never used[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.1488537Z   [1m[94m--> [0mdoublets-patched/doublets/src/mem/split/generic/internal_recursion_less_base.rs:44:8
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.1489057Z    [1m[94m|[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.1489611Z [1m[94m35[0m [1m[94m|[0m pub(crate) trait InternalRecursionlessSizeBalancedTreeBaseAbstract<T: LinkType>:
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.1490456Z    [1m[94m|[0m                  [1m[94m-------------------------------------------------[0m [1m[94mmethod in this trait[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.1490949Z [1m[94m...[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.1491382Z [1m[94m44[0m [1m[94m|[0m     fn get_mut_data_part(&mut self, link: T) -> &mut DataPart<T>;
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.1491892Z    [1m[94m|[0m        [1m[33m^^^^^^^^^^^^^^^^^[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.1492234Z 
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.1492487Z [1m[33mwarning[0m[1m: fields `continue` and `break` are never read[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.1493173Z   [1m[94m--> [0mdoublets-patched/doublets/src/mem/split/generic/internal_sources_linked_list.rs:19:5
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.1493702Z    [1m[94m|[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.1494086Z [1m[94m16[0m [1m[94m|[0m pub struct InternalSourcesLinkedList<T: LinkType> {
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.1494684Z    [1m[94m|[0m            [1m[94m-------------------------[0m [1m[94mfields in this struct[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.1495114Z [1m[94m...[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.1495374Z [1m[94m19[0m [1m[94m|[0m     r#continue: T,
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.1495713Z    [1m[94m|[0m     [1m[33m^^^^^^^^^^[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.1496035Z [1m[94m20[0m [1m[94m|[0m     r#break: T,
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.1496354Z    [1m[94m|[0m     [1m[33m^^^^^^^[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.1496535Z 
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.1496927Z [1m[33mwarning[0m[1m: methods `get_header`, `get_mut_header`, and `get_mut_data_part` are never used[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.1497714Z   [1m[94m--> [0mdoublets-patched/doublets/src/mem/split/generic/internal_sources_linked_list.rs:37:8
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.1498233Z    [1m[94m|[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.1498559Z [1m[94m23[0m [1m[94m|[0m impl<T: LinkType> InternalSourcesLinkedList<T> {
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.1499172Z    [1m[94m|[0m [1m[94m----------------------------------------------[0m [1m[94mmethods in this implementation[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.1499612Z [1m[94m...[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.1499923Z [1m[94m37[0m [1m[94m|[0m     fn get_header(&self) -> &LinksHeader<T> {
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.1500296Z    [1m[94m|[0m        [1m[33m^^^^^^^^^^[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.1500555Z [1m[94m...[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.1500894Z [1m[94m41[0m [1m[94m|[0m     fn get_mut_header(&mut self) -> &mut LinksHeader<T> {
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.1501319Z    [1m[94m|[0m        [1m[33m^^^^^^^^^^^^^^[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.1501598Z [1m[94m...[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.1502067Z [1m[94m49[0m [1m[94m|[0m     fn get_mut_data_part(&mut self, link: T) -> &mut DataPart<T> {
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.1502518Z    [1m[94m|[0m        [1m[33m^^^^^^^^^^^^^^^^^[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.1502703Z 
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.1502908Z [1m[33mwarning[0m[1m: method `get_link_part` is never used[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.1503367Z    [1m[94m--> [0mdoublets-patched/doublets/src/mem/unit/store.rs:131:8
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.1503735Z     [1m[94m|[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.1504391Z [1m[94m 36[0m [1m[94m|[0m [1m[94m/[0m impl<T: LinkType, M: RawMem<LinkPart<T>>, TS: UnitTree<T>, TT: UnitTree<T>, TU: UnitList<T>>
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.1505018Z [1m[94m 37[0m [1m[94m|[0m [1m[94m|[0m     Store<T, M, TS, TT, TU>
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.1505542Z     [1m[94m|[0m [1m[94m|___________________________-[0m [1m[94mmethod in this implementation[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.1505936Z [1m[94m...[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.1506407Z [1m[94m131[0m [1m[94m|[0m       fn get_link_part(&self, index: T) -> &LinkPart<T> {
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.1506830Z     [1m[94m|[0m          [1m[33m^^^^^^^^^^^^^[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.1507024Z 
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.1873578Z [1m[33mwarning[0m[1m: feature `associated_type_defaults` is declared but not used[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.1875145Z  [1m[94m--> [0mdoublets-patched/doublets/src/lib.rs:5:12
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.1875728Z   [1m[94m|[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.1876258Z [1m[94m5[0m [1m[94m|[0m #![feature(associated_type_defaults)]
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.1876983Z   [1m[94m|[0m            [1m[33m^^^^^^^^^^^^^^^^^^^^^^^^[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.1877535Z   [1m[94m|[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.1878245Z   [1m[94m= [0m[1mnote[0m: `#[warn(unused_features)]` (part of `#[warn(unused)]`) on by default
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.1878760Z 
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.1879183Z [1m[33mwarning[0m[1m: feature `nonnull_slice_from_raw_parts` is declared but not used[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.1879927Z  [1m[94m--> [0mdoublets-patched/doublets/src/lib.rs:4:12
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.1880375Z   [1m[94m|[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.1880800Z [1m[94m4[0m [1m[94m|[0m #![feature(nonnull_slice_from_raw_parts)]
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.1881384Z   [1m[94m|[0m            [1m[33m^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.1881695Z 
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.1882296Z [1m[33mwarning[0m[1m: feature `allocator_api` is declared but not used[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.1882971Z  [1m[94m--> [0mdoublets-patched/doublets/src/lib.rs:7:12
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.1883408Z   [1m[94m|[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.1883781Z [1m[94m7[0m [1m[94m|[0m #![feature(allocator_api)]
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.1884282Z   [1m[94m|[0m            [1m[33m^^^^^^^^^^^^^[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.1884553Z 
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.1884987Z [1m[33mwarning[0m[1m: feature `maybe_uninit_array_assume_init` is declared but not used[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.1885721Z  [1m[94m--> [0mdoublets-patched/doublets/src/lib.rs:8:12
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.1886160Z   [1m[94m|[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.1886599Z [1m[94m8[0m [1m[94m|[0m #![feature(maybe_uninit_array_assume_init)]
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.1887189Z   [1m[94m|[0m            [1m[33m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.1887502Z 
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.1961421Z [1m[33mwarning[0m: `doublets` (lib) generated 17 warnings (run `cargo clippy --fix --lib -p doublets -- ` to apply 2 suggestions)
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.1964397Z [1m[92m    Checking[0m spacetimedb-vs-doublets v0.1.0 (/home/runner/work/Comparisons.SpacetimeDBVSDoublets/Comparisons.SpacetimeDBVSDoublets/rust)
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.4623391Z [1m[33mwarning[0m[1m: hiding a lifetime that's elided elsewhere is confusing[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.4625240Z   [1m[94m--> [0msrc/benched/mod.rs:29:13
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.4625802Z    [1m[94m|[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.4626387Z [1m[94m29[0m [1m[94m|[0m     fn fork(&mut self) -> Fork<Self>;
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.4627400Z    [1m[94m|[0m             [1m[33m^^^^^^^^^[0m     [1m[33m^^^^^^^^^^[0m [1m[33mthe same lifetime is hidden here[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.4628167Z    [1m[94m|[0m             [1m[33m|[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.4628748Z    [1m[94m|[0m             [1m[33mthe lifetime is elided here[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.4629247Z    [1m[94m|[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.4630067Z    [1m[94m= [0m[1mhelp[0m: the same lifetime is referred to in inconsistent ways, making the signature confusing
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.4631186Z    [1m[94m= [0m[1mnote[0m: `#[warn(mismatched_lifetime_syntaxes)]` on by default
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.4631894Z [1m[96mhelp[0m: use `'_` for type paths
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.4632621Z    [1m[94m|[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.4633495Z [1m[94m29[0m [1m[94m| [0m    fn fork(&mut self) -> Fork<[92m'_, [0mSelf>;
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.4634290Z    [1m[94m|[0m                                [92m+++[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.4634680Z 
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.4635150Z [1m[33mwarning[0m[1m: hiding a lifetime that's elided elsewhere is confusing[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.4636214Z   [1m[94m--> [0msrc/benched/doublets_benched.rs:27:13
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.4636696Z    [1m[94m|[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.4637174Z [1m[94m27[0m [1m[94m|[0m     fn fork(&mut self) -> Fork<Self> {
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.4638050Z    [1m[94m|[0m             [1m[33m^^^^^^^^^[0m     [1m[33m^^^^^^^^^^[0m [1m[33mthe same lifetime is hidden here[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.4638778Z    [1m[94m|[0m             [1m[33m|[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.4639360Z    [1m[94m|[0m             [1m[33mthe lifetime is elided here[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.4639883Z    [1m[94m|[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.4640705Z    [1m[94m= [0m[1mhelp[0m: the same lifetime is referred to in inconsistent ways, making the signature confusing
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.4641638Z [1m[96mhelp[0m: use `'_` for type paths
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.4642416Z    [1m[94m|[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.4642959Z [1m[94m27[0m [1m[94m| [0m    fn fork(&mut self) -> Fork<[92m'_, [0mSelf> {
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.4643659Z    [1m[94m|[0m                                [92m+++[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.4644043Z 
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.4644519Z [1m[33mwarning[0m[1m: hiding a lifetime that's elided elsewhere is confusing[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.4645306Z   [1m[94m--> [0msrc/benched/doublets_benched.rs:64:13
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.4645847Z    [1m[94m|[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.4646331Z [1m[94m64[0m [1m[94m|[0m     fn fork(&mut self) -> Fork<Self> {
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.4647209Z    [1m[94m|[0m             [1m[33m^^^^^^^^^[0m     [1m[33m^^^^^^^^^^[0m [1m[33mthe same lifetime is hidden here[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.4647947Z    [1m[94m|[0m             [1m[33m|[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.4648547Z    [1m[94m|[0m             [1m[33mthe lifetime is elided here[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.4649053Z    [1m[94m|[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.4649851Z    [1m[94m= [0m[1mhelp[0m: the same lifetime is referred to in inconsistent ways, making the signature confusing
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.4650785Z [1m[96mhelp[0m: use `'_` for type paths
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.4651253Z    [1m[94m|[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.4651805Z [1m[94m64[0m [1m[94m| [0m    fn fork(&mut self) -> Fork<[92m'_, [0mSelf> {
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.4652771Z    [1m[94m|[0m                                [92m+++[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.4653105Z 
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.4653535Z [1m[33mwarning[0m[1m: hiding a lifetime that's elided elsewhere is confusing[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.4654313Z   [1m[94m--> [0msrc/benched/spacetimedb_benched.rs:23:13
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.4654829Z    [1m[94m|[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.4655330Z [1m[94m23[0m [1m[94m|[0m     fn fork(&mut self) -> Fork<Self> {
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.4656204Z    [1m[94m|[0m             [1m[33m^^^^^^^^^[0m     [1m[33m^^^^^^^^^^[0m [1m[33mthe same lifetime is hidden here[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.4656902Z    [1m[94m|[0m             [1m[33m|[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.4657476Z    [1m[94m|[0m             [1m[33mthe lifetime is elided here[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.4657987Z    [1m[94m|[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.4658774Z    [1m[94m= [0m[1mhelp[0m: the same lifetime is referred to in inconsistent ways, making the signature confusing
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.4659647Z [1m[96mhelp[0m: use `'_` for type paths
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.4660085Z    [1m[94m|[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.4660612Z [1m[94m23[0m [1m[94m| [0m    fn fork(&mut self) -> Fork<[92m'_, [0mSelf> {
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.4661301Z    [1m[94m|[0m                                [92m+++[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.4661642Z 
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.4825952Z [1m[33mwarning[0m: `spacetimedb-vs-doublets` (lib) generated 4 warnings (run `cargo clippy --fix --lib -p spacetimedb-vs-doublets -- ` to apply 4 suggestions)
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.5049070Z [1m[33mwarning[0m: `spacetimedb-vs-doublets` (lib test) generated 4 warnings (4 duplicates)
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.6083501Z [1m[33mwarning[0m[1m: feature `allocator_api` is declared but not used[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.6084272Z   [1m[94m--> [0mbenches/bench.rs:23:12
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.6084711Z    [1m[94m|[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.6085526Z [1m[94m23[0m [1m[94m|[0m #![feature(allocator_api)]
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.6086095Z    [1m[94m|[0m            [1m[33m^^^^^^^^^^^^^[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.6086588Z    [1m[94m|[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.6087314Z    [1m[94m= [0m[1mnote[0m: `#[warn(unused_features)]` (part of `#[warn(unused)]`) on by default
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.6087894Z 
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.6182323Z [1m[33mwarning[0m: `spacetimedb-vs-doublets` (bench "bench") generated 1 warning
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.6183350Z [1m[92m    Finished[0m `dev` profile [unoptimized + debuginfo] target(s) in 2.37s
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.6482121Z ##[group]Run curl -sSf https://install.spacetimedb.com | sh -s -- -y
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.6482691Z [36;1mcurl -sSf https://install.spacetimedb.com | sh -s -- -y[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.6483091Z [36;1mecho "$HOME/.local/bin" >> $GITHUB_PATH[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.6531058Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.6531397Z env:
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.6531570Z   CARGO_TERM_COLOR: always
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.6531802Z   RUST_BACKTRACE: 1
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.6532128Z   CARGO_HOME: /home/runner/.cargo
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.6532363Z   CARGO_INCREMENTAL: 0
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.6532570Z   CACHE_ON_FAILURE: true
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.6532779Z ##[endgroup]
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:45.9372715Z Downloading installer...
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:46.2340457Z The SpacetimeDB command line tool will now be installed:
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:46.2341234Z 	CLI configuration directory: /home/runner/.config/spacetime/
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:46.2342230Z 	`spacetime` binary: /home/runner/.local/bin/spacetime
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:46.2343085Z 	directory for installed SpacetimeDB versions: /home/runner/.local/share/spacetime/bin
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:46.2343981Z 	database directory: /home/runner/.local/share/spacetime/data
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:46.2432785Z Downloading latest version...
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:47.3911452Z The `spacetime` command has been installed as /home/runner/.local/bin/spacetime
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:47.3912360Z 
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:47.3912816Z The install process is complete; check out our quickstart guide to get started!
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:47.3913720Z 	<https://spacetimedb.com/docs/getting-started>
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:47.4051820Z ##[group]Run cargo build --release --target wasm32-unknown-unknown
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:47.4052563Z [36;1mcargo build --release --target wasm32-unknown-unknown[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:47.4104681Z shell: /usr/bin/bash -e {0}
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:47.4104918Z env:
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:47.4105098Z   CARGO_TERM_COLOR: always
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:47.4105325Z   RUST_BACKTRACE: 1
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:47.4105529Z   CARGO_HOME: /home/runner/.cargo
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:47.4105774Z   CARGO_INCREMENTAL: 0
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:47.4105986Z   CACHE_ON_FAILURE: true
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:47.4106191Z ##[endgroup]
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:47.4989205Z [1m[92m    Updating[0m crates.io index
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:48.4961663Z [1m[92m     Locking[0m 105 packages to latest compatible versions
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:48.5055847Z [1m[92m      Adding[0m generic-array v0.14.7 [1m[33m(available: v0.14.9)[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:48.5560569Z [1m[92m Downloading[0m crates ...
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:48.5971113Z [1m[92m  Downloaded[0m quote v1.0.45
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:48.6173382Z [1m[92m  Downloaded[0m rand_chacha v0.3.1
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:48.6221382Z [1m[92m  Downloaded[0m spacetimedb v2.0.3
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:48.6263236Z [1m[92m  Downloaded[0m zerocopy v0.8.40
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:48.6365588Z [1m[92m  Downloaded[0m rand v0.8.5
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:48.7048349Z [1m[92m  Downloaded[0m rand_core v0.6.4
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:48.7111287Z [1m[92m  Downloaded[0m uuid v1.22.0
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:48.7299277Z [1m[92m  Downloaded[0m scoped-tls v1.0.1
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:48.7393850Z [1m[92m  Downloaded[0m getrandom v0.4.2
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:48.7655378Z [1m[92m  Downloaded[0m getrandom v0.2.17
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:48.7824362Z [1m[92m  Downloaded[0m spacetimedb-bindings-sys v2.0.3
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:49.1663252Z [1m[92m   Compiling[0m proc-macro2 v1.0.106
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:49.1664102Z [1m[92m   Compiling[0m unicode-ident v1.0.24
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:49.1665162Z [1m[92m   Compiling[0m quote v1.0.45
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:49.1665872Z [1m[92m   Compiling[0m version_check v0.9.5
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:49.2323537Z [1m[92m   Compiling[0m typenum v1.19.0
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:49.3639685Z [1m[92m   Compiling[0m generic-array v0.14.7
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:49.7762584Z [1m[92m   Compiling[0m autocfg v1.5.0
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:49.8087034Z [1m[92m   Compiling[0m heck v0.5.0
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:49.9623479Z [1m[92m   Compiling[0m serde_core v1.0.228
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:50.0944795Z [1m[92m   Compiling[0m num-traits v0.2.19
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:50.1411637Z [1m[92m   Compiling[0m cfg-if v1.0.4
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:50.1727372Z [1m[92m   Compiling[0m rustversion v1.0.22
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:50.3996582Z [1m[92m   Compiling[0m syn v2.0.117
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:51.0368602Z [1m[92m   Compiling[0m either v1.15.0
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:51.2036187Z [1m[92m   Compiling[0m shlex v1.3.0
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:51.3218531Z [1m[92m   Compiling[0m serde v1.0.228
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:51.4600523Z [1m[92m   Compiling[0m itoa v1.0.17
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:51.4977134Z [1m[92m   Compiling[0m find-msvc-tools v0.1.9
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:51.6528224Z [1m[92m   Compiling[0m cc v1.2.56
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:51.6955269Z [1m[92m   Compiling[0m itertools v0.12.1
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:53.0103753Z [1m[92m   Compiling[0m crypto-common v0.1.7
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:53.0697941Z [1m[92m   Compiling[0m block-buffer v0.10.4
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:53.3783710Z [1m[92m   Compiling[0m bitflags v2.11.0
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:53.5751818Z [1m[92m   Compiling[0m thiserror v1.0.69
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:53.7235978Z [1m[92m   Compiling[0m nohash-hasher v0.2.0
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:53.7711810Z [1m[92m   Compiling[0m zerocopy v0.8.40
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:53.8475520Z [1m[92m   Compiling[0m anyhow v1.0.102
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:54.0503729Z [1m[92m   Compiling[0m castaway v0.2.4
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:54.0531891Z [1m[92m   Compiling[0m digest v0.10.7
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:54.1093943Z [1m[92m   Compiling[0m blake3 v1.8.3
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:54.2872920Z [1m[92m   Compiling[0m approx v0.3.2
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:54.3360793Z [1m[92m   Compiling[0m arrayvec v0.7.6
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:54.3718829Z [1m[92m   Compiling[0m ryu v1.0.23
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:54.3835818Z [1m[92m   Compiling[0m keccak v0.1.6
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:54.5318284Z [1m[92m   Compiling[0m heck v0.4.1
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:54.6226045Z [1m[92m   Compiling[0m humantime v2.3.0
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:54.6466717Z [1m[92m   Compiling[0m convert_case v0.4.0
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:54.6609550Z [1m[92m   Compiling[0m bytes v1.11.1
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:54.8625569Z [1m[92m   Compiling[0m sha3 v0.10.8
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:54.9393313Z [1m[92m   Compiling[0m lean_string v0.5.1
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:54.9724195Z [1m[92m   Compiling[0m enum-as-inner v0.6.1
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:55.1873872Z [1m[92m   Compiling[0m thiserror-impl v1.0.69
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:55.2676699Z [1m[92m   Compiling[0m spacetimedb-primitives v2.0.3
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:55.5423378Z [1m[92m   Compiling[0m derive_more v0.99.20
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:55.8048269Z [1m[92m   Compiling[0m spacetimedb-bindings-macro v2.0.3
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:56.1943707Z [1m[92m   Compiling[0m decorum v0.3.1
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:56.2944351Z [1m[92m   Compiling[0m ethnum v1.5.2
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:57.4575894Z [1m[92m   Compiling[0m chrono v0.4.44
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:57.7424554Z [1m[92m   Compiling[0m getrandom v0.2.17
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:57.8266248Z [1m[92m   Compiling[0m uuid v1.22.0
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:57.9543760Z [1m[92m   Compiling[0m bytemuck v1.25.0
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:58.1234156Z [1m[92m   Compiling[0m zmij v1.0.21
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:58.2089519Z [1m[92m   Compiling[0m smallvec v1.15.1
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:58.2514449Z [1m[92m   Compiling[0m arrayref v0.3.9
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:58.2853693Z [1m[92m   Compiling[0m second-stack v0.3.5
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:58.3727906Z [1m[92m   Compiling[0m constant_time_eq v0.4.2
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:58.3983374Z [1m[92m   Compiling[0m hex v0.4.3
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:58.4570832Z [1m[92m   Compiling[0m spacetimedb-lib v2.0.3
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:58.6522543Z [1m[92m   Compiling[0m spacetimedb-sats v2.0.3
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:59.2692698Z [1m[92m   Compiling[0m rand_core v0.6.4
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:59.4336300Z [1m[92m   Compiling[0m serde_json v1.0.149
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:59.5202816Z [1m[92m   Compiling[0m log v0.4.29
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:41:59.9742438Z [1m[92m   Compiling[0m memchr v2.8.0
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:00.0883085Z [1m[92m   Compiling[0m spacetimedb-bindings-sys v2.0.3
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:00.2149434Z [1m[92m   Compiling[0m http v1.4.0
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:01.1809804Z [1m[92m   Compiling[0m ppv-lite86 v0.2.21
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:01.4020535Z [1m[92m   Compiling[0m rand_chacha v0.3.1
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:02.9664447Z [1m[92m   Compiling[0m rand v0.8.5
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:03.8692229Z [1m[92m   Compiling[0m scoped-tls v1.0.1
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:04.7517588Z [1m[92m   Compiling[0m spacetimedb-query-builder v2.0.3
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:04.9012418Z [1m[92m   Compiling[0m spacetimedb v2.0.3
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:07.6656042Z [1m[92m   Compiling[0m spacetime-module v0.1.0 (/home/runner/work/Comparisons.SpacetimeDBVSDoublets/Comparisons.SpacetimeDBVSDoublets/rust/spacetime-module)
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:08.1564148Z [1m[92m    Finished[0m `release` profile [optimized] target(s) in 20.69s
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:08.1856112Z ##[group]Run spacetime start &
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:08.1856423Z [36;1mspacetime start &[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:08.1856721Z [36;1mecho "Waiting for SpacetimeDB server to be ready..."[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:08.1857042Z [36;1mfor i in $(seq 1 30); do[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:08.1857364Z [36;1m  if curl -sf http://localhost:3000/ > /dev/null 2>&1; then[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:08.1857742Z [36;1m    echo "SpacetimeDB server is ready"[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:08.1858000Z [36;1m    break[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:08.1858180Z [36;1m  fi[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:08.1858346Z [36;1m  sleep 1[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:08.1858517Z [36;1mdone[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:08.1906915Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:08.1907244Z env:
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:08.1907425Z   CARGO_TERM_COLOR: always
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:08.1907664Z   RUST_BACKTRACE: 1
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:08.1907862Z   CARGO_HOME: /home/runner/.cargo
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:08.1908110Z   CARGO_INCREMENTAL: 0
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:08.1908451Z   CACHE_ON_FAILURE: true
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:08.1908668Z ##[endgroup]
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:08.1978390Z Waiting for SpacetimeDB server to be ready...
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:08.2030772Z Saving config to /home/runner/.config/spacetime/cli.toml.
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:08.2114454Z 
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:08.2124091Z [1;33mwarning[0m[1m:[0m [1msome trace filter directives would enable traces that are disabled statically[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:08.2125496Z ┌───────────────────────────────────────────────────────────────────────────────────────────────────────┐
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:08.2127496Z  [1;38;5;21m|[0m `spacetimedb=debug` would enable the DEBUG level for the `spacetimedb` target
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:08.2128499Z │                                                                                                       │
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:08.2132607Z  [1;38;5;21m|[0m `spacetimedb_client_api=debug` would enable the DEBUG level for the `spacetimedb_client_api` target
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:08.2133845Z │                                                                                                       │
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:08.2136192Z  [1;38;5;21m|[0m `spacetimedb_lib=debug` would enable the DEBUG level for the `spacetimedb_lib` target
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:08.2137217Z │                                                                              ⢀⠔⠁                      │
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:08.2138781Z  [1;38;5;21m|[0m `spacetimedb_standalone=debug` would enable the DEBUG level for the `spacetimedb_standalone` target
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:08.2139889Z │                                                                            ⣠⡞⠁                        │
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:08.2148667Z  [1;38;5;21m|[0m `spacetimedb_commitlog=info` would enable the INFO level for the `spacetimedb_commitlog` target
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:08.2149878Z │                                              ⣀⣀⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣀⣀⣀⣀⣀⣀⣀⣤⣤⡴⠒    ⢀⣠⡾⠋                          │
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:08.2151519Z  [1;38;5;21m|[0m `spacetimedb_durability=info` would enable the INFO level for the `spacetimedb_durability` target
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:08.2153241Z  [1;38;5;21m|[0m `axum::rejection=trace` would enable the TRACE level for the `axum::rejection` target
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:08.2154205Z  [1;38;5;21m=[0m [1mnote:[0m the static max level is `off`
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:08.2155163Z  [1;38;5;21m=[0m [1mhelp:[0m to enable logging, remove the `max_level_off` feature from the `tracing` crate
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:08.2156906Z │                                         ⢀⣤⣶⣾88888888888888888888⠿⠋    ⢀⣴8⡟⠁                           │
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:08.2158100Z │                                      ⢀⣤⣾88888⡿⠿⠛⠛⠛⠛⠛⠛⠛⠛⠻⠿88888⠟⠁    ⣠⣾88⡟                             │
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:08.2160337Z │                                    ⢀⣴88888⠟⠋⠁ ⣀⣤⠤⠶⠶⠶⠶⠶⠤⣤⣀ ⠉⠉⠉    ⢀⣴⣾888⡟                              │
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:08.2161104Z │                                   ⣠88888⠋  ⣠⠶⠋⠉         ⠉⠙⠶⣄   ⢀⣴888888⠃                              │
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:08.2162517Z │                                  ⣰8888⡟⠁ ⣰⠟⠁               ⠈⠻⣆ ⠈⢿888888                               │
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:08.2163470Z │                                 ⢠8888⡟  ⡼⠁                   ⠈⢧ ⠈⢿8888⡿                               │
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:08.2164354Z │                                 ⣼8888⠁ ⢸⠇                     ⠸⡇ ⠘8888⣷                               │
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:08.2165239Z │                                 88888  8                       8  88888                               │
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:08.2166129Z │                                 ⢿8888⡄ ⢸⡆                     ⢰⡇ ⢀8888⡟                               │
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:08.2167004Z │                                 ⣾8888⣷⡀ ⢳⡀                   ⢀⡞  ⣼8888⠃                               │
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:08.2167977Z │                                 888888⣷⡀ ⠹⣦⡀               ⢀⣴⠏ ⢀⣼8888⠏                                │
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:08.2168861Z │                                ⢠888888⠟⠁   ⠙⠶⣄⣀         ⣀⣠⠶⠋  ⣠88888⠋                                 │
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:08.2169407Z │                                ⣼888⡿⠟⠁    ⣀⣀⣀ ⠉⠛⠒⠶⠶⠶⠶⠶⠒⠛⠉ ⢀⣠⣴88888⠟⠁                                  │
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:08.2169927Z │                               ⣼88⡿⠋    ⢀⣴88888⣶⣦⣤⣤⣤⣤⣤⣤⣤⣤⣶⣾88888⡿⠛⠁                                    │
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:08.2170538Z │                             ⢀⣼8⠟⠁    ⣠⣶88888888888888888888⡿⠿⠛⠁                                       │
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:08.2171608Z │                            ⣠⡾⠋⠁    ⠤⠞⠛⠛⠉⠉⠉⠉⠉⠉⠉⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠉⠉                                            │
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:08.2172802Z │                          ⢀⡼⠋                                                                          │
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:08.2173635Z │                        ⢀⠔⠁                                                                            │
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:08.2174473Z │                                                                                                       │
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:08.2175347Z │                                                                                                       │
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:08.2176263Z │  .d8888b.                                     888    d8b                        8888888b.  888888b.   │
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:08.2177225Z │ d88P  Y88b                                    888    Y8P                        888  "Y88b 888  "88b  │
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:08.2178128Z │ Y88b.                                         888                               888    888 888  .88P  │
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:08.2179159Z │  "Y888b.   88888b.   8888b.   .d8888b .d88b.  888888 888 88888b.d88b.   .d88b.  888    888 8888888K.  │
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:08.2179912Z │     "Y88b. 888 "88b     "88b d88P"   d8P  Y8b 888    888 888 "888 "88b d8P  Y8b 888    888 888  "Y88b │
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:08.2180776Z │       "888 888  888 .d888888 888     88888888 888    888 888  888  888 88888888 888    888 888    888 │
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:08.2182531Z │ Y88b  d88P 888 d88P 888  888 Y88b.   Y8b.     Y88b.  888 888  888  888 Y8b.     888  .d88P 888   d88P │
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:08.2183710Z │  "Y8888P"  88888P"  "Y888888  "Y8888P "Y8888   "Y888 888 888  888  888  "Y8888  8888888P"  8888888P"  │
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:08.2184702Z │            888                                                                                        │
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:08.2185657Z │            888                                                                                        │
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:08.2186580Z │            888                                                                                        │
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:08.2187599Z │                                  "Multiplayer at the speed of light"                                  │
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:08.2188545Z └───────────────────────────────────────────────────────────────────────────────────────────────────────┘
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:08.2190244Z     
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:08.2190556Z spacetimedb-standalone version: 2.0.3
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:08.2191368Z spacetimedb-standalone path: /home/runner/.local/share/spacetime/bin/2.0.3/spacetimedb-standalone
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:08.2198231Z database running in data directory /home/runner/.local/share/spacetime/data
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:08.2858328Z [2m2026-03-08T00:42:08.285539Z[0m [32m INFO[0m [2m/home/runner/work/SpacetimeDB/SpacetimeDB/crates/standalone/src/subcommands/start.rs[0m[2m:[0m[2m251[0m[2m:[0m Starting SpacetimeDB listening on 0.0.0.0:3000
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:08.2860297Z [2m2026-03-08T00:42:08.285582Z[0m [33m WARN[0m [2m/home/runner/work/SpacetimeDB/SpacetimeDB/crates/standalone/src/subcommands/start.rs[0m[2m:[0m[2m272[0m[2m:[0m PostgreSQL wire protocol server disabled
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:43.4677882Z ##[group]Run spacetime publish \
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:43.4678184Z [36;1mspacetime publish \[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:43.4678456Z [36;1m  --server http://localhost:3000 \[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:43.4678883Z [36;1m  --bin-path target/wasm32-unknown-unknown/release/spacetime_module.wasm \[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:43.4679279Z [36;1m  --yes \[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:43.4679477Z [36;1m  benchmark-links[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:43.4728348Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:43.4728695Z env:
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:43.4728883Z   CARGO_TERM_COLOR: always
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:43.4729108Z   RUST_BACKTRACE: 1
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:43.4729324Z   CARGO_HOME: /home/runner/.cargo
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:43.4729580Z   CARGO_INCREMENTAL: 0
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:43.4729791Z   CACHE_ON_FAILURE: true
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:43.4730010Z ##[endgroup]
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:43.4956782Z We have logged in directly to your target server.
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:43.4957912Z Saving config to /home/runner/.config/spacetime/cli.toml.
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:43.4958447Z WARNING: This login will NOT work for any other servers.
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:43.4959455Z (WASM) Skipping build. Instead we are publishing target/wasm32-unknown-unknown/release/spacetime_module.wasm
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:43.4960484Z Uploading to http://localhost:3000 => http://localhost:3000
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:43.5021370Z Checking for breaking changes...
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:43.5030936Z Publishing module...
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:43.6121054Z Created new database with name: benchmark-links, identity: c200552d02b65c34554b08a969521ae9b2d228fed6f73cd7a4b658806b906d76
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:43.6175568Z ##[group]Run cargo test
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:43.6175812Z [36;1mcargo test[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:43.6224333Z shell: /usr/bin/bash -e {0}
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:43.6224561Z env:
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:43.6224733Z   CARGO_TERM_COLOR: always
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:43.6224955Z   RUST_BACKTRACE: 1
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:43.6225152Z   CARGO_HOME: /home/runner/.cargo
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:43.6225392Z   CARGO_INCREMENTAL: 0
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:43.6225601Z   CACHE_ON_FAILURE: true
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:43.6225840Z   SPACETIMEDB_URI: http://localhost:3000
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:43.6226125Z   SPACETIMEDB_DB: benchmark-links
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:43.6226363Z ##[endgroup]
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:43.8818225Z [1m[92m   Compiling[0m unicode-ident v1.0.24
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:43.8820217Z [1m[92m   Compiling[0m cfg-if v1.0.4
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:43.8821002Z [1m[92m   Compiling[0m libc v0.2.182
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:43.8821747Z [1m[92m   Compiling[0m serde_core v1.0.228
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:43.9128649Z [1m[92m   Compiling[0m either v1.15.0
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:43.9477812Z [1m[92m   Compiling[0m proc-macro2 v1.0.106
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:44.0785066Z [1m[92m   Compiling[0m smallvec v1.15.1
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:44.2464466Z [1m[92m   Compiling[0m bitflags v2.11.0
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:44.4323829Z [1m[92m   Compiling[0m quote v1.0.44
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:44.5416210Z [1m[92m   Compiling[0m memchr v2.8.0
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:44.6457837Z [1m[92m   Compiling[0m syn v2.0.117
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:44.7985264Z [1m[92m   Compiling[0m stable_deref_trait v1.2.1
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:44.8371425Z [1m[92m   Compiling[0m typenum v1.19.0
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:45.2535575Z [1m[92m   Compiling[0m itoa v1.0.17
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:45.3757841Z [1m[92m   Compiling[0m num-traits v0.2.19
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:45.4403967Z [1m[92m   Compiling[0m generic-array v0.14.7
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:46.0299789Z [1m[92m   Compiling[0m crossbeam-utils v0.8.21
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:46.0668908Z [1m[92m   Compiling[0m zerocopy v0.8.39
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:46.2204370Z [1m[92m   Compiling[0m fnv v1.0.7
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:46.2635966Z [1m[92m   Compiling[0m once_cell v1.21.3
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:46.4133691Z [1m[92m   Compiling[0m scopeguard v1.2.0
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:46.4558837Z [1m[92m   Compiling[0m lock_api v0.4.14
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:46.5038304Z [1m[92m   Compiling[0m parking_lot_core v0.9.12
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:46.6365041Z [1m[92m   Compiling[0m bytes v1.11.1
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:46.6981367Z [1m[92m   Compiling[0m parking_lot v0.12.5
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:47.1033624Z [1m[92m   Compiling[0m getrandom v0.4.1
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:47.2196495Z [1m[92m   Compiling[0m getrandom v0.3.4
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:47.2803430Z [1m[92m   Compiling[0m crossbeam-epoch v0.9.18
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:47.3743928Z [1m[92m   Compiling[0m block-buffer v0.10.4
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:47.4515744Z [1m[92m   Compiling[0m crypto-common v0.1.7
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:47.5154404Z [1m[92m   Compiling[0m digest v0.10.7
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:47.5635408Z [1m[92m   Compiling[0m crossbeam-deque v0.8.6
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:47.6544756Z [1m[92m   Compiling[0m rand_core v0.9.5
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:47.7060899Z [1m[92m   Compiling[0m itertools v0.12.1
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:47.8094170Z [1m[92m   Compiling[0m nohash-hasher v0.2.0
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:47.8583135Z [1m[92m   Compiling[0m log v0.4.29
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:47.9861831Z [1m[92m   Compiling[0m synstructure v0.13.2
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:48.5065603Z [1m[92m   Compiling[0m rayon-core v1.13.0
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:49.0833037Z [1m[92m   Compiling[0m approx v0.3.2
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:49.1683593Z [1m[92m   Compiling[0m litemap v0.8.1
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:49.2881814Z [1m[92m   Compiling[0m ryu v1.0.23
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:49.2979344Z [1m[92m   Compiling[0m lazy_static v1.5.0
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:49.3396730Z [1m[92m   Compiling[0m cpufeatures v0.2.17
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:49.3684032Z [1m[92m   Compiling[0m writeable v0.6.2
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:49.4130509Z [1m[92m   Compiling[0m decorum v0.3.1
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:49.5004355Z [1m[92m   Compiling[0m rayon v1.11.0
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:49.6457341Z [1m[92m   Compiling[0m zerofrom-derive v0.1.6
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:49.7183685Z [1m[92m   Compiling[0m serde_derive v1.0.228
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:49.7839411Z [1m[92m   Compiling[0m yoke-derive v0.8.1
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:50.7272836Z [1m[92m   Compiling[0m thiserror-impl v1.0.69
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:50.8124842Z [1m[92m   Compiling[0m zerofrom v0.1.6
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:50.8883684Z [1m[92m   Compiling[0m yoke v0.8.1
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:51.0179130Z [1m[92m   Compiling[0m zerovec-derive v0.11.2
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:51.5697988Z [1m[92m   Compiling[0m displaydoc v0.2.5
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:51.7848676Z [1m[92m   Compiling[0m thiserror v1.0.69
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:51.8299233Z [1m[92m   Compiling[0m ppv-lite86 v0.2.21
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:52.0164174Z [1m[92m   Compiling[0m zerovec v0.11.5
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:52.0976374Z [1m[92m   Compiling[0m enum-as-inner v0.6.1
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:52.1443585Z [1m[92m   Compiling[0m rand_chacha v0.9.0
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:52.4184582Z [1m[92m   Compiling[0m rand v0.9.2
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:52.5245869Z [1m[92m   Compiling[0m tinystr v0.8.2
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:52.5815203Z [1m[92m   Compiling[0m potential_utf v0.1.4
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:52.6697238Z [1m[92m   Compiling[0m icu_locale_core v2.1.1
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:52.6740634Z [1m[92m   Compiling[0m zerotrie v0.2.3
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:52.7634902Z [1m[92m   Compiling[0m serde v1.0.228
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:52.9240968Z [1m[92m   Compiling[0m protobuf v2.28.0
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:53.0064838Z [1m[92m   Compiling[0m arrayvec v0.7.6
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:53.1666545Z [1m[92m   Compiling[0m spacetimedb-primitives v2.0.3
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:53.3244351Z [1m[92m   Compiling[0m ethnum v1.5.2
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:53.5444843Z [1m[92m   Compiling[0m icu_provider v2.1.1
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:53.7118496Z [1m[92m   Compiling[0m icu_collections v2.1.1
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:53.7797275Z [1m[92m   Compiling[0m castaway v0.2.4
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:53.8352794Z [1m[92m   Compiling[0m hex v0.4.3
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:54.0557212Z [1m[92m   Compiling[0m spacetimedb-memory-usage v2.0.3
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:54.1134590Z [1m[92m   Compiling[0m equivalent v1.0.2
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:54.1531641Z [1m[92m   Compiling[0m keccak v0.1.6
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:54.1716724Z [1m[92m   Compiling[0m derive_more v0.99.20
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:54.1865217Z [1m[92m   Compiling[0m hashbrown v0.16.1
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:54.3497318Z [1m[92m   Compiling[0m sha3 v0.10.8
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:54.8570637Z [1m[92m   Compiling[0m spacetimedb-bindings-macro v2.0.3
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:55.0935262Z [1m[92m   Compiling[0m lean_string v0.5.1
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:55.4532578Z [1m[92m   Compiling[0m icu_properties_data v2.1.2
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:55.5492653Z [1m[92m   Compiling[0m prometheus v0.13.4
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:56.6383789Z [1m[92m   Compiling[0m spacetimedb-metrics v2.0.3
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:56.7525991Z [1m[92m   Compiling[0m chrono v0.4.44
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:56.8136003Z [1m[92m   Compiling[0m icu_normalizer_data v2.1.1
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:56.8521891Z [1m[92m   Compiling[0m anyhow v1.0.102
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:57.2113596Z [1m[92m   Compiling[0m enum-map-derive v0.17.0
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:57.5264152Z [1m[92m   Compiling[0m uuid v1.21.0
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:57.7034093Z [1m[92m   Compiling[0m bytestring v1.5.0
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:57.8162577Z [1m[92m   Compiling[0m constant_time_eq v0.4.2
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:57.8447955Z [1m[92m   Compiling[0m pin-project-lite v0.2.16
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:57.8893808Z [1m[92m   Compiling[0m second-stack v0.3.5
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:57.9337631Z [1m[92m   Compiling[0m foreign-types-shared v0.1.1
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:57.9674732Z [1m[92m   Compiling[0m bytemuck v1.25.0
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:57.9711504Z [1m[92m   Compiling[0m linux-raw-sys v0.12.1
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:58.0313744Z [1m[92m   Compiling[0m arrayref v0.3.9
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:58.0644236Z [1m[92m   Compiling[0m darling_core v0.21.3
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:58.1333799Z [1m[92m   Compiling[0m spacetimedb-sats v2.0.3
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:42:58.2817617Z [1m[92m   Compiling[0m rustix v1.1.4
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:00.1894095Z [1m[92m   Compiling[0m blake3 v1.8.3
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:00.1942577Z [1m[92m   Compiling[0m foreign-types v0.3.2
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:00.2234114Z [1m[92m   Compiling[0m enum-map v2.7.3
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:00.3275567Z [1m[92m   Compiling[0m icu_normalizer v2.1.1
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:00.6670336Z [1m[92m   Compiling[0m icu_properties v2.1.2
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:00.7794482Z [1m[92m   Compiling[0m zmij v1.0.21
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:00.9313016Z [1m[92m   Compiling[0m openssl-sys v0.9.111
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:01.0425097Z [1m[92m   Compiling[0m openssl-macros v0.1.1
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:01.2281274Z [1m[92m   Compiling[0m futures-core v0.3.32
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:01.3144072Z [1m[92m   Compiling[0m futures-sink v0.3.32
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:01.3630395Z [1m[92m   Compiling[0m fastrand v2.3.0
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:01.5333882Z [1m[92m   Compiling[0m regex-syntax v0.8.10
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:01.7243901Z [1m[92m   Compiling[0m idna_adapter v1.2.1
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:01.7950740Z [1m[92m   Compiling[0m openssl v0.10.75
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:01.9808587Z [1m[92m   Compiling[0m tempfile v3.26.0
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:02.1896047Z [1m[92m   Compiling[0m futures-channel v0.3.32
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:02.3683483Z [1m[92m   Compiling[0m serde_json v1.0.149
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:02.4468784Z [1m[92m   Compiling[0m darling_macro v0.21.3
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:02.6914709Z [1m[92m   Compiling[0m spacetimedb-lib v2.0.3
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:03.9273975Z [1m[92m   Compiling[0m regex-automata v0.4.14
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:04.5992968Z [1m[92m   Compiling[0m indexmap v2.13.0
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:05.2194179Z [1m[92m   Compiling[0m futures-macro v0.3.32
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:05.2403369Z [1m[92m   Compiling[0m errno v0.3.14
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:05.3231353Z [1m[92m   Compiling[0m slab v0.4.12
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:05.4415399Z [1m[92m   Compiling[0m winnow v0.7.14
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:05.7493841Z [1m[92m   Compiling[0m percent-encoding v2.3.2
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:05.8753964Z [1m[92m   Compiling[0m futures-io v0.3.32
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:05.8926390Z [1m[92m   Compiling[0m openssl-probe v0.1.6
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:05.9724761Z [1m[92m   Compiling[0m futures-task v0.3.32
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:06.0084746Z [1m[92m   Compiling[0m utf8_iter v1.0.4
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:06.0829791Z [1m[92m   Compiling[0m idna v1.1.0
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:06.0984262Z [1m[92m   Compiling[0m futures-util v0.3.32
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:06.6268751Z [1m[92m   Compiling[0m native-tls v0.2.14
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:06.8614668Z [1m[92m   Compiling[0m form_urlencoded v1.2.2
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:06.9565559Z [1m[92m   Compiling[0m signal-hook-registry v1.4.8
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:06.9755878Z [1m[92m   Compiling[0m regex v1.12.3
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:07.1854111Z [1m[92m   Compiling[0m toml_parser v1.0.9+spec-1.1.0
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:07.2487505Z [1m[92m   Compiling[0m darling v0.21.3
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:07.2905323Z [1m[92m   Compiling[0m thiserror-impl v2.0.18
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:07.4253692Z [1m[92m   Compiling[0m tokio-macros v2.6.0
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:07.9578540Z [1m[92m   Compiling[0m serde_spanned v1.0.4
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:07.9633220Z [1m[92m   Compiling[0m toml_datetime v0.7.5+spec-1.1.0
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:08.0377082Z [1m[92m   Compiling[0m socket2 v0.6.2
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:08.2217404Z [1m[92m   Compiling[0m mio v1.1.1
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:08.4817305Z [1m[92m   Compiling[0m tinyvec_macros v0.1.1
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:08.5138749Z [1m[92m   Compiling[0m toml_writer v1.0.6+spec-1.1.0
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:08.5795760Z [1m[92m   Compiling[0m alloc-no-stdlib v2.0.4
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:08.6415898Z [1m[92m   Compiling[0m alloc-stdlib v0.2.2
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:08.6715511Z [1m[92m   Compiling[0m toml_edit v0.23.10+spec-1.0.0
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:08.7033344Z [1m[92m   Compiling[0m tokio v1.49.0
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:08.7319246Z [1m[92m   Compiling[0m tinyvec v1.10.0
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:08.8536005Z [1m[92m   Compiling[0m thiserror v2.0.18
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:08.9058343Z [1m[92m   Compiling[0m serde_with_macros v3.17.0
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:09.0734533Z [1m[92m   Compiling[0m ahash v0.8.12
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:09.2555491Z [1m[92m   Compiling[0m url v2.5.8
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:09.8200162Z [1m[92m   Compiling[0m syn v1.0.109
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:10.1351395Z [1m[92m   Compiling[0m httparse v1.10.1
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:10.3996570Z [1m[92m   Compiling[0m strum_macros v0.25.3
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:10.6953316Z [1m[92m   Compiling[0m sha1 v0.10.6
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:10.8598110Z [1m[92m   Compiling[0m sqlparser v0.38.0
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:11.8079664Z [1m[92m   Compiling[0m http v1.4.0
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:12.9119565Z [1m[92m   Compiling[0m crossbeam-queue v0.3.12
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:13.0171605Z [1m[92m   Compiling[0m console v0.15.11
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:13.6084281Z [1m[92m   Compiling[0m data-encoding v2.10.0
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:13.7174450Z [1m[92m   Compiling[0m unicode-segmentation v1.12.0
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:14.0795335Z [1m[92m   Compiling[0m funty v2.0.0
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:14.5261594Z [1m[92m   Compiling[0m adler2 v2.0.1
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:14.5955029Z [1m[92m   Compiling[0m utf-8 v0.7.6
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:14.7026071Z [1m[92m   Compiling[0m fixedbitset v0.4.2
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:14.8504417Z [1m[92m   Compiling[0m simd-adler32 v0.3.8
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:14.8707623Z [1m[92m   Compiling[0m base64 v0.22.1
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:15.0023688Z [1m[92m   Compiling[0m similar v2.7.0
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:15.1133502Z [1m[92m   Compiling[0m beef v0.5.2
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:15.2038989Z [1m[92m   Compiling[0m platform-data v0.1.0-beta.3 (/home/runner/work/Comparisons.SpacetimeDBVSDoublets/Comparisons.SpacetimeDBVSDoublets/rust/doublets-patched/dev-deps/data-rs)
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:15.3919532Z [1m[92m   Compiling[0m serde_with v3.17.0
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:16.0023782Z [1m[92m   Compiling[0m insta v1.46.3
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:16.0876683Z [1m[92m   Compiling[0m miniz_oxide v0.8.9
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:16.6517405Z [1m[92m   Compiling[0m petgraph v0.6.5
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:16.7653879Z [1m[92m   Compiling[0m tungstenite v0.27.0
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:17.2368371Z [1m[92m   Compiling[0m convert_case v0.6.0
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:17.6139622Z [1m[92m   Compiling[0m spacetimedb-sql-parser v2.0.3
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:17.7304772Z [1m[92m   Compiling[0m delegate v0.7.0
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:17.9414924Z [1m[92m   Compiling[0m spacetimedb-data-structures v2.0.3
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:18.1791752Z [1m[92m   Compiling[0m tokio-native-tls v0.3.1
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:18.2157241Z [1m[92m   Compiling[0m strum v0.25.0
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:18.2757704Z [1m[92m   Compiling[0m unicode-normalization v0.1.25
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:18.2800610Z [1m[92m   Compiling[0m crc32fast v1.5.0
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:18.3142882Z [1m[92m   Compiling[0m brotli-decompressor v2.5.1
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:18.3964673Z [1m[92m   Compiling[0m futures-executor v0.3.32
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:18.6195265Z [1m[92m   Compiling[0m memmap2 v0.5.10
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:18.6774437Z [1m[92m   Compiling[0m tap v1.0.1
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:18.7367620Z [1m[92m   Compiling[0m unicode-width v0.1.14
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:18.7594340Z [1m[92m   Compiling[0m termcolor v1.4.1
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:18.9164998Z [1m[92m   Compiling[0m plotters-backend v0.3.7
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:19.0724759Z [1m[92m   Compiling[0m brotli v3.5.0
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:19.1305040Z [1m[92m   Compiling[0m plotters-svg v0.3.7
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:19.1715127Z [1m[92m   Compiling[0m spacetimedb-schema v2.0.3
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:19.2827548Z [1m[92m   Compiling[0m textwrap v0.11.0
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:19.4795578Z [1m[92m   Compiling[0m platform-mem v0.1.0-pre+beta.2 (/home/runner/work/Comparisons.SpacetimeDBVSDoublets/Comparisons.SpacetimeDBVSDoublets/rust/doublets-patched/dev-deps/mem-rs)
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:19.5218699Z [1m[33mwarning[0m[1m: the feature `nonnull_slice_from_raw_parts` has been stable since 1.70.0 and no longer requires an attribute to enable[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:19.5220868Z  [1m[94m--> [0mdoublets-patched/dev-deps/mem-rs/src/lib.rs:1:12
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:19.5222847Z   [1m[94m|[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:19.5223635Z [1m[94m1[0m [1m[94m|[0m #![feature(nonnull_slice_from_raw_parts)]
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:19.5224986Z   [1m[94m|[0m            [1m[33m^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:19.5225665Z   [1m[94m|[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:19.5226334Z   [1m[94m= [0m[1mnote[0m: `#[warn(stable_features)]` on by default
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:19.5226867Z 
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:19.5324177Z [1m[92m   Compiling[0m futures v0.3.32
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:19.5672281Z [1m[92m   Compiling[0m flate2 v1.1.9
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:19.6007757Z [1m[33mwarning[0m[1m: feature `nonnull_slice_from_raw_parts` is declared but not used[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:19.6009162Z  [1m[94m--> [0mdoublets-patched/dev-deps/mem-rs/src/lib.rs:1:12
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:19.6010456Z   [1m[94m|[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:19.6011218Z [1m[94m1[0m [1m[94m|[0m #![feature(nonnull_slice_from_raw_parts)]
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:19.6012799Z   [1m[94m|[0m            [1m[33m^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:19.6013551Z   [1m[94m|[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:19.6014850Z   [1m[94m= [0m[1mnote[0m: `#[warn(unused_features)]` (part of `#[warn(unused)]`) on by default
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:19.6015684Z 
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:19.6115613Z [1m[33mwarning[0m: `platform-mem` (lib) generated 2 warnings
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:19.6118914Z [1m[92m   Compiling[0m tokio-tungstenite v0.27.0
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:19.8644971Z [1m[92m   Compiling[0m spacetimedb-client-api-messages v2.0.3
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:19.9774342Z [1m[92m   Compiling[0m platform-trees v0.1.0-beta.1 (/home/runner/work/Comparisons.SpacetimeDBVSDoublets/Comparisons.SpacetimeDBVSDoublets/rust/doublets-patched/dev-deps/trees-rs)
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:20.1272634Z [1m[92m   Compiling[0m spacetimedb-query-builder v2.0.3
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:20.2538238Z [1m[92m   Compiling[0m csv-core v0.1.13
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:20.4483229Z [1m[92m   Compiling[0m itertools v0.10.5
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:21.5923550Z [1m[92m   Compiling[0m cast v0.3.0
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:21.7103803Z [1m[92m   Compiling[0m leak_slice v0.2.0
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:21.7438654Z [1m[92m   Compiling[0m home v0.5.12
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:21.8093646Z [1m[92m   Compiling[0m half v1.8.3
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:22.0133787Z [1m[92m   Compiling[0m bumpalo v3.20.2
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:22.0343302Z [1m[92m   Compiling[0m anymap v0.12.1
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:22.1493663Z [1m[92m   Compiling[0m same-file v1.0.6
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:22.2493734Z [1m[92m   Compiling[0m base64 v0.21.7
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:22.5204252Z [1m[92m   Compiling[0m bitflags v1.3.2
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:22.5384454Z [1m[92m   Compiling[0m spacetimedb-sdk v2.0.3
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:22.5565912Z [1m[92m   Compiling[0m clap v2.34.0
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:23.8608977Z [1m[92m   Compiling[0m doublets v0.1.0-pre+beta.15 (/home/runner/work/Comparisons.SpacetimeDBVSDoublets/Comparisons.SpacetimeDBVSDoublets/rust/doublets-patched/doublets)
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:23.9207352Z [1m[33mwarning[0m[1m: unused import: `mem::MaybeUninit`[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:23.9210257Z  [1m[94m--> [0mdoublets-patched/doublets/src/data/handler.rs:3:32
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:23.9212705Z   [1m[94m|[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:23.9215690Z [1m[94m3[0m [1m[94m|[0m use std::{marker::PhantomData, mem::MaybeUninit, ops::Try};
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:23.9217381Z   [1m[94m|[0m                                [1m[33m^^^^^^^^^^^^^^^^[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:23.9224316Z   [1m[94m|[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:23.9225730Z   [1m[94m= [0m[1mnote[0m: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:23.9226678Z 
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:23.9227498Z [1m[33mwarning[0m[1m: unused import: `bumpalo::Bump`[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:23.9228597Z  [1m[94m--> [0mdoublets-patched/doublets/src/data/traits.rs:1:5
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:23.9229241Z   [1m[94m|[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:23.9229795Z [1m[94m1[0m [1m[94m|[0m use bumpalo::Bump;
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:23.9230379Z   [1m[94m|[0m     [1m[33m^^^^^^^^^^^^^[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:23.9230700Z 
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:23.9389313Z [1m[33mwarning[0m[1m: the feature `nonnull_slice_from_raw_parts` has been stable since 1.70.0 and no longer requires an attribute to enable[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:23.9390592Z  [1m[94m--> [0mdoublets-patched/doublets/src/lib.rs:4:12
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:23.9391541Z   [1m[94m|[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:23.9392566Z [1m[94m4[0m [1m[94m|[0m #![feature(nonnull_slice_from_raw_parts)]
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:23.9393247Z   [1m[94m|[0m            [1m[33m^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:23.9394272Z   [1m[94m|[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:23.9394938Z   [1m[94m= [0m[1mnote[0m: `#[warn(stable_features)]` on by default
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:23.9395421Z 
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:24.4932411Z [1m[33mwarning[0m[1m: unused import: `error::Error`[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:24.4933389Z  [1m[94m--> [0mdoublets-patched/doublets/src/mem/split/store.rs:1:26
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:24.4934086Z   [1m[94m|[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:24.4934940Z [1m[94m1[0m [1m[94m|[0m use std::{cmp::Ordering, error::Error, mem::transmute, ptr::NonNull};
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:24.4935900Z   [1m[94m|[0m                          [1m[33m^^^^^^^^^^^^[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:24.4936291Z 
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:24.4944206Z [1m[33mwarning[0m[1m: unused import: `error::Error`[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:24.4945130Z   [1m[94m--> [0mdoublets-patched/doublets/src/mem/unit/store.rs:17:31
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:24.4945803Z    [1m[94m|[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:24.4946676Z [1m[94m17[0m [1m[94m|[0m use std::{cmp, cmp::Ordering, error::Error, mem::transmute, ptr::NonNull};
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:24.4947661Z    [1m[94m|[0m                               [1m[33m^^^^^^^^^^^^[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:24.4948077Z 
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:24.4948405Z [1m[33mwarning[0m[1m: unused import: `LinksTree`[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:24.4949222Z   [1m[94m--> [0mdoublets-patched/doublets/src/mem/split/store.rs:10:22
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:24.4949886Z    [1m[94m|[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:24.4950615Z [1m[94m10[0m [1m[94m|[0m         LinksHeader, LinksTree, SplitList, SplitTree, SplitUpdateMem,
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:24.4951520Z    [1m[94m|[0m                      [1m[33m^^^^^^^^^[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:24.4951880Z 
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:24.4952690Z [1m[33mwarning[0m[1m: unused import: `trees::RelativeCircularLinkedList`[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:24.4953664Z   [1m[94m--> [0mdoublets-patched/doublets/src/mem/split/store.rs:16:5
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:24.4954293Z    [1m[94m|[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:24.4954920Z [1m[94m16[0m [1m[94m|[0m use trees::RelativeCircularLinkedList;
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:24.4955687Z    [1m[94m|[0m     [1m[33m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:24.4956077Z 
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:24.5663877Z [1m[92m   Compiling[0m walkdir v2.5.0
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:24.6510904Z [1m[33mwarning[0m[1m: fields `break` and `continue` are never read[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:24.6512356Z   [1m[94m--> [0mdoublets-patched/doublets/src/mem/split/generic/external_recursion_less_base.rs:17:16
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:24.6513208Z    [1m[94m|[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:24.6513997Z [1m[94m14[0m [1m[94m|[0m pub struct ExternalRecursionlessSizeBalancedTreeBase<T: LinkType> {
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:24.6515226Z    [1m[94m|[0m            [1m[94m-----------------------------------------[0m [1m[94mfields in this struct[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:24.6516006Z [1m[94m...[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:24.6516846Z [1m[94m17[0m [1m[94m|[0m     pub(crate) r#break: T,
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:24.6517516Z    [1m[94m|[0m                [1m[33m^^^^^^^[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:24.6518351Z [1m[94m18[0m [1m[94m|[0m     pub(crate) r#continue: T,
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:24.6519191Z    [1m[94m|[0m                [1m[33m^^^^^^^^^^[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:24.6519829Z    [1m[94m|[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:24.6520668Z    [1m[94m= [0m[1mnote[0m: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:24.6521364Z 
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:24.6522268Z [1m[33mwarning[0m[1m: fields `break` and `continue` are never read[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:24.6523457Z   [1m[94m--> [0mdoublets-patched/doublets/src/mem/split/generic/internal_recursion_less_base.rs:16:16
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:24.6524334Z    [1m[94m|[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:24.6525217Z [1m[94m13[0m [1m[94m|[0m pub(crate) struct InternalRecursionlessSizeBalancedTreeBase<T: LinkType> {
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:24.6526524Z    [1m[94m|[0m                   [1m[94m-----------------------------------------[0m [1m[94mfields in this struct[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:24.6527689Z [1m[94m...[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:24.6528192Z [1m[94m16[0m [1m[94m|[0m     pub(crate) r#break: T,
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:24.6529075Z    [1m[94m|[0m                [1m[33m^^^^^^^[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:24.6529769Z [1m[94m17[0m [1m[94m|[0m     pub(crate) r#continue: T,
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:24.6530432Z    [1m[94m|[0m                [1m[33m^^^^^^^^^^[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:24.6530787Z 
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:24.6531179Z [1m[33mwarning[0m[1m: method `get_mut_data_part` is never used[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:24.6532513Z   [1m[94m--> [0mdoublets-patched/doublets/src/mem/split/generic/internal_recursion_less_base.rs:44:8
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:24.6533386Z    [1m[94m|[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:24.6534279Z [1m[94m35[0m [1m[94m|[0m pub(crate) trait InternalRecursionlessSizeBalancedTreeBaseAbstract<T: LinkType>:
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:24.6535648Z    [1m[94m|[0m                  [1m[94m-------------------------------------------------[0m [1m[94mmethod in this trait[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:24.6536485Z [1m[94m...[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:24.6537184Z [1m[94m44[0m [1m[94m|[0m     fn get_mut_data_part(&mut self, link: T) -> &mut DataPart<T>;
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:24.6537984Z    [1m[94m|[0m        [1m[33m^^^^^^^^^^^^^^^^^[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:24.6538327Z 
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:24.6538737Z [1m[33mwarning[0m[1m: fields `continue` and `break` are never read[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:24.6539950Z   [1m[94m--> [0mdoublets-patched/doublets/src/mem/split/generic/internal_sources_linked_list.rs:19:5
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:24.6540831Z    [1m[94m|[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:24.6541500Z [1m[94m16[0m [1m[94m|[0m pub struct InternalSourcesLinkedList<T: LinkType> {
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:24.6542700Z    [1m[94m|[0m            [1m[94m-------------------------[0m [1m[94mfields in this struct[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:24.6543394Z [1m[94m...[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:24.6543841Z [1m[94m19[0m [1m[94m|[0m     r#continue: T,
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:24.6544432Z    [1m[94m|[0m     [1m[33m^^^^^^^^^^[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:24.6544965Z [1m[94m20[0m [1m[94m|[0m     r#break: T,
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:24.6545485Z    [1m[94m|[0m     [1m[33m^^^^^^^[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:24.6545790Z 
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:24.6546424Z [1m[33mwarning[0m[1m: methods `get_header`, `get_mut_header`, and `get_mut_data_part` are never used[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:24.6547742Z   [1m[94m--> [0mdoublets-patched/doublets/src/mem/split/generic/internal_sources_linked_list.rs:37:8
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:24.6548615Z    [1m[94m|[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:24.6549250Z [1m[94m23[0m [1m[94m|[0m impl<T: LinkType> InternalSourcesLinkedList<T> {
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:24.6550376Z    [1m[94m|[0m [1m[94m----------------------------------------------[0m [1m[94mmethods in this implementation[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:24.6551215Z [1m[94m...[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:24.6551780Z [1m[94m37[0m [1m[94m|[0m     fn get_header(&self) -> &LinksHeader<T> {
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:24.6572884Z    [1m[94m|[0m        [1m[33m^^^^^^^^^^[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:24.6573427Z [1m[94m...[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:24.6574089Z [1m[94m41[0m [1m[94m|[0m     fn get_mut_header(&mut self) -> &mut LinksHeader<T> {
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:24.6574891Z    [1m[94m|[0m        [1m[33m^^^^^^^^^^^^^^[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:24.6575408Z [1m[94m...[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:24.6576226Z [1m[94m49[0m [1m[94m|[0m     fn get_mut_data_part(&mut self, link: T) -> &mut DataPart<T> {
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:24.6577295Z    [1m[94m|[0m        [1m[33m^^^^^^^^^^^^^^^^^[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:24.6577749Z 
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:24.6578163Z [1m[33mwarning[0m[1m: method `get_link_part` is never used[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:24.6579003Z    [1m[94m--> [0mdoublets-patched/doublets/src/mem/unit/store.rs:131:8
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:24.6579639Z     [1m[94m|[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:24.6580583Z [1m[94m 36[0m [1m[94m|[0m [1m[94m/[0m impl<T: LinkType, M: RawMem<LinkPart<T>>, TS: UnitTree<T>, TT: UnitTree<T>, TU: UnitList<T>>
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:24.6581694Z [1m[94m 37[0m [1m[94m|[0m [1m[94m|[0m     Store<T, M, TS, TT, TU>
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:24.6583099Z     [1m[94m|[0m [1m[94m|___________________________-[0m [1m[94mmethod in this implementation[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:24.6583846Z [1m[94m...[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:24.6584703Z [1m[94m131[0m [1m[94m|[0m       fn get_link_part(&self, index: T) -> &LinkPart<T> {
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:24.6585513Z     [1m[94m|[0m          [1m[33m^^^^^^^^^^^^^[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:24.6585838Z 
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:24.7423458Z [1m[33mwarning[0m[1m: feature `associated_type_defaults` is declared but not used[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:24.7425037Z  [1m[94m--> [0mdoublets-patched/doublets/src/lib.rs:5:12
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:24.7425999Z   [1m[94m|[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:24.7426995Z [1m[94m5[0m [1m[94m|[0m #![feature(associated_type_defaults)]
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:24.7427761Z   [1m[94m|[0m            [1m[33m^^^^^^^^^^^^^^^^^^^^^^^^[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:24.7428300Z   [1m[94m|[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:24.7429040Z   [1m[94m= [0m[1mnote[0m: `#[warn(unused_features)]` (part of `#[warn(unused)]`) on by default
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:24.7429668Z 
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:24.7437356Z [1m[33mwarning[0m[1m: feature `nonnull_slice_from_raw_parts` is declared but not used[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:24.7438748Z  [1m[94m--> [0mdoublets-patched/doublets/src/lib.rs:4:12
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:24.7439632Z   [1m[94m|[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:24.7445132Z [1m[94m4[0m [1m[94m|[0m #![feature(nonnull_slice_from_raw_parts)]
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:24.7446400Z   [1m[94m|[0m            [1m[33m^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:24.7447236Z 
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:24.7456687Z [1m[33mwarning[0m[1m: feature `allocator_api` is declared but not used[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:24.7462583Z  [1m[94m--> [0mdoublets-patched/doublets/src/lib.rs:7:12
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:24.7467687Z   [1m[94m|[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:24.7470598Z [1m[94m7[0m [1m[94m|[0m #![feature(allocator_api)]
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:24.7493682Z   [1m[94m|[0m            [1m[33m^^^^^^^^^^^^^[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:24.7494342Z 
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:24.7495289Z [1m[33mwarning[0m[1m: feature `maybe_uninit_array_assume_init` is declared but not used[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:24.7496578Z  [1m[94m--> [0mdoublets-patched/doublets/src/lib.rs:8:12
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:24.7497413Z   [1m[94m|[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:24.7498265Z [1m[94m8[0m [1m[94m|[0m #![feature(maybe_uninit_array_assume_init)]
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:24.7499295Z   [1m[94m|[0m            [1m[33m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:24.7499991Z 
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:24.7627060Z [1m[33mwarning[0m: `doublets` (lib) generated 17 warnings (run `cargo fix --lib -p doublets` to apply 2 suggestions)
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:24.7639050Z [1m[92m   Compiling[0m serde_cbor v0.11.2
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:24.8583580Z [1m[92m   Compiling[0m criterion-plot v0.4.5
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:25.3003835Z [1m[92m   Compiling[0m csv v1.4.0
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:25.4035810Z [1m[92m   Compiling[0m plotters v0.3.7
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:25.8327803Z [1m[92m   Compiling[0m tinytemplate v1.2.1
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:26.2970194Z [1m[92m   Compiling[0m atty v0.2.14
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:26.3433895Z [1m[92m   Compiling[0m oorandom v11.1.5
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:26.4075165Z [1m[92m   Compiling[0m criterion v0.3.6
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:26.4656349Z [1m[92m   Compiling[0m spacetimedb-vs-doublets v0.1.0 (/home/runner/work/Comparisons.SpacetimeDBVSDoublets/Comparisons.SpacetimeDBVSDoublets/rust)
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:26.7882247Z [1m[33mwarning[0m[1m: hiding a lifetime that's elided elsewhere is confusing[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:26.7883138Z   [1m[94m--> [0msrc/benched/mod.rs:29:13
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:26.7883634Z    [1m[94m|[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:26.7884162Z [1m[94m29[0m [1m[94m|[0m     fn fork(&mut self) -> Fork<Self>;
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:26.7885138Z    [1m[94m|[0m             [1m[33m^^^^^^^^^[0m     [1m[33m^^^^^^^^^^[0m [1m[33mthe same lifetime is hidden here[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:26.7885941Z    [1m[94m|[0m             [1m[33m|[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:26.7886577Z    [1m[94m|[0m             [1m[33mthe lifetime is elided here[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:26.7887564Z    [1m[94m|[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:26.7888526Z    [1m[94m= [0m[1mhelp[0m: the same lifetime is referred to in inconsistent ways, making the signature confusing
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:26.7889898Z    [1m[94m= [0m[1mnote[0m: `#[warn(mismatched_lifetime_syntaxes)]` on by default
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:26.7890666Z [1m[96mhelp[0m: use `'_` for type paths
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:26.7891156Z    [1m[94m|[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:26.7891779Z [1m[94m29[0m [1m[94m| [0m    fn fork(&mut self) -> Fork<[92m'_, [0mSelf>;
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:26.7892733Z    [1m[94m|[0m                                [92m+++[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:26.7893435Z 
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:26.7894228Z [1m[33mwarning[0m[1m: hiding a lifetime that's elided elsewhere is confusing[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:26.7895132Z   [1m[94m--> [0msrc/benched/doublets_benched.rs:27:13
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:26.7895682Z    [1m[94m|[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:26.7896268Z [1m[94m27[0m [1m[94m|[0m     fn fork(&mut self) -> Fork<Self> {
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:26.7897283Z    [1m[94m|[0m             [1m[33m^^^^^^^^^[0m     [1m[33m^^^^^^^^^^[0m [1m[33mthe same lifetime is hidden here[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:26.7898102Z    [1m[94m|[0m             [1m[33m|[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:26.7898754Z    [1m[94m|[0m             [1m[33mthe lifetime is elided here[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:26.7899335Z    [1m[94m|[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:26.7900371Z    [1m[94m= [0m[1mhelp[0m: the same lifetime is referred to in inconsistent ways, making the signature confusing
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:26.7901404Z [1m[96mhelp[0m: use `'_` for type paths
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:26.7902174Z    [1m[94m|[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:26.7902915Z [1m[94m27[0m [1m[94m| [0m    fn fork(&mut self) -> Fork<[92m'_, [0mSelf> {
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:26.7903770Z    [1m[94m|[0m                                [92m+++[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:26.7904196Z 
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:26.7907311Z [1m[33mwarning[0m[1m: hiding a lifetime that's elided elsewhere is confusing[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:26.7908159Z   [1m[94m--> [0msrc/benched/doublets_benched.rs:64:13
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:26.7908737Z    [1m[94m|[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:26.7909307Z [1m[94m64[0m [1m[94m|[0m     fn fork(&mut self) -> Fork<Self> {
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:26.7910259Z    [1m[94m|[0m             [1m[33m^^^^^^^^^[0m     [1m[33m^^^^^^^^^^[0m [1m[33mthe same lifetime is hidden here[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:26.7911017Z    [1m[94m|[0m             [1m[33m|[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:26.7911618Z    [1m[94m|[0m             [1m[33mthe lifetime is elided here[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:26.7912355Z    [1m[94m|[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:26.7913273Z    [1m[94m= [0m[1mhelp[0m: the same lifetime is referred to in inconsistent ways, making the signature confusing
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:26.7914243Z [1m[96mhelp[0m: use `'_` for type paths
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:26.7914717Z    [1m[94m|[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:26.7915295Z [1m[94m64[0m [1m[94m| [0m    fn fork(&mut self) -> Fork<[92m'_, [0mSelf> {
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:26.7916028Z    [1m[94m|[0m                                [92m+++[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:26.7916400Z 
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:26.7916852Z [1m[33mwarning[0m[1m: hiding a lifetime that's elided elsewhere is confusing[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:26.7917731Z   [1m[94m--> [0msrc/benched/spacetimedb_benched.rs:23:13
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:26.7918273Z    [1m[94m|[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:26.7918782Z [1m[94m23[0m [1m[94m|[0m     fn fork(&mut self) -> Fork<Self> {
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:26.7919717Z    [1m[94m|[0m             [1m[33m^^^^^^^^^[0m     [1m[33m^^^^^^^^^^[0m [1m[33mthe same lifetime is hidden here[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:26.7920494Z    [1m[94m|[0m             [1m[33m|[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:26.7921096Z    [1m[94m|[0m             [1m[33mthe lifetime is elided here[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:26.7921625Z    [1m[94m|[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:26.7922601Z    [1m[94m= [0m[1mhelp[0m: the same lifetime is referred to in inconsistent ways, making the signature confusing
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:26.7923531Z [1m[96mhelp[0m: use `'_` for type paths
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:26.7924335Z    [1m[94m|[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:26.7924920Z [1m[94m23[0m [1m[94m| [0m    fn fork(&mut self) -> Fork<[92m'_, [0mSelf> {
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:26.7925632Z    [1m[94m|[0m                                [92m+++[0m
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:26.7925956Z 
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:27.8264546Z [1m[33mwarning[0m: `spacetimedb-vs-doublets` (lib) generated 4 warnings (run `cargo fix --lib -p spacetimedb-vs-doublets` to apply 4 suggestions)
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:30.6332185Z [1m[33mwarning[0m: `spacetimedb-vs-doublets` (lib test) generated 4 warnings (4 duplicates)
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:30.6333722Z [1m[92m    Finished[0m `test` profile [unoptimized + debuginfo] target(s) in 46.96s
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:30.6493730Z [1m[92m     Running[0m unittests src/lib.rs (target/debug/deps/spacetimedb_vs_doublets-dbcbaca470ab9d00)
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:30.6516820Z 
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:30.6517017Z running 11 tests
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:30.6820290Z test doublets_impl::tests::test_delete_united ... ok
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:30.6841659Z test doublets_impl::tests::test_create_and_query_united ... ok
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:30.6843031Z test doublets_impl::tests::test_delete_all_united ... ok
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:30.7002553Z test doublets_impl::tests::test_create_and_query_split ... ok
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:30.7110951Z test doublets_impl::tests::test_update_united ... ok
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:30.7132553Z test doublets_impl::tests::test_query_by_source_united ... ok
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:30.7268831Z test doublets_impl::tests::test_query_by_target_split ... ok
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:30.7482650Z test spacetimedb_impl::tests::test_delete ... ok
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:30.7663819Z test spacetimedb_impl::tests::test_create_and_query ... FAILED
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:30.7669948Z test spacetimedb_impl::tests::test_update ... ok
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:30.8067990Z test spacetimedb_impl::tests::test_delete_all ... FAILED
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:30.8068563Z 
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:30.8068726Z failures:
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:30.8068996Z 
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:30.8069385Z ---- spacetimedb_impl::tests::test_create_and_query stdout ----
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:30.8070463Z [SpacetimeDB] Connecting to http://localhost:3000/benchmark-links
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:30.8080456Z [SpacetimeDB] Connected as c20061649776171b83ad407fdaff31ec11fb3c9e322cc14b055dbe41c7e6537d
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:30.8081199Z [SpacetimeDB] Subscription ready, client cache populated
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:30.8081456Z 
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:30.8081844Z thread 'spacetimedb_impl::tests::test_create_and_query' (6709) panicked at src/spacetimedb_impl.rs:294:39:
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:30.8082571Z called `Option::unwrap()` on a `None` value
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:30.8082845Z stack backtrace:
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:30.8083058Z    0: __rustc::rust_begin_unwind
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:30.8083508Z              at /rustc/80282b130679a654eaa22f028a908c51be53d436/library/std/src/panicking.rs:689:5
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:30.8083976Z    1: core::panicking::panic_fmt
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:30.8084405Z              at /rustc/80282b130679a654eaa22f028a908c51be53d436/library/core/src/panicking.rs:80:14
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:30.8084860Z    2: core::panicking::panic
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:30.8085267Z              at /rustc/80282b130679a654eaa22f028a908c51be53d436/library/core/src/panicking.rs:150:5
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:30.8085712Z    3: core::option::unwrap_failed
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:30.8086121Z              at /rustc/80282b130679a654eaa22f028a908c51be53d436/library/core/src/option.rs:2236:5
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:30.8086638Z    4: <core::option::Option<spacetimedb_vs_doublets::Link>>::unwrap
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:30.8087133Z              at /rustc/80282b130679a654eaa22f028a908c51be53d436/library/core/src/option.rs:1016:21
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:30.8087680Z    5: spacetimedb_vs_doublets::spacetimedb_impl::tests::test_create_and_query
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:30.8088090Z              at ./src/spacetimedb_impl.rs:294:39
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:30.8088514Z    6: spacetimedb_vs_doublets::spacetimedb_impl::tests::test_create_and_query::{closure#0}
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:30.8088941Z              at ./src/spacetimedb_impl.rs:285:31
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:30.8089509Z    7: <spacetimedb_vs_doublets::spacetimedb_impl::tests::test_create_and_query::{closure#0} as core::ops::function::FnOnce<()>>::call_once
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:30.8090500Z              at /rustc/80282b130679a654eaa22f028a908c51be53d436/library/core/src/ops/function.rs:250:5
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:30.8091256Z    8: <fn() -> core::result::Result<(), alloc::string::String> as core::ops::function::FnOnce<()>>::call_once
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:30.8091867Z              at /rustc/80282b130679a654eaa22f028a908c51be53d436/library/core/src/ops/function.rs:250:5
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:30.8092658Z note: Some details are omitted, run with `RUST_BACKTRACE=full` for a verbose backtrace.
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:30.8092985Z 
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:30.8093140Z ---- spacetimedb_impl::tests::test_delete_all stdout ----
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:30.8093571Z [SpacetimeDB] Connecting to http://localhost:3000/benchmark-links
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:30.8094094Z [SpacetimeDB] Connected as c20036f6a67e83ef83e6217867c9cde055fc1ace6f73a398c1666255cb9077a8
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:30.8094591Z [SpacetimeDB] Subscription ready, client cache populated
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:30.8094827Z 
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:30.8095114Z thread 'spacetimedb_impl::tests::test_delete_all' (6717) panicked at src/spacetimedb_impl.rs:337:9:
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:30.8095573Z assertion failed: db.count() >= 5
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:30.8095815Z stack backtrace:
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:30.8096028Z    0: __rustc::rust_begin_unwind
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:30.8096435Z              at /rustc/80282b130679a654eaa22f028a908c51be53d436/library/std/src/panicking.rs:689:5
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:30.8096864Z    1: core::panicking::panic_fmt
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:30.8097263Z              at /rustc/80282b130679a654eaa22f028a908c51be53d436/library/core/src/panicking.rs:80:14
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:30.8097697Z    2: core::panicking::panic
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:30.8098100Z              at /rustc/80282b130679a654eaa22f028a908c51be53d436/library/core/src/panicking.rs:150:5
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:30.8098643Z    3: spacetimedb_vs_doublets::spacetimedb_impl::tests::test_delete_all
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:30.8099017Z              at ./src/spacetimedb_impl.rs:337:9
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:30.8099422Z    4: spacetimedb_vs_doublets::spacetimedb_impl::tests::test_delete_all::{closure#0}
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:30.8099834Z              at ./src/spacetimedb_impl.rs:328:25
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:30.8100389Z    5: <spacetimedb_vs_doublets::spacetimedb_impl::tests::test_delete_all::{closure#0} as core::ops::function::FnOnce<()>>::call_once
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:30.8101105Z              at /rustc/80282b130679a654eaa22f028a908c51be53d436/library/core/src/ops/function.rs:250:5
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:30.8101822Z    6: <fn() -> core::result::Result<(), alloc::string::String> as core::ops::function::FnOnce<()>>::call_once
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:30.8102692Z              at /rustc/80282b130679a654eaa22f028a908c51be53d436/library/core/src/ops/function.rs:250:5
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:30.8103262Z note: Some details are omitted, run with `RUST_BACKTRACE=full` for a verbose backtrace.
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:30.8103588Z 
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:30.8103592Z 
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:30.8103666Z failures:
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:30.8103889Z     spacetimedb_impl::tests::test_create_and_query
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:30.8104207Z     spacetimedb_impl::tests::test_delete_all
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:30.8104596Z 
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:30.8104897Z test result: FAILED. 9 passed; 2 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.16s
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:30.8105250Z 
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:30.8113300Z [1m[91merror[0m: test failed, to rerun pass `--lib`
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:30.8197901Z ##[error]Process completed with exit code 101.
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:30.8271678Z Post job cleanup.
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:31.0919713Z Cache up-to-date.
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:31.1069874Z Post job cleanup.
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:31.2037421Z [command]/usr/bin/git version
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:31.2081115Z git version 2.53.0
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:31.2124326Z Temporarily overriding HOME='/home/runner/work/_temp/75213763-a5f5-4938-8baa-3e970fc226f7' before making global git config changes
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:31.2125613Z Adding repository directory to the temporary git global config as a safe directory
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:31.2129891Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/Comparisons.SpacetimeDBVSDoublets/Comparisons.SpacetimeDBVSDoublets
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:31.2164118Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:31.2197523Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:31.2440805Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:31.2462328Z http.https://github.com/.extraheader
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:31.2475043Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:31.2506560Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:31.2737652Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:31.2768957Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:31.3115793Z Cleaning up orphan processes
+Test (ubuntu-latest)	UNKNOWN STEP	2026-03-08T00:43:31.3407742Z Terminate orphan process: pid (3920) (spacetimedb-standalone)
