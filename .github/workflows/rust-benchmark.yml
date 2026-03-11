@@ -20,7 +20,7 @@ jobs:
   test:
     name: Test (${{ matrix.os }})
     runs-on: ${{ matrix.os }}
-    timeout-minutes: 360
+    timeout-minutes: 30
     strategy:
       fail-fast: false
       matrix:
@@ -89,11 +89,125 @@ jobs:
         # Run tests sequentially to avoid parallel interference with shared SpacetimeDB state.
         run: cargo test -- --test-threads=1
 
+  # Quick benchmark validation for pull requests.
+  # Runs benchmarks with reduced scale to verify they work and produce results
+  # in well under 10 minutes. Results are not committed but uploaded as artifacts.
+  #
+  # Parameters chosen to keep total benchmark time under 5 minutes:
+  #   BENCHMARK_LINK_COUNT=10, BACKGROUND_LINK_COUNT=30: reduces SpacetimeDB
+  #   round trips per iteration from ~8000 to ~80, making each iteration ~0.1s.
+  #   --sample-size 10: collect 10 samples per benchmark (instead of 100 default).
+  #   --warm-up-time 1: 1s warm-up instead of 3s default.
+  #   --measurement-time 2: 2s measurement instead of 5s default.
+  #   Expected runtime: ~3-5 minutes total for all 35 benchmarks.
+  benchmark-pr:
+    name: Benchmark (PR validation)
+    runs-on: ubuntu-latest
+    needs: [test]
+    if: github.event_name == 'pull_request'
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Rust (nightly)
+        uses: dtolnay/rust-toolchain@master
+        with:
+          toolchain: nightly
+          targets: wasm32-unknown-unknown
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Python dependencies
+        run: pip install matplotlib numpy
+
+      - name: Cache cargo registry
+        uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: rust -> target
+          cache-on-failure: "true"
+
+      - name: Install SpacetimeDB CLI
+        run: |
+          curl -sSf https://install.spacetimedb.com | sh -s -- -y
+          echo "$HOME/.local/bin" >> $GITHUB_PATH
+        working-directory: .
+
+      - name: Build SpacetimeDB module (WASM)
+        run: cargo build --release --target wasm32-unknown-unknown
+        working-directory: rust/spacetime-module
+
+      - name: Start SpacetimeDB server
+        run: |
+          spacetime start &
+          for i in $(seq 1 30); do
+            if curl -sf http://localhost:3000/ > /dev/null 2>&1; then
+              echo "SpacetimeDB server is ready"
+              break
+            fi
+            sleep 1
+          done
+        working-directory: .
+
+      - name: Publish SpacetimeDB module
+        run: |
+          spacetime publish \
+            --server http://localhost:3000 \
+            --bin-path target/wasm32-unknown-unknown/release/spacetime_module.wasm \
+            --yes \
+            benchmark-links
+        working-directory: rust/spacetime-module
+
+      - name: Build benchmark
+        run: cargo build --release
+
+      - name: Run benchmark (quick mode for PR validation)
+        env:
+          # Reduced scale: 10 links instead of 1000, 30 background instead of 3000.
+          # This reduces SpacetimeDB round trips per iteration from ~8000 to ~80,
+          # keeping each iteration under 0.1s and total benchmark time under 5 minutes.
+          BENCHMARK_LINK_COUNT: 10
+          BACKGROUND_LINK_COUNT: 30
+          SPACETIMEDB_URI: http://localhost:3000
+          SPACETIMEDB_DB: benchmark-links
+        run: |
+          cargo bench --bench bench -- \
+            --output-format bencher \
+            --sample-size 10 \
+            --warm-up-time 1 \
+            --measurement-time 2 \
+            --nresamples 1000 \
+            | tee out.txt
+
+      - name: Generate charts
+        run: python3 out.py
+
+      - name: Upload PR benchmark artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: benchmark-results-pr
+          path: |
+            rust/out.txt
+            rust/bench_rust.png
+            rust/bench_rust_log_scale.png
+
+  # Full benchmark run for commits to main/master.
+  # Uses full scale (1000 links, 3000 background) with reduced sample count
+  # to produce statistically meaningful results while fitting within 1 hour.
+  #
+  # Parameters:
+  #   BENCHMARK_LINK_COUNT=1000, BACKGROUND_LINK_COUNT=3000: realistic scale.
+  #   --sample-size 20: 20 samples per benchmark (down from 100 default).
+  #   --nresamples 10000: 10k bootstrap resamples (down from 100k default).
+  #   Expected runtime: ~30-45 minutes total for all 35 benchmarks.
   benchmark:
-    name: Benchmark
+    name: Benchmark (full)
     runs-on: ubuntu-latest
     needs: [test]
     if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
+    timeout-minutes: 180
     steps:
       - uses: actions/checkout@v4
         with:
@@ -154,13 +268,21 @@ jobs:
       - name: Build benchmark
         run: cargo build --release
 
-      - name: Run benchmark
+      - name: Run benchmark (full mode for main branch)
         env:
+          # Full scale: 1000 links, 3000 background for realistic results.
+          # --sample-size 20 reduces total runtime from ~2h (default 100) to ~25-40 min
+          # while still providing statistically valid measurements.
           BENCHMARK_LINK_COUNT: 1000
           BACKGROUND_LINK_COUNT: 3000
           SPACETIMEDB_URI: http://localhost:3000
           SPACETIMEDB_DB: benchmark-links
-        run: cargo bench --bench bench -- --output-format bencher | tee out.txt
+        run: |
+          cargo bench --bench bench -- \
+            --output-format bencher \
+            --sample-size 20 \
+            --nresamples 10000 \
+            | tee out.txt
 
       - name: Generate charts
         run: python3 out.py
