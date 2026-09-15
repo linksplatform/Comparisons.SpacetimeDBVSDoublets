@@ -1,218 +1,331 @@
 #!/usr/bin/env python3
-"""
-Benchmark result visualization for SpacetimeDB vs Doublets.
+"""Benchmark result visualization and documentation for SpacetimeDB vs Doublets.
 
-Reads Criterion bencher-format output from out.txt and generates:
-- bench_rust.png: Linear scale comparison chart
-- bench_rust_log_scale.png: Logarithmic scale comparison chart
-- results.md: Markdown table with speedup ratios
+Reads Criterion bencher-format output (produced by
+`cargo bench --bench bench -- --output-format bencher`) and generates:
+
+- ``bench_rust.png``          — linear ("pixel") scale comparison chart
+- ``bench_rust_log_scale.png``— logarithmic scale comparison chart
+- ``results.md``              — Markdown results table with speedup ratios
+- optionally updates the results section of ``README.md`` in place
+
+The chart and table style follows the sibling benchmarks
+(Comparisons.Neo4jVSDoublets, Comparisons.PostgreSQLVSDoublets) so that all
+LinksPlatform comparisons are documented the same way.
 
 Usage:
-    python3 out.py [out.txt]
+    python3 out.py [out.txt] [--readme ../README.md] [--docs-dir ../Docs]
 """
 
-import re
-import sys
+import argparse
 import os
+import re
+import shutil
+import sys
+from datetime import datetime, timezone
 
 try:
     import matplotlib
-    matplotlib.use('Agg')
+
+    matplotlib.use("Agg")
     import matplotlib.pyplot as plt
     import numpy as np
+
     HAS_MATPLOTLIB = True
-except ImportError:
+except ImportError:  # pragma: no cover - exercised only without matplotlib
     print("Warning: matplotlib/numpy not installed, skipping chart generation")
     HAS_MATPLOTLIB = False
 
-# Bencher output line format:
-# test <benchmark>/<operation>/<variant>/<size> ... bench: <ns_per_iter> ns/iter (+/- <variance>)
+# Bencher output line format emitted by criterion:
+# test <operation>/<variant>/<size> ... bench: <ns_per_iter> ns/iter (+/- <variance>)
 BENCHER_PATTERN = re.compile(
-    r'test (\w+)/(\w+)/(\w+)/(\d+)\s+\.\.\.\s+bench:\s+([\d,]+)\s+ns/iter'
+    r"test\s+(\w+)/(\w+)/(\d+)\s+\.\.\.\s+bench:\s+([\d,]+)\s+ns/iter"
 )
 
+# Operations in the order they are reported, mapped to human readable labels.
 OPERATIONS = [
-    'create',
-    'delete',
-    'update',
-    'query_all',
-    'query_by_id',
-    'query_by_source',
-    'query_by_target',
+    ("create", "Create"),
+    ("update", "Update"),
+    ("delete", "Delete"),
+    ("query_all", "Query All"),
+    ("query_by_id", "Query by Id"),
+    ("query_by_source", "Query by Source"),
+    ("query_by_target", "Query by Target"),
 ]
 
-OPERATION_LABELS = {
-    'create': 'Create',
-    'delete': 'Delete',
-    'update': 'Update',
-    'query_all': 'Query All',
-    'query_by_id': 'Query by Id',
-    'query_by_source': 'Query by Source',
-    'query_by_target': 'Query by Target',
-}
+# Benchmarked backends. The first entry is the baseline every other variant is
+# compared against in the results table.
+BASELINE = "SpacetimeDB"
 
-VARIANTS = {
-    'SpacetimeDB': 'SpacetimeDB 2.0',
-    'Doublets_United_Volatile': 'Doublets (United/Volatile)',
-    'Doublets_Split_Volatile': 'Doublets (Split/Volatile)',
-}
+VARIANTS = [
+    ("Doublets_United_Volatile", "Doublets United Volatile", "salmon"),
+    ("Doublets_United_NonVolatile", "Doublets United NonVolatile", "red"),
+    ("Doublets_Split_Volatile", "Doublets Split Volatile", "lightgreen"),
+    ("Doublets_Split_NonVolatile", "Doublets Split NonVolatile", "green"),
+    (BASELINE, "SpacetimeDB", "royalblue"),
+]
 
-COLORS = {
-    'SpacetimeDB': '#e74c3c',
-    'Doublets_United_Volatile': '#2ecc71',
-    'Doublets_Split_Volatile': '#3498db',
-}
+README_START_MARKER = "<!--BENCHMARK_RESULTS_START-->"
+README_END_MARKER = "<!--BENCHMARK_RESULTS_END-->"
 
 
-def parse_results(filename='out.txt'):
-    """Parse bencher-format output into a nested dict: operation -> variant -> ns_per_iter."""
-    results = {op: {} for op in OPERATIONS}
+def parse_results(filename="out.txt"):
+    """Parse bencher-format output into ``{operation: {variant: ns_per_iter}}``."""
+    results = {op: {} for op, _ in OPERATIONS}
 
     if not os.path.exists(filename):
         print(f"Warning: {filename} not found")
         return results
 
-    with open(filename, 'r') as f:
-        content = f.read()
+    with open(filename, "r", encoding="utf-8") as handle:
+        content = handle.read()
 
     for line in content.splitlines():
-        m = BENCHER_PATTERN.search(line)
-        if m:
-            group, op, variant, size, ns_str = m.groups()
-            ns = int(ns_str.replace(',', ''))
-            if op in results:
-                results[op][variant] = ns
-
-    # Also handle Criterion's default output format
-    # test group::benchmark/variant/size ... bench: X ns/iter (+/- Y)
-    CRITERION_PATTERN = re.compile(
-        r'test (\w+)::(\w+)/(\w+)/\d+\s+\.\.\.\s+bench:\s+([\d,]+)\s+ns/iter'
-    )
-    for line in content.splitlines():
-        m = CRITERION_PATTERN.search(line)
-        if m:
-            _group, op, variant, ns_str = m.groups()
-            ns = int(ns_str.replace(',', ''))
-            if op in results:
-                results[op][variant] = ns
+        match = BENCHER_PATTERN.search(line)
+        if not match:
+            continue
+        operation, variant, _size, ns_str = match.groups()
+        if operation in results:
+            results[operation][variant] = int(ns_str.replace(",", ""))
 
     return results
 
 
-def generate_charts(results):
-    """Generate PNG comparison charts."""
+def has_any_results(results):
+    """Return ``True`` when at least one measurement was parsed."""
+    return any(measurements for measurements in results.values())
+
+
+def format_speedup(value, baseline):
+    """Annotate ``value`` with how it compares to the ``baseline`` measurement."""
+    if not value:
+        return "N/A"
+    if not baseline:
+        return f"{value}"
+    if value <= baseline:
+        return f"{value} ({baseline / value:.1f}x faster)"
+    return f"{value} ({value / baseline:.1f}x slower)"
+
+
+def format_results_table(results):
+    """Render the Markdown results table (all numbers in nanoseconds)."""
+    labels = [label for _, label, _ in VARIANTS]
+    widths = [max(len(label), 13) for label in labels]
+    operation_width = max(len(label) for _, label in OPERATIONS)
+
+    header = "| " + "Operation".ljust(operation_width) + " | "
+    header += " | ".join(label.ljust(width) for label, width in zip(labels, widths))
+    header += " |"
+    separator = "|" + "-" * (operation_width + 2)
+    separator += "".join("|" + "-" * (width + 2) for width in widths) + "|"
+
+    lines = [header, separator]
+    for op, op_label in OPERATIONS:
+        baseline = results[op].get(BASELINE, 0)
+        cells = []
+        for key, _label, _color in VARIANTS:
+            value = results[op].get(key, 0)
+            if key == BASELINE:
+                cells.append(str(value) if value else "N/A")
+            else:
+                cells.append(format_speedup(value, baseline))
+        row = "| " + op_label.ljust(operation_width) + " | "
+        row += " | ".join(cell.ljust(width) for cell, width in zip(cells, widths))
+        row += " |"
+        lines.append(row)
+
+    return "\n".join(lines)
+
+
+def build_provenance(benchmark_links=None, background_links=None, generated_at=None):
+    """Describe how and when the committed results were produced."""
+    benchmark_links = benchmark_links or os.environ.get("BENCHMARK_LINK_COUNT", "1000")
+    background_links = background_links or os.environ.get(
+        "BACKGROUND_LINK_COUNT", "3000"
+    )
+    generated_at = generated_at or datetime.now(timezone.utc).strftime(
+        "%Y-%m-%d %H:%M UTC"
+    )
+
+    source = "a local benchmark run"
+    repository = os.environ.get("GITHUB_REPOSITORY")
+    run_id = os.environ.get("GITHUB_RUN_ID")
+    if repository and run_id:
+        source = (
+            f"[GitHub Actions run {run_id}]"
+            f"(https://github.com/{repository}/actions/runs/{run_id})"
+        )
+
+    return (
+        f"_Generated {generated_at} by {source} — "
+        f"{benchmark_links} benchmarked links, "
+        f"{background_links} background links._"
+    )
+
+
+def render_results_section(results, provenance=None):
+    """Render the README section: provenance line plus the results table."""
+    provenance = provenance if provenance is not None else build_provenance()
+    return f"{provenance}\n\n{format_results_table(results)}"
+
+
+def update_readme(readme_path, section):
+    """Replace the marked results section of the README.
+
+    Returns ``True`` when the file was modified.
+    """
+    with open(readme_path, "r", encoding="utf-8") as handle:
+        readme = handle.read()
+
+    if README_START_MARKER not in readme or README_END_MARKER not in readme:
+        raise ValueError(
+            f"{readme_path} does not contain the "
+            f"{README_START_MARKER} / {README_END_MARKER} markers"
+        )
+
+    pattern = re.compile(
+        re.escape(README_START_MARKER) + r".*?" + re.escape(README_END_MARKER),
+        re.DOTALL,
+    )
+    replacement = f"{README_START_MARKER}\n{section}\n{README_END_MARKER}"
+    updated = pattern.sub(lambda _match: replacement, readme, count=1)
+
+    if updated == readme:
+        return False
+
+    with open(readme_path, "w", encoding="utf-8") as handle:
+        handle.write(updated)
+    return True
+
+
+def _series(results, variant):
+    """Measurements of one variant across all operations, 0 when missing."""
+    return [results[op].get(variant, 0) for op, _ in OPERATIONS]
+
+
+def _ensure_min_visible(values, minimum):
+    """Keep non-zero bars at least ``minimum`` wide so they stay visible."""
+    return [max(value, minimum) if value > 0 else 0 for value in values]
+
+
+def _plot(results, filename, log_scale, output_dir):
+    positions = np.arange(len(OPERATIONS))
+    width = 0.15
+    figure, axes = plt.subplots(figsize=(12, 8))
+
+    series = {key: _series(results, key) for key, _, _ in VARIANTS}
+
+    if log_scale:
+        plotted = series
+    else:
+        # On a linear scale Doublets bars are invisible next to SpacetimeDB, so
+        # give every non-zero measurement a minimum visible width (~0.5% of the
+        # maximum), matching the sibling benchmark charts.
+        all_values = [value for values in series.values() for value in values]
+        max_value = max(all_values) if all_values else 1
+        minimum = max_value * 0.005
+        plotted = {
+            key: _ensure_min_visible(values, minimum) for key, values in series.items()
+        }
+
+    offset_base = (len(VARIANTS) - 1) / 2
+    for index, (key, label, color) in enumerate(VARIANTS):
+        offset = (index - offset_base) * width
+        axes.barh(positions + offset, plotted[key], width, label=label, color=color)
+
+    axes.set_xlabel("Time (ns) – log scale" if log_scale else "Time (ns)")
+    axes.set_title("Benchmark Comparison: SpacetimeDB vs Doublets (Rust)")
+    axes.set_yticks(positions)
+    axes.set_yticklabels([label for _, label in OPERATIONS])
+    if log_scale:
+        axes.set_xscale("log")
+    axes.legend()
+    figure.tight_layout()
+
+    path = os.path.join(output_dir, filename) if output_dir else filename
+    figure.savefig(path)
+    plt.close(figure)
+    print(f"Generated {path}")
+
+
+def generate_charts(results, output_dir=""):
+    """Generate the linear and logarithmic comparison charts."""
     if not HAS_MATPLOTLIB:
         return
-
-    variant_keys = list(VARIANTS.keys())
-    op_labels = [OPERATION_LABELS.get(op, op) for op in OPERATIONS]
-    n_ops = len(OPERATIONS)
-    n_variants = len(variant_keys)
-
-    # Collect data
-    data = {}
-    for variant in variant_keys:
-        data[variant] = []
-        for op in OPERATIONS:
-            ns = results[op].get(variant, 0)
-            data[variant].append(ns)
-
-    x = np.arange(n_ops)
-    width = 0.8 / n_variants
-
-    def make_chart(ax, log_scale=False):
-        for i, variant in enumerate(variant_keys):
-            vals = [v if v > 0 else float('nan') for v in data[variant]]
-            offset = (i - n_variants / 2 + 0.5) * width
-            bars = ax.bar(
-                x + offset, vals, width,
-                label=VARIANTS[variant],
-                color=COLORS[variant],
-                alpha=0.85
-            )
-
-        ax.set_xlabel('Operation')
-        ax.set_ylabel('Time (ns/iter)')
-        title = 'SpacetimeDB vs Doublets — Link CRUD Benchmark'
-        if log_scale:
-            title += ' (Log Scale)'
-            ax.set_yscale('log')
-        ax.set_title(title)
-        ax.set_xticks(x)
-        ax.set_xticklabels(op_labels, rotation=30, ha='right')
-        ax.legend()
-        ax.grid(axis='y', alpha=0.3)
-        plt.tight_layout()
-
-    # Linear scale
-    fig, ax = plt.subplots(figsize=(12, 6))
-    make_chart(ax, log_scale=False)
-    fig.savefig('bench_rust.png', dpi=150, bbox_inches='tight')
-    plt.close(fig)
-    print("Generated bench_rust.png")
-
-    # Log scale
-    fig, ax = plt.subplots(figsize=(12, 6))
-    make_chart(ax, log_scale=True)
-    fig.savefig('bench_rust_log_scale.png', dpi=150, bbox_inches='tight')
-    plt.close(fig)
-    print("Generated bench_rust_log_scale.png")
+    _plot(results, "bench_rust.png", log_scale=False, output_dir=output_dir)
+    _plot(results, "bench_rust_log_scale.png", log_scale=True, output_dir=output_dir)
 
 
-def generate_markdown_table(results):
-    """Generate a Markdown results table with speedup ratios."""
-    baseline = 'SpacetimeDB'
-    doublets_variants = ['Doublets_United_Volatile', 'Doublets_Split_Volatile']
+def copy_charts(docs_dir, output_dir=""):
+    """Copy generated charts into the documentation directory."""
+    os.makedirs(docs_dir, exist_ok=True)
+    for chart in ("bench_rust.png", "bench_rust_log_scale.png"):
+        source = os.path.join(output_dir, chart) if output_dir else chart
+        if os.path.exists(source):
+            shutil.copyfile(source, os.path.join(docs_dir, chart))
+            print(f"Copied {source} -> {os.path.join(docs_dir, chart)}")
 
-    header = (
-        '| Operation | SpacetimeDB (ns/iter) '
-        '| Doublets United (ns/iter) | Doublets United Speedup '
-        '| Doublets Split (ns/iter) | Doublets Split Speedup |'
+
+def parse_args(argv):
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument(
+        "input",
+        nargs="?",
+        default="out.txt",
+        help="criterion bencher output file (default: out.txt)",
     )
-    sep = '|---|---|---|---|---|---|'
-
-    rows = [header, sep]
-    for op in OPERATIONS:
-        label = OPERATION_LABELS.get(op, op)
-        baseline_ns = results[op].get(baseline, 0)
-        baseline_str = f'{baseline_ns:,}' if baseline_ns else 'N/A'
-
-        row = f'| {label} | {baseline_str} '
-        for variant in doublets_variants:
-            ns = results[op].get(variant, 0)
-            ns_str = f'{ns:,}' if ns else 'N/A'
-            if baseline_ns > 0 and ns > 0:
-                speedup = baseline_ns / ns
-                speedup_str = f'{speedup:.0f}x'
-            else:
-                speedup_str = 'N/A'
-            row += f'| {ns_str} | {speedup_str} '
-        row += '|'
-        rows.append(row)
-
-    table = '\n'.join(rows)
-    with open('results.md', 'w') as f:
-        f.write('# Benchmark Results\n\n')
-        f.write(f'> Background: {os.environ.get("BACKGROUND_LINK_COUNT", "3000")} links\n')
-        f.write(f'> Operations: {os.environ.get("BENCHMARK_LINK_COUNT", "1000")} links\n\n')
-        f.write(table)
-        f.write('\n')
-
-    print("Generated results.md")
-    print('\n' + table)
+    parser.add_argument(
+        "--results",
+        default="results.md",
+        help="path of the generated Markdown table (default: results.md)",
+    )
+    parser.add_argument(
+        "--readme",
+        default=None,
+        help="README to update in place between the benchmark result markers",
+    )
+    parser.add_argument(
+        "--docs-dir",
+        default=None,
+        help="directory the generated charts are copied to (for example ../Docs)",
+    )
+    parser.add_argument(
+        "--output-dir",
+        default="",
+        help="directory the charts are written to (default: working directory)",
+    )
+    return parser.parse_args(argv)
 
 
-def main():
-    filename = sys.argv[1] if len(sys.argv) > 1 else 'out.txt'
-    results = parse_results(filename)
+def main(argv=None):
+    args = parse_args(argv if argv is not None else sys.argv[1:])
+    results = parse_results(args.input)
 
-    if all(not v for v in results.values()):
-        print(f"No benchmark data found in {filename}")
-        return
+    if not has_any_results(results):
+        print(f"No benchmark data found in {args.input}")
+        return 1
 
-    generate_charts(results)
-    generate_markdown_table(results)
+    section = render_results_section(results)
+    table = format_results_table(results)
+    print(table)
+
+    with open(args.results, "w", encoding="utf-8") as handle:
+        handle.write(section + "\n")
+    print(f"Generated {args.results}")
+
+    generate_charts(results, args.output_dir)
+
+    if args.docs_dir:
+        copy_charts(args.docs_dir, args.output_dir)
+
+    if args.readme:
+        changed = update_readme(args.readme, section)
+        print(
+            f"{'Updated' if changed else 'No changes needed in'} {args.readme}",
+        )
+
+    return 0
 
 
-if __name__ == '__main__':
-    main()
+if __name__ == "__main__":
+    sys.exit(main())
