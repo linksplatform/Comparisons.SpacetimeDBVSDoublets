@@ -3,10 +3,10 @@ name: Rust Benchmark
 on:
   push:
     branches: [main, master]
-    paths: ['rust/**', 'spacetime-module/**', '.github/workflows/rust-benchmark.yml']
+    paths: ['rust/**', '.github/workflows/rust-benchmark.yml']
   pull_request:
     branches: [main, master]
-    paths: ['rust/**', 'spacetime-module/**', '.github/workflows/rust-benchmark.yml']
+    paths: ['rust/**', '.github/workflows/rust-benchmark.yml']
 
 env:
   CARGO_TERM_COLOR: always
