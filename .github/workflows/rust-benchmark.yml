@@ -204,6 +204,11 @@ jobs:
           SPACETIMEDB_DB: benchmark-links
         run: |
           set -o pipefail
+          # Criterion compares against target/criterion/<id>/<size>/base and prints
+          # the failure to *stdout* when that directory was restored incompletely by
+          # the cache, which splices "Criterion.rs ERROR: ..." into the middle of the
+          # bencher records (see CI run 35028280108). Start from a clean state.
+          rm -rf target/criterion
           cargo bench --bench bench -- \
             --output-format bencher \
             --sample-size 10 \
@@ -230,6 +235,9 @@ jobs:
           } >> "$GITHUB_STEP_SUMMARY"
 
       - name: Upload PR benchmark artifacts
+        # Keep the raw output even when the results step fails,
+        # so a broken run can be diagnosed from the artifact.
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: benchmark-results-pr
@@ -333,6 +341,11 @@ jobs:
           SPACETIMEDB_DB: benchmark-links
         run: |
           set -o pipefail
+          # Criterion compares against target/criterion/<id>/<size>/base and prints
+          # the failure to *stdout* when that directory was restored incompletely by
+          # the cache, which splices "Criterion.rs ERROR: ..." into the middle of the
+          # bencher records (see CI run 35028280108). Start from a clean state.
+          rm -rf target/criterion
           cargo bench --bench bench -- \
             --output-format bencher \
             --sample-size 20 \
@@ -379,6 +392,9 @@ jobs:
           fi
 
       - name: Upload benchmark artifacts
+        # Keep the raw output even when the results step fails,
+        # so a broken run can be diagnosed from the artifact.
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: benchmark-results

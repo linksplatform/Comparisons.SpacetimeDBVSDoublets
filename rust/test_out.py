@@ -112,6 +112,71 @@ class ParseResultsTests(unittest.TestCase):
 
         self.assertFalse(out.has_any_results(out.parse_results(path)))
 
+    def test_interleaved_criterion_errors_do_not_hide_measurements(self):
+        """Regression test for the `No benchmark data found` CI failure.
+
+        Criterion prints its own errors to stdout between `test <id> ... ` and
+        `bench: ...`, which splits the record over two lines (CI run 35028280108).
+        """
+        path = write(
+            os.path.join(self.tmp.name, "interleaved.txt"),
+            'test create/SpacetimeDB/10 ... Criterion.rs ERROR: error: Failed to '
+            'access file "target/criterion/create_SpacetimeDB/10/base/sample.json": '
+            "No such file or directory (os error 2)\n"
+            "bench:    24992765 ns/iter (+/- 1790323177)\n"
+            "\n"
+            "test create/Doublets_United_Volatile/10 ... Criterion.rs ERROR: error: "
+            'Failed to access file "sample.json": No such file or directory '
+            "(os error 2)\n"
+            "bench:         464 ns/iter (+/- 12)\n",
+        )
+
+        results = out.parse_results(path)
+
+        self.assertEqual(results["create"]["SpacetimeDB"], 24_992_765)
+        self.assertEqual(results["create"]["Doublets_United_Volatile"], 464)
+
+    def test_measurement_is_not_borrowed_from_the_next_benchmark(self):
+        """An aborted benchmark must not take the following benchmark's number."""
+        path = write(
+            os.path.join(self.tmp.name, "aborted.txt"),
+            "test create/SpacetimeDB/10 ... \n"
+            "test create/Doublets_United_Volatile/10 ... bench: 464 ns/iter (+/- 12)\n",
+        )
+
+        results = out.parse_results(path)
+
+        self.assertNotIn("SpacetimeDB", results["create"])
+        self.assertEqual(results["create"]["Doublets_United_Volatile"], 464)
+
+
+class InputExcerptTests(unittest.TestCase):
+    def setUp(self):
+        self.tmp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.tmp.cleanup)
+
+    def test_missing_file(self):
+        path = os.path.join(self.tmp.name, "absent.txt")
+
+        self.assertEqual(out.report_input_excerpt(path), f"{path} does not exist")
+
+    def test_empty_file(self):
+        path = write(os.path.join(self.tmp.name, "empty.txt"), "\n\n")
+
+        self.assertEqual(out.report_input_excerpt(path), f"{path} is empty")
+
+    def test_reports_the_tail(self):
+        path = write(
+            os.path.join(self.tmp.name, "noise.txt"),
+            "".join(f"line {index}\n" for index in range(10)),
+        )
+
+        excerpt = out.report_input_excerpt(path, lines=3)
+
+        self.assertIn("Last 3 line(s)", excerpt)
+        self.assertIn("line 9", excerpt)
+        self.assertNotIn("line 6", excerpt)
+
 
 class SpeedupFormattingTests(unittest.TestCase):
     def test_faster_than_baseline(self):

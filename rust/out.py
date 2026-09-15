@@ -36,10 +36,20 @@ except ImportError:  # pragma: no cover - exercised only without matplotlib
     print("Warning: matplotlib/numpy not installed, skipping chart generation")
     HAS_MATPLOTLIB = False
 
-# Bencher output line format emitted by criterion:
+# Bencher output format emitted by criterion:
 # test <operation>/<variant>/<size> ... bench: <ns_per_iter> ns/iter (+/- <variance>)
+#
+# The two halves are printed by separate statements (`print!("test {} ... ")` and
+# `println!("bench: ...")`, criterion-0.3.6/src/report.rs), and criterion logs its
+# own errors to stdout in between (`println!("Criterion.rs ERROR: ...")`,
+# criterion-0.3.6/src/macros_private.rs). A stale `target/criterion/<id>/<size>/base`
+# directory is enough to splice such an error into the middle of the record and push
+# `bench:` onto the next line, so the pattern skips anything that is not the start of
+# the next `test ` record.
 BENCHER_PATTERN = re.compile(
-    r"test\s+(\w+)/(\w+)/(\d+)\s+\.\.\.\s+bench:\s+([\d,]+)\s+ns/iter"
+    r"test\s+(\w+)/(\w+)/(\d+)\s+\.\.\.\s*"
+    r"(?:(?!\btest\s)[\s\S])*?"
+    r"bench:\s+([\d,]+)\s+ns/iter"
 )
 
 # Operations in the order they are reported, mapped to human readable labels.
@@ -69,26 +79,41 @@ README_START_MARKER = "<!--BENCHMARK_RESULTS_START-->"
 README_END_MARKER = "<!--BENCHMARK_RESULTS_END-->"
 
 
-def parse_results(filename="out.txt"):
-    """Parse bencher-format output into ``{operation: {variant: ns_per_iter}}``."""
+def parse_text(content):
+    """Parse bencher-format text into ``{operation: {variant: ns_per_iter}}``."""
     results = {op: {} for op, _ in OPERATIONS}
 
-    if not os.path.exists(filename):
-        print(f"Warning: {filename} not found")
-        return results
-
-    with open(filename, "r", encoding="utf-8") as handle:
-        content = handle.read()
-
-    for line in content.splitlines():
-        match = BENCHER_PATTERN.search(line)
-        if not match:
-            continue
+    for match in BENCHER_PATTERN.finditer(content):
         operation, variant, _size, ns_str = match.groups()
         if operation in results:
             results[operation][variant] = int(ns_str.replace(",", ""))
 
     return results
+
+
+def parse_results(filename="out.txt"):
+    """Parse a bencher-format output file."""
+    if not os.path.exists(filename):
+        print(f"Warning: {filename} not found")
+        return {op: {} for op, _ in OPERATIONS}
+
+    with open(filename, "r", encoding="utf-8") as handle:
+        return parse_text(handle.read())
+
+
+def report_input_excerpt(filename, lines=20):
+    """Describe the tail of ``filename`` so an unparsable run can be diagnosed."""
+    if not os.path.exists(filename):
+        return f"{filename} does not exist"
+
+    with open(filename, "r", encoding="utf-8") as handle:
+        content = handle.read()
+
+    if not content.strip():
+        return f"{filename} is empty"
+
+    tail = content.splitlines()[-lines:]
+    return "\n".join([f"Last {len(tail)} line(s) of {filename}:", *tail])
 
 
 def has_any_results(results):
@@ -303,6 +328,7 @@ def main(argv=None):
 
     if not has_any_results(results):
         print(f"No benchmark data found in {args.input}")
+        print(report_input_excerpt(args.input))
         return 1
 
     section = render_results_section(results)
