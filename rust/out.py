@@ -14,7 +14,7 @@ The chart and table style follows the sibling benchmarks
 LinksPlatform comparisons are documented the same way.
 
 Usage:
-    python3 out.py [out.txt] [--readme ../README.md] [--docs-dir ../Docs]
+    python3 out.py [out.txt] [--readme ../README.md] [--docs-dir ../docs/benchmarks]
 """
 
 import argparse
@@ -312,7 +312,7 @@ def parse_args(argv):
     parser.add_argument(
         "--docs-dir",
         default=None,
-        help="directory the generated charts are copied to (for example ../Docs)",
+        help="directory the generated charts are copied to (for example ../docs/benchmarks)",
     )
     parser.add_argument(
         "--output-dir",

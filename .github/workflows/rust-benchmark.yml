@@ -262,7 +262,7 @@ jobs:
     needs: [test, results-pipeline]
     if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
     timeout-minutes: 180
-    # Required to push the regenerated README table and Docs/ charts back.
+    # Required to push the regenerated README table and docs/benchmarks/ charts back.
     permissions:
       contents: write
     steps:
@@ -352,7 +352,7 @@ jobs:
             --nresamples 10000 \
             | tee out.txt
 
-      # Regenerates results.md, both charts, copies the charts into Docs/ and
+      # Regenerates results.md, both charts, copies the charts into docs/benchmarks/ and
       # replaces the results section of README.md, so the numbers are readable
       # in the repository without running the benchmark locally.
       - name: Generate results table and charts
@@ -363,7 +363,7 @@ jobs:
           python3 out.py out.txt \
             --results results.md \
             --readme ../README.md \
-            --docs-dir ../Docs
+            --docs-dir ../docs/benchmarks
 
       - name: Publish results to the job summary
         run: |
@@ -381,9 +381,9 @@ jobs:
       - name: Commit benchmark results
         working-directory: .
         run: |
-          # The charts live in Docs/ only; the copies in rust/ are build output
-          # and are kept as workflow artifacts instead of being committed twice.
-          git add Docs README.md rust/results.md rust/out.txt
+          # The charts live in docs/benchmarks/ only; the copies in rust/ are build
+          # output and are kept as workflow artifacts instead of being committed twice.
+          git add docs/benchmarks README.md rust/results.md rust/out.txt
           if git diff --staged --quiet; then
             echo "No changes to commit"
           else

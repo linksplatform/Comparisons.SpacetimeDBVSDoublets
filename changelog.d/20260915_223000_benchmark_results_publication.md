@@ -7,7 +7,7 @@ bump: patch
 - Added `set -o pipefail` around `cargo bench ... | tee out.txt`, so a failing benchmark is no longer masked by `tee`
 
 ### Added
-- Benchmark results are now published automatically: `rust/out.py` writes `rust/results.md`, copies both charts into `Docs/` and replaces the results section of `README.md`, which CI commits back to `main`
+- Benchmark results are now published automatically: `rust/out.py` writes `rust/results.md`, copies both charts into `docs/benchmarks/` and replaces the results section of `README.md`, which CI commits back to `main`
 - `rust/test_out.py` — unit tests for the results reporting pipeline, run by a dedicated `results-pipeline` CI job that gates the benchmark jobs
 - Benchmark results are written to the GitHub Actions job summary for both the pull request and the full run
 

@@ -54,8 +54,8 @@ the benchmark locally.
 
 ### Rust
 
-![Image of Rust benchmark (pixel scale)](https://github.com/linksplatform/Comparisons.SpacetimeDBVSDoublets/blob/main/Docs/bench_rust.png?raw=true)
-![Image of Rust benchmark (log scale)](https://github.com/linksplatform/Comparisons.SpacetimeDBVSDoublets/blob/main/Docs/bench_rust_log_scale.png?raw=true)
+![Image of Rust benchmark (pixel scale)](https://github.com/linksplatform/Comparisons.SpacetimeDBVSDoublets/blob/main/docs/benchmarks/bench_rust.png?raw=true)
+![Image of Rust benchmark (log scale)](https://github.com/linksplatform/Comparisons.SpacetimeDBVSDoublets/blob/main/docs/benchmarks/bench_rust_log_scale.png?raw=true)
 
 ### Raw benchmark results (all numbers are in nanoseconds)
 
@@ -132,9 +132,10 @@ SPACETIMEDB_URI=http://localhost:3000 SPACETIMEDB_DB=benchmark-links \
 # Generate the results table and charts from out.txt
 python3 out.py out.txt --results results.md
 
-# Regenerate everything the CI publishes: results.md, Docs/ charts and the
-# results section of README.md
-python3 out.py out.txt --results results.md --readme ../README.md --docs-dir ../Docs
+# Regenerate everything the CI publishes: results.md, docs/benchmarks/ charts
+# and the results section of README.md
+python3 out.py out.txt --results results.md --readme ../README.md \
+  --docs-dir ../docs/benchmarks
 ```
 
 ### Run tests
@@ -159,9 +160,10 @@ python3 -m unittest test_out -v
 
 ```
 .
-├── Docs/                       # Benchmark charts published by CI and shown above
-│   ├── bench_rust.png
-│   └── bench_rust_log_scale.png
+├── docs/
+│   └── benchmarks/             # Benchmark charts published by CI and shown above
+│       ├── bench_rust.png
+│       └── bench_rust_log_scale.png
 ├── rust/
 │   ├── spacetime-module/       # SpacetimeDB WASM module (links table + reducers)
 │   │   ├── Cargo.toml

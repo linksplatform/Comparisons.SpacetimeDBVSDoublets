@@ -304,7 +304,7 @@ class MainTests(unittest.TestCase):
         self.input = write(os.path.join(self.tmp.name, "out.txt"), SAMPLE_OUT_TXT)
         self.readme = write(os.path.join(self.tmp.name, "README.md"), README_TEMPLATE)
         self.results = os.path.join(self.tmp.name, "results.md")
-        self.docs = os.path.join(self.tmp.name, "Docs")
+        self.docs = os.path.join(self.tmp.name, "docs", "benchmarks")
 
     def test_writes_results_and_updates_readme(self):
         exit_code = out.main(
