@@ -368,8 +368,9 @@ jobs:
       - name: Commit benchmark results
         working-directory: .
         run: |
-          git add Docs README.md rust/results.md
-          git add -f rust/out.txt rust/bench_rust.png rust/bench_rust_log_scale.png
+          # The charts live in Docs/ only; the copies in rust/ are build output
+          # and are kept as workflow artifacts instead of being committed twice.
+          git add Docs README.md rust/results.md rust/out.txt
           if git diff --staged --quiet; then
             echo "No changes to commit"
           else
