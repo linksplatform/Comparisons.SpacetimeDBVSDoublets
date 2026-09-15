@@ -138,6 +138,11 @@ jobs:
         uses: dtolnay/rust-toolchain@master
         with:
           toolchain: ${{ env.toolchain }}
+          # rust/rust-toolchain.toml requires these components. Installing them
+          # with the toolchain avoids rustup adding them lazily on the first
+          # cargo invocation, which fails on the runner image with
+          # "detected conflict: 'bin/cargo-fmt'".
+          components: rustfmt, clippy
           targets: wasm32-unknown-unknown
 
       - name: Setup Python
@@ -262,6 +267,11 @@ jobs:
         uses: dtolnay/rust-toolchain@master
         with:
           toolchain: ${{ env.toolchain }}
+          # rust/rust-toolchain.toml requires these components. Installing them
+          # with the toolchain avoids rustup adding them lazily on the first
+          # cargo invocation, which fails on the runner image with
+          # "detected conflict: 'bin/cargo-fmt'".
+          components: rustfmt, clippy
           targets: wasm32-unknown-unknown
 
       - name: Setup Python
