@@ -1,3 +1,10 @@
+# Pinned nightly toolchain.
+#
+# The benchmark depends on `#![feature(allocator_api)]` and on the patched
+# `doublets` crates, which use unstable `Try`/`Residual` APIs. Those APIs keep
+# changing on rolling nightly, which repeatedly broke CI (see issue #14), so the
+# toolchain is pinned to a known-good nightly and updated deliberately.
 [toolchain]
-channel = "nightly"
+channel = "nightly-2026-04-14"
 components = ["rustfmt", "clippy"]
+targets = ["wasm32-unknown-unknown"]
