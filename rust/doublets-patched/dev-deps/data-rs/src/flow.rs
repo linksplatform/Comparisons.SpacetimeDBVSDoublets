@@ -1,4 +1,4 @@
-use std::ops::{ControlFlow, FromResidual, Try};
+use std::ops::{ControlFlow, FromResidual, Residual, Try};
 
 pub enum Flow {
     Continue,
@@ -9,6 +9,13 @@ impl FromResidual for Flow {
     fn from_residual(_: <Self as Try>::Residual) -> Self {
         Flow::Break
     }
+}
+
+// `Try::Residual` gained a `Residual<Self::Output>` bound on modern nightly, so `Flow`
+// must also declare which `Try` type it reconstructs when used as a residual. `Flow` is
+// its own residual and its `Output` is `()`, so the canonical `Try` type is `Flow` itself.
+impl Residual<()> for Flow {
+    type TryType = Flow;
 }
 
 impl Try for Flow {
