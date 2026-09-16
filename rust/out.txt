@@ -1,0 +1,91 @@
+WARNING: HTML report generation will become a non-default optional feature in Criterion.rs 0.4.0.
+This feature is being moved to cargo-criterion (https://github.com/bheisler/cargo-criterion) and will be optional in a future version of Criterion.rs. To silence this warning, either switch to cargo-criterion or enable the 'html_reports' feature in your Cargo.toml.
+
+WARNING: In Criterion.rs 0.4.0, running criterion benchmarks outside of cargo-criterion will become a default optional feature.
+The statistical analysis and reporting is being moved to cargo-criterion (https://github.com/bheisler/cargo-criterion) and will be optional in a future version of Criterion.rs. To silence this warning, either switch to cargo-criterion or enable the 'cargo_bench_support' feature in your Cargo.toml.
+
+Gnuplot not found, using plotters backend
+
+Warning: Unable to complete 20 samples in 5.0s. You may wish to increase target time to 204.8s, or reduce sample count to 10.
+test create/SpacetimeDB/1000 ... bench:  2539260579 ns/iter (+/- 24015279)
+
+test create/Doublets_United_Volatile/1000 ... bench:       73090 ns/iter (+/- 517)
+
+test create/Doublets_Split_Volatile/1000 ... bench:       48458 ns/iter (+/- 307)
+
+test create/Doublets_United_NonVolatile/1000 ... bench:       70181 ns/iter (+/- 350)
+
+test create/Doublets_Split_NonVolatile/1000 ... bench:       48606 ns/iter (+/- 310)
+
+
+Warning: Unable to complete 20 samples in 5.0s. You may wish to increase target time to 233.9s, or reduce sample count to 10.
+test delete/SpacetimeDB/1000 ... bench:  1276662577 ns/iter (+/- 15290294)
+
+test delete/Doublets_United_Volatile/1000 ... bench:      159655 ns/iter (+/- 458)
+
+test delete/Doublets_Split_Volatile/1000 ... bench:       96915 ns/iter (+/- 324)
+
+test delete/Doublets_United_NonVolatile/1000 ... bench:      159342 ns/iter (+/- 467)
+
+test delete/Doublets_Split_NonVolatile/1000 ... bench:       96309 ns/iter (+/- 364)
+
+
+Warning: Unable to complete 20 samples in 5.0s. You may wish to increase target time to 260.0s, or reduce sample count to 10.
+test update/SpacetimeDB/1000 ... bench:  2582139227 ns/iter (+/- 17332618)
+
+test update/Doublets_United_Volatile/1000 ... bench:      214541 ns/iter (+/- 740)
+
+test update/Doublets_Split_Volatile/1000 ... bench:       38161 ns/iter (+/- 323)
+
+test update/Doublets_United_NonVolatile/1000 ... bench:      214497 ns/iter (+/- 667)
+
+test update/Doublets_Split_NonVolatile/1000 ... bench:       37990 ns/iter (+/- 205)
+
+
+Warning: Unable to complete 20 samples in 5.0s. You may wish to increase target time to 210.2s, or reduce sample count to 10.
+test query_all/SpacetimeDB/1000 ... bench:       22522 ns/iter (+/- 4134)
+
+test query_all/Doublets_United_Volatile/1000 ... bench:       21170 ns/iter (+/- 97)
+
+test query_all/Doublets_Split_Volatile/1000 ... bench:       25503 ns/iter (+/- 171)
+
+test query_all/Doublets_United_NonVolatile/1000 ... bench:       21611 ns/iter (+/- 124)
+
+test query_all/Doublets_Split_NonVolatile/1000 ... bench:       25649 ns/iter (+/- 127)
+
+
+Warning: Unable to complete 20 samples in 5.0s. You may wish to increase target time to 212.6s, or reduce sample count to 10.
+test query_by_id/SpacetimeDB/1000 ... bench:    11191350 ns/iter (+/- 312768)
+
+test query_by_id/Doublets_United_Volatile/1000 ... bench:          53 ns/iter (+/- 4)
+
+test query_by_id/Doublets_Split_Volatile/1000 ... bench:        1019 ns/iter (+/- 23)
+
+test query_by_id/Doublets_United_NonVolatile/1000 ... bench:          53 ns/iter (+/- 17)
+
+test query_by_id/Doublets_Split_NonVolatile/1000 ... bench:        1019 ns/iter (+/- 40)
+
+
+Warning: Unable to complete 20 samples in 5.0s. You may wish to increase target time to 188.6s, or reduce sample count to 10.
+test query_by_source/SpacetimeDB/1000 ... bench:      203651 ns/iter (+/- 27980)
+
+test query_by_source/Doublets_United_Volatile/1000 ... bench:        1463 ns/iter (+/- 32)
+
+test query_by_source/Doublets_Split_Volatile/1000 ... bench:         461 ns/iter (+/- 8)
+
+test query_by_source/Doublets_United_NonVolatile/1000 ... bench:        1462 ns/iter (+/- 26)
+
+test query_by_source/Doublets_Split_NonVolatile/1000 ... bench:         464 ns/iter (+/- 11)
+
+
+Warning: Unable to complete 20 samples in 5.0s. You may wish to increase target time to 190.4s, or reduce sample count to 10.
+test query_by_target/SpacetimeDB/1000 ... bench:      182251 ns/iter (+/- 23594)
+
+test query_by_target/Doublets_United_Volatile/1000 ... bench:        1562 ns/iter (+/- 29)
+
+test query_by_target/Doublets_Split_Volatile/1000 ... bench:         392 ns/iter (+/- 6)
+
+test query_by_target/Doublets_United_NonVolatile/1000 ... bench:        1539 ns/iter (+/- 30)
+
+test query_by_target/Doublets_Split_NonVolatile/1000 ... bench:         394 ns/iter (+/- 14)
+

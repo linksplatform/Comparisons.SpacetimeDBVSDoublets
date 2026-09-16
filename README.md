@@ -40,9 +40,51 @@ Each benchmark iteration pre-populates the database with background links to sim
 
 ## Results
 
-> _Benchmark results will be automatically generated and committed here by CI when changes are merged to main._
+The numbers below represent the amount of time (ns) a single benchmark iteration takes.
 
-<!--RESULTS_TABLE_PLACEHOLDER-->
+- The first chart shows time in a pixel (linear) scale. Doublets bars are drawn with a
+  minimum visible width, otherwise they would not be visible next to SpacetimeDB.
+- The second chart shows time in a logarithmic scale, to see the difference clearly,
+  because it is around 3-5 orders of magnitude.
+
+Charts and the table are recalculated by the
+[Rust Benchmark workflow](.github/workflows/rust-benchmark.yml) on every push to `main`
+and committed back to this repository, so the results are visible here without running
+the benchmark locally.
+
+### Rust
+
+![Image of Rust benchmark (pixel scale)](https://github.com/linksplatform/Comparisons.SpacetimeDBVSDoublets/blob/main/docs/benchmarks/bench_rust.png?raw=true)
+![Image of Rust benchmark (log scale)](https://github.com/linksplatform/Comparisons.SpacetimeDBVSDoublets/blob/main/docs/benchmarks/bench_rust_log_scale.png?raw=true)
+
+### Raw benchmark results (all numbers are in nanoseconds)
+
+<!--BENCHMARK_RESULTS_START-->
+_Generated 2026-09-15 22:53 UTC by [GitHub Actions run 35030102133](https://github.com/linksplatform/Comparisons.SpacetimeDBVSDoublets/actions/runs/35030102133) — 1000 benchmarked links, 3000 background links._
+
+| Operation       | Doublets United Volatile | Doublets United NonVolatile | Doublets Split Volatile | Doublets Split NonVolatile | SpacetimeDB   |
+|-----------------|--------------------------|-----------------------------|-------------------------|----------------------------|---------------|
+| Create          | 73090 (34741.6x faster)  | 70181 (36181.6x faster)     | 48458 (52401.3x faster) | 48606 (52241.7x faster)    | 2539260579    |
+| Update          | 214541 (12035.6x faster) | 214497 (12038.1x faster)    | 38161 (67664.3x faster) | 37990 (67968.9x faster)    | 2582139227    |
+| Delete          | 159655 (7996.4x faster)  | 159342 (8012.1x faster)     | 96915 (13173.0x faster) | 96309 (13255.9x faster)    | 1276662577    |
+| Query All       | 21170 (1.1x faster)      | 21611 (1.0x faster)         | 25503 (1.1x slower)     | 25649 (1.1x slower)        | 22522         |
+| Query by Id     | 53 (211157.5x faster)    | 53 (211157.5x faster)       | 1019 (10982.7x faster)  | 1019 (10982.7x faster)     | 11191350      |
+| Query by Source | 1463 (139.2x faster)     | 1462 (139.3x faster)        | 461 (441.8x faster)     | 464 (438.9x faster)        | 203651        |
+| Query by Target | 1562 (116.7x faster)     | 1539 (118.4x faster)        | 392 (464.9x faster)     | 394 (462.6x faster)        | 182251        |
+<!--BENCHMARK_RESULTS_END-->
+
+Each Doublets cell is annotated with how many times faster (or slower) it is than
+SpacetimeDB for the same operation.
+
+## Conclusion
+
+Doublets is an embedded store: an operation is a few pointer dereferences and tree
+rotations in memory (or in a memory-mapped file), while every SpacetimeDB operation is a
+reducer call over a WebSocket connection to a separate process, and every query is served
+from the client-side subscription cache. The measured difference is dominated by that
+architectural difference rather than by the data structures themselves.
+
+To get fresh numbers, please fork the repository and rerun the benchmark in GitHub Actions.
 
 ## Operation Complexity
 
@@ -68,7 +110,7 @@ The algorithmic complexity is the same for volatile and non-volatile Doublets va
 
 ### Prerequisites
 
-- Rust nightly (see `rust/rust-toolchain.toml`)
+- Rust nightly, pinned in `rust/rust-toolchain.toml` (`rustup` installs it automatically)
 - SpacetimeDB CLI: `curl -sSf https://install.spacetimedb.com | sh`
 
 ### Start SpacetimeDB server and publish module
@@ -78,8 +120,8 @@ The algorithmic complexity is the same for volatile and non-volatile Doublets va
 spacetime start &
 
 # Build and publish the links module
-spacetime build --project-path spacetime-module
-spacetime publish --project-path spacetime-module benchmark-links
+spacetime build --project-path rust/spacetime-module
+spacetime publish --project-path rust/spacetime-module --yes benchmark-links
 ```
 
 ### Run benchmarks
@@ -96,8 +138,13 @@ BENCHMARK_LINK_COUNT=10 BACKGROUND_LINK_COUNT=100 \
 SPACETIMEDB_URI=http://localhost:3000 SPACETIMEDB_DB=benchmark-links \
   cargo bench --bench bench
 
-# Generate charts from results
-python3 out.py
+# Generate the results table and charts from out.txt
+python3 out.py out.txt --results results.md
+
+# Regenerate everything the CI publishes: results.md, docs/benchmarks/ charts
+# and the results section of README.md
+python3 out.py out.txt --results results.md --readme ../README.md \
+  --docs-dir ../docs/benchmarks
 ```
 
 ### Run tests
@@ -113,23 +160,32 @@ SPACETIMEDB_URI=http://localhost:3000 SPACETIMEDB_DB=benchmark-links cargo test
 cd rust
 cargo fmt --all
 cargo clippy --all-targets
+
+# Unit tests for the results reporting pipeline (no benchmark run required)
+python3 -m unittest test_out -v
 ```
 
 ## Project Structure
 
 ```
 .
-├── spacetime-module/           # SpacetimeDB WASM module (links table + reducers)
-│   ├── Cargo.toml
-│   └── src/
-│       └── lib.rs              # Table definition and reducers using `spacetimedb` crate
+├── docs/
+│   └── benchmarks/             # Benchmark charts published by CI and shown above
+│       ├── bench_rust.png
+│       └── bench_rust_log_scale.png
 ├── rust/
+│   ├── spacetime-module/       # SpacetimeDB WASM module (links table + reducers)
+│   │   ├── Cargo.toml
+│   │   └── src/
+│   │       └── lib.rs          # Table definition and reducers using `spacetimedb` crate
 │   ├── Cargo.toml              # Package manifest with pinned dependencies
 │   ├── doublets-patched/       # Local patches to doublets-rs for modern nightly compatibility
 │   │   └── PATCHES.md          # Documents why patches are needed and what was changed
 │   ├── rust-toolchain.toml     # Pinned Rust nightly toolchain
 │   ├── rustfmt.toml            # Rust formatting config
-│   ├── out.py                  # Chart generation script (matplotlib)
+│   ├── out.py                  # Results table, charts and README update
+│   ├── test_out.py             # Unit tests for out.py
+│   ├── results.md              # Generated results table (committed by CI)
 │   ├── src/
 │   │   ├── lib.rs              # Links trait, constants (BENCHMARK_LINK_COUNT, BACKGROUND_LINK_COUNT)
 │   │   ├── module_bindings/    # spacetimedb-sdk client bindings for the links module
@@ -145,7 +201,7 @@ cargo clippy --all-targets
 │       └── bench.rs            # Criterion benchmark suite (7 operations x 5 backends)
 └── .github/
     └── workflows/
-        └── rust-benchmark.yml  # CI: test on 3 OS + benchmark + chart generation
+        └── rust-benchmark.yml  # CI: test on Linux/macOS, benchmark, publish results
 ```
 
 ## License

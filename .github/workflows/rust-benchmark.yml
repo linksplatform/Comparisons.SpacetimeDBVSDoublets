@@ -3,14 +3,18 @@ name: Rust Benchmark
 on:
   push:
     branches: [main, master]
-    paths: ['rust/**', 'spacetime-module/**', '.github/workflows/rust-benchmark.yml']
+    paths: ['rust/**', '.github/workflows/rust-benchmark.yml']
   pull_request:
     branches: [main, master]
-    paths: ['rust/**', 'spacetime-module/**', '.github/workflows/rust-benchmark.yml']
+    paths: ['rust/**', '.github/workflows/rust-benchmark.yml']
 
 env:
   CARGO_TERM_COLOR: always
   RUST_BACKTRACE: 1
+  # Pinned nightly, kept in sync with rust/rust-toolchain.toml. The patched
+  # doublets crates rely on unstable APIs, so a rolling nightly breaks the build
+  # without any change in this repository.
+  toolchain: nightly-2026-04-14
 
 defaults:
   run:
@@ -28,10 +32,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Setup Rust (nightly)
+      - name: Setup Rust (pinned nightly)
         uses: dtolnay/rust-toolchain@master
         with:
-          toolchain: nightly
+          toolchain: ${{ env.toolchain }}
           components: rustfmt, clippy
           targets: wasm32-unknown-unknown
 
@@ -46,12 +50,6 @@ jobs:
 
       - name: Run Clippy
         run: cargo clippy --all-targets
-
-      # Guards the bencher-format parsing in out.py. Pure stdlib unittest, so it
-      # needs no extra setup and runs before the slow SpacetimeDB steps.
-      - name: Test benchmark result parser
-        shell: bash
-        run: python3 -m unittest discover -p 'test_*.py' --verbose
 
       - name: Install SpacetimeDB CLI
         shell: bash
@@ -95,6 +93,27 @@ jobs:
         # Run tests sequentially to avoid parallel interference with shared SpacetimeDB state.
         run: cargo test -- --test-threads=1
 
+  # Unit tests for the reporting pipeline (rust/out.py). They are cheap and must
+  # pass before a benchmark is run, otherwise a 40 minute benchmark could finish
+  # only to fail while publishing its results.
+  results-pipeline:
+    name: Results pipeline tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Python dependencies
+        run: pip install matplotlib numpy
+
+      - name: Run results pipeline tests
+        run: python3 -m unittest test_out -v
+
   # Quick benchmark validation for pull requests.
   # Runs benchmarks with reduced scale to verify they work and produce results
   # in well under 10 minutes. Results are not committed but uploaded as artifacts.
@@ -109,16 +128,21 @@ jobs:
   benchmark-pr:
     name: Benchmark (PR validation)
     runs-on: ubuntu-latest
-    needs: [test]
+    needs: [test, results-pipeline]
     if: github.event_name == 'pull_request'
     timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
 
-      - name: Setup Rust (nightly)
+      - name: Setup Rust (pinned nightly)
         uses: dtolnay/rust-toolchain@master
         with:
-          toolchain: nightly
+          toolchain: ${{ env.toolchain }}
+          # rust/rust-toolchain.toml requires these components. Installing them
+          # with the toolchain avoids rustup adding them lazily on the first
+          # cargo invocation, which fails on the runner image with
+          # "detected conflict: 'bin/cargo-fmt'".
+          components: rustfmt, clippy
           targets: wasm32-unknown-unknown
 
       - name: Setup Python
@@ -179,6 +203,12 @@ jobs:
           SPACETIMEDB_URI: http://localhost:3000
           SPACETIMEDB_DB: benchmark-links
         run: |
+          set -o pipefail
+          # Criterion compares against target/criterion/<id>/<size>/base and prints
+          # the failure to *stdout* when that directory was restored incompletely by
+          # the cache, which splices "Criterion.rs ERROR: ..." into the middle of the
+          # bencher records (see CI run 35028280108). Start from a clean state.
+          rm -rf target/criterion
           cargo bench --bench bench -- \
             --output-format bencher \
             --sample-size 10 \
@@ -187,15 +217,33 @@ jobs:
             --nresamples 1000 \
             | tee out.txt
 
-      - name: Generate charts
-        run: python3 out.py
+      - name: Generate results table and charts
+        env:
+          BENCHMARK_LINK_COUNT: 10
+          BACKGROUND_LINK_COUNT: 30
+        run: python3 out.py out.txt --results results.md
+
+      - name: Publish results to the job summary
+        run: |
+          {
+            echo "## Benchmark results (PR validation, reduced scale)"
+            echo
+            cat results.md
+            echo
+            echo "_Reduced scale: these numbers only prove the benchmark runs;"
+            echo "the published results come from the full run on \`main\`._"
+          } >> "$GITHUB_STEP_SUMMARY"
 
       - name: Upload PR benchmark artifacts
+        # Keep the raw output even when the results step fails,
+        # so a broken run can be diagnosed from the artifact.
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: benchmark-results-pr
           path: |
             rust/out.txt
+            rust/results.md
             rust/bench_rust.png
             rust/bench_rust_log_scale.png
 
@@ -211,19 +259,27 @@ jobs:
   benchmark:
     name: Benchmark (full)
     runs-on: ubuntu-latest
-    needs: [test]
+    needs: [test, results-pipeline]
     if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
     timeout-minutes: 180
+    # Required to push the regenerated README table and docs/benchmarks/ charts back.
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Setup Rust (nightly)
+      - name: Setup Rust (pinned nightly)
         uses: dtolnay/rust-toolchain@master
         with:
-          toolchain: nightly
+          toolchain: ${{ env.toolchain }}
+          # rust/rust-toolchain.toml requires these components. Installing them
+          # with the toolchain avoids rustup adding them lazily on the first
+          # cargo invocation, which fails on the runner image with
+          # "detected conflict: 'bin/cargo-fmt'".
+          components: rustfmt, clippy
           targets: wasm32-unknown-unknown
 
       - name: Setup Python
@@ -284,31 +340,66 @@ jobs:
           SPACETIMEDB_URI: http://localhost:3000
           SPACETIMEDB_DB: benchmark-links
         run: |
+          set -o pipefail
+          # Criterion compares against target/criterion/<id>/<size>/base and prints
+          # the failure to *stdout* when that directory was restored incompletely by
+          # the cache, which splices "Criterion.rs ERROR: ..." into the middle of the
+          # bencher records (see CI run 35028280108). Start from a clean state.
+          rm -rf target/criterion
           cargo bench --bench bench -- \
             --output-format bencher \
             --sample-size 20 \
             --nresamples 10000 \
             | tee out.txt
 
-      - name: Generate charts
-        run: python3 out.py
+      # Regenerates results.md, both charts, copies the charts into docs/benchmarks/ and
+      # replaces the results section of README.md, so the numbers are readable
+      # in the repository without running the benchmark locally.
+      - name: Generate results table and charts
+        env:
+          BENCHMARK_LINK_COUNT: 1000
+          BACKGROUND_LINK_COUNT: 3000
+        run: |
+          python3 out.py out.txt \
+            --results results.md \
+            --readme ../README.md \
+            --docs-dir ../docs/benchmarks
+
+      - name: Publish results to the job summary
+        run: |
+          {
+            echo "## Benchmark results (full scale)"
+            echo
+            cat results.md
+          } >> "$GITHUB_STEP_SUMMARY"
 
       - name: Configure git
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git config user.email "linksplatform@gmail.com"
+          git config user.name "LinksPlatformBencher"
 
       - name: Commit benchmark results
+        working-directory: .
         run: |
-          git add -f out.txt bench_rust.png bench_rust_log_scale.png 2>/dev/null || true
-          git diff --staged --quiet || git commit -m "chore: update benchmark results [skip ci]"
-          git push
+          # The charts live in docs/benchmarks/ only; the copies in rust/ are build
+          # output and are kept as workflow artifacts instead of being committed twice.
+          git add docs/benchmarks README.md rust/results.md rust/out.txt
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "Update benchmark results [skip ci]"
+            git push origin HEAD:${GITHUB_REF_NAME}
+          fi
 
       - name: Upload benchmark artifacts
+        # Keep the raw output even when the results step fails,
+        # so a broken run can be diagnosed from the artifact.
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: benchmark-results
           path: |
             rust/out.txt
+            rust/results.md
             rust/bench_rust.png
             rust/bench_rust_log_scale.png
