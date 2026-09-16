@@ -27,15 +27,32 @@ impl __sdk::InModule for UpdateLinkArgs {
 }
 
 #[allow(non_camel_case_types)]
+/// Extension trait for access to the reducer `update_link`.
+///
+/// Implemented for [`super::RemoteReducers`].
 pub trait update_link {
+    /// Request that the remote module invoke the reducer `update_link` to run as soon as possible.
+    ///
+    /// This method returns immediately, and errors only if we are unable to send the request.
+    /// The reducer will run asynchronously in the future,
+    ///  and this method provides no way to listen for its completion status.
+    /// /// Use [`update_link:update_link_then`] to run a callback after the reducer completes.
     fn update_link(&self, id: u64, source: u64, target: u64) -> __sdk::Result<()> {
         self.update_link_then(id, source, target, |_, _| {})
     }
+
+    /// Request that the remote module invoke the reducer `update_link` to run as soon as possible,
+    /// registering `callback` to run when we are notified that the reducer completed.
+    ///
+    /// This method returns immediately, and errors only if we are unable to send the request.
+    /// The reducer will run asynchronously in the future,
+    ///  and its status can be observed with the `callback`.
     fn update_link_then(
         &self,
         id: u64,
         source: u64,
         target: u64,
+
         callback: impl FnOnce(&super::ReducerEventContext, Result<Result<(), String>, __sdk::InternalError>)
             + Send
             + 'static,
@@ -48,6 +65,7 @@ impl update_link for super::RemoteReducers {
         id: u64,
         source: u64,
         target: u64,
+
         callback: impl FnOnce(&super::ReducerEventContext, Result<Result<(), String>, __sdk::InternalError>)
             + Send
             + 'static,

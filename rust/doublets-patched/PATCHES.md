@@ -16,6 +16,8 @@ The `doublets` crate (and its internal dependencies `platform-mem`, `platform-da
 
 - **Removed `~const` syntax**: The upstream code used `~const Fn` bounds (the "maybe-const" trait bound syntax) in several places. This experimental syntax was removed from nightly in 2023 (see [rust-lang/rust#110395](https://github.com/rust-lang/rust/issues/110395)). The affected functions were changed to use regular `Fn` bounds instead, which is correct since they are never called in a `const` context in this project.
 
+- **Added `impl Residual<()> for Flow`**: The upstream `Flow` type in `src/flow.rs` implements `std::ops::Try` with `type Residual = Flow`. Nightly later added a `Residual<Self::Output>` bound to the associated type (`pub trait Try { type Residual: Residual<Self::Output>; ... }` in `library/core/src/ops/try_trait.rs`), so the unchanged code now fails with ``error[E0277]: the trait bound `Flow: Residual<()>` is not satisfied``. `Flow` is its own residual and its `Output` is `()`, so the canonical try-type it reconstructs is `Flow` itself: `impl Residual<()> for Flow { type TryType = Flow; }`. The `try_trait_v2_residual` feature gate was added to `src/lib.rs` alongside the existing `try_trait_v2` gate, since `Residual` is exported under the separate gate.
+
 ### `platform-mem` crate (`doublets-patched/dev-deps/mem-rs/`)
 
 - **Removed obsolete `#![feature(...)]` flags**: The upstream crate declared several feature flags that have since been stabilized or renamed. Specifically, `nonnull_slice_from_raw_parts` and `slice_ptr_get` were stabilized in Rust 1.70.0 and 1.74.0 respectively. Keeping them as `#![feature(...)]` flags causes errors on modern nightly because nightly rejects `#![feature]` declarations for already-stable features.

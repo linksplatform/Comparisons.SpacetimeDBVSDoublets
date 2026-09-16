@@ -25,14 +25,31 @@ impl __sdk::InModule for CreateLinkArgs {
 }
 
 #[allow(non_camel_case_types)]
+/// Extension trait for access to the reducer `create_link`.
+///
+/// Implemented for [`super::RemoteReducers`].
 pub trait create_link {
+    /// Request that the remote module invoke the reducer `create_link` to run as soon as possible.
+    ///
+    /// This method returns immediately, and errors only if we are unable to send the request.
+    /// The reducer will run asynchronously in the future,
+    ///  and this method provides no way to listen for its completion status.
+    /// /// Use [`create_link:create_link_then`] to run a callback after the reducer completes.
     fn create_link(&self, source: u64, target: u64) -> __sdk::Result<()> {
         self.create_link_then(source, target, |_, _| {})
     }
+
+    /// Request that the remote module invoke the reducer `create_link` to run as soon as possible,
+    /// registering `callback` to run when we are notified that the reducer completed.
+    ///
+    /// This method returns immediately, and errors only if we are unable to send the request.
+    /// The reducer will run asynchronously in the future,
+    ///  and its status can be observed with the `callback`.
     fn create_link_then(
         &self,
         source: u64,
         target: u64,
+
         callback: impl FnOnce(&super::ReducerEventContext, Result<Result<(), String>, __sdk::InternalError>)
             + Send
             + 'static,
@@ -44,6 +61,7 @@ impl create_link for super::RemoteReducers {
         &self,
         source: u64,
         target: u64,
+
         callback: impl FnOnce(&super::ReducerEventContext, Result<Result<(), String>, __sdk::InternalError>)
             + Send
             + 'static,
