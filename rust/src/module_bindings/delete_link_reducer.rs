@@ -21,13 +21,30 @@ impl __sdk::InModule for DeleteLinkArgs {
 }
 
 #[allow(non_camel_case_types)]
+/// Extension trait for access to the reducer `delete_link`.
+///
+/// Implemented for [`super::RemoteReducers`].
 pub trait delete_link {
+    /// Request that the remote module invoke the reducer `delete_link` to run as soon as possible.
+    ///
+    /// This method returns immediately, and errors only if we are unable to send the request.
+    /// The reducer will run asynchronously in the future,
+    ///  and this method provides no way to listen for its completion status.
+    /// /// Use [`delete_link:delete_link_then`] to run a callback after the reducer completes.
     fn delete_link(&self, id: u64) -> __sdk::Result<()> {
         self.delete_link_then(id, |_, _| {})
     }
+
+    /// Request that the remote module invoke the reducer `delete_link` to run as soon as possible,
+    /// registering `callback` to run when we are notified that the reducer completed.
+    ///
+    /// This method returns immediately, and errors only if we are unable to send the request.
+    /// The reducer will run asynchronously in the future,
+    ///  and its status can be observed with the `callback`.
     fn delete_link_then(
         &self,
         id: u64,
+
         callback: impl FnOnce(&super::ReducerEventContext, Result<Result<(), String>, __sdk::InternalError>)
             + Send
             + 'static,
@@ -38,6 +55,7 @@ impl delete_link for super::RemoteReducers {
     fn delete_link_then(
         &self,
         id: u64,
+
         callback: impl FnOnce(&super::ReducerEventContext, Result<Result<(), String>, __sdk::InternalError>)
             + Send
             + 'static,

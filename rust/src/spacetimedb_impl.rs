@@ -17,7 +17,7 @@
 use crate::{
     module_bindings::{
         create_link_reducer::create_link, delete_all_links_reducer::delete_all_links,
-        delete_link_reducer::delete_link, link_table::LinkTableAccess,
+        delete_link_reducer::delete_link, links_table::LinksTableAccess,
         update_link_reducer::update_link, DbConnection, Link as SdbLink,
     },
     Link, Links,
