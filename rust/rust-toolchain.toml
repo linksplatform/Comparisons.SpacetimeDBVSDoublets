@@ -4,7 +4,12 @@
 # `doublets` crates, which use unstable `Try`/`Residual` APIs. Those APIs keep
 # changing on rolling nightly, which repeatedly broke CI (see issue #14), so the
 # toolchain is pinned to a known-good nightly and updated deliberately.
+#
+# The pin was moved from `nightly-2026-04-14` once the two errors it worked
+# around were fixed at the source: `E0512` in `ethnum` (fixed upstream in
+# 1.5.3) and `E0277` in the patched `platform-data` (see
+# `doublets-patched/PATCHES.md`).
 [toolchain]
-channel = "nightly-2026-04-14"
+channel = "nightly-2026-09-16"
 components = ["rustfmt", "clippy"]
 targets = ["wasm32-unknown-unknown"]

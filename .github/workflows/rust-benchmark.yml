@@ -14,7 +14,7 @@ env:
   # Pinned nightly, kept in sync with rust/rust-toolchain.toml. The patched
   # doublets crates rely on unstable APIs, so a rolling nightly breaks the build
   # without any change in this repository.
-  toolchain: nightly-2026-04-14
+  toolchain: nightly-2026-09-16
 
 defaults:
   run:
