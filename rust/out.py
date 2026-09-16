@@ -26,9 +26,12 @@ except ImportError:
     HAS_MATPLOTLIB = False
 
 # Bencher output line format:
-# test <benchmark>/<operation>/<variant>/<size> ... bench: <ns_per_iter> ns/iter (+/- <variance>)
+# test <operation>/<variant>/<size> ... bench: <ns_per_iter> ns/iter (+/- <variance>)
+#
+# The benchmarks build their ids as BenchmarkId::new("<operation>/<variant>", <size>),
+# which Criterion renders as three slash-separated components, not four.
 BENCHER_PATTERN = re.compile(
-    r'test (\w+)/(\w+)/(\w+)/(\d+)\s+\.\.\.\s+bench:\s+([\d,]+)\s+ns/iter'
+    r'test (\w+)/(\w+)/(\d+)\s+\.\.\.\s+bench:\s+([\d,]+)\s+ns/iter'
 )
 
 OPERATIONS = [
@@ -55,12 +58,16 @@ VARIANTS = {
     'SpacetimeDB': 'SpacetimeDB 2.0',
     'Doublets_United_Volatile': 'Doublets (United/Volatile)',
     'Doublets_Split_Volatile': 'Doublets (Split/Volatile)',
+    'Doublets_United_NonVolatile': 'Doublets (United/NonVolatile)',
+    'Doublets_Split_NonVolatile': 'Doublets (Split/NonVolatile)',
 }
 
 COLORS = {
     'SpacetimeDB': '#e74c3c',
     'Doublets_United_Volatile': '#2ecc71',
     'Doublets_Split_Volatile': '#3498db',
+    'Doublets_United_NonVolatile': '#f39c12',
+    'Doublets_Split_NonVolatile': '#9b59b6',
 }
 
 
@@ -78,7 +85,7 @@ def parse_results(filename='out.txt'):
     for line in content.splitlines():
         m = BENCHER_PATTERN.search(line)
         if m:
-            group, op, variant, size, ns_str = m.groups()
+            op, variant, size, ns_str = m.groups()
             ns = int(ns_str.replace(',', ''))
             if op in results:
                 results[op][variant] = ns

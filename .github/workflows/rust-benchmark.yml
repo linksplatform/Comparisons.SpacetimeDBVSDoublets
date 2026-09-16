@@ -47,6 +47,12 @@ jobs:
       - name: Run Clippy
         run: cargo clippy --all-targets
 
+      # Guards the bencher-format parsing in out.py. Pure stdlib unittest, so it
+      # needs no extra setup and runs before the slow SpacetimeDB steps.
+      - name: Test benchmark result parser
+        shell: bash
+        run: python3 -m unittest discover -p 'test_*.py' --verbose
+
       - name: Install SpacetimeDB CLI
         shell: bash
         run: |
