@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="SpacetimeDBVSDoublets/SpacetimeDBVSDoublets.csproj" />
+  <Project Path="SpacetimeDBVSDoublets.Tests/SpacetimeDBVSDoublets.Tests.csproj" />
+</Solution>
