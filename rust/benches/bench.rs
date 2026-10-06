@@ -525,7 +525,7 @@ fn spacetimedb_query_all(c: &mut Criterion) {
                         fork.create_point();
                     }
                     let start = Instant::now();
-                    let _ = fork.query_all();
+                    std::hint::black_box(fork.query_all());
                     total += start.elapsed();
                 }
                 total
@@ -553,7 +553,7 @@ fn doublets_united_query_all(c: &mut Criterion) {
                         fork.create_point();
                     }
                     let start = Instant::now();
-                    let _ = fork.query_all();
+                    std::hint::black_box(fork.query_all());
                     total += start.elapsed();
                 }
                 total
@@ -581,7 +581,7 @@ fn doublets_split_query_all(c: &mut Criterion) {
                         fork.create_point();
                     }
                     let start = Instant::now();
-                    let _ = fork.query_all();
+                    std::hint::black_box(fork.query_all());
                     total += start.elapsed();
                 }
                 total
@@ -611,7 +611,7 @@ fn doublets_united_non_volatile_query_all(c: &mut Criterion) {
                         fork.create_point();
                     }
                     let start = Instant::now();
-                    let _ = fork.query_all();
+                    std::hint::black_box(fork.query_all());
                     total += start.elapsed();
                 }
                 total
@@ -642,7 +642,7 @@ fn doublets_split_non_volatile_query_all(c: &mut Criterion) {
                         fork.create_point();
                     }
                     let start = Instant::now();
-                    let _ = fork.query_all();
+                    std::hint::black_box(fork.query_all());
                     total += start.elapsed();
                 }
                 total
