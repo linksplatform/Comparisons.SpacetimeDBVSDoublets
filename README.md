@@ -2,7 +2,7 @@
 
 Benchmark comparing [SpacetimeDB 2](https://github.com/clockworklabs/SpacetimeDB) vs [Doublets](https://github.com/linksplatform/doublets-rs) performance for basic CRUD operations with links.
 
-SpacetimeDB is benchmarked using the official `spacetimedb-sdk` Rust crate connected to a running SpacetimeDB 2.0 server. Doublets is benchmarked with both in-memory (volatile) and file-backed (non-volatile) storage variants.
+SpacetimeDB is benchmarked using the official Rust and C# SDKs connected to a running SpacetimeDB 2.10.1 server. Doublets is benchmarked with both in-memory (volatile) and file-backed (non-volatile) storage variants.
 
 ## Benchmark Operations
 
@@ -19,9 +19,9 @@ SpacetimeDB is benchmarked using the official `spacetimedb-sdk` Rust crate conne
 ## Backends Benchmarked
 
 ### SpacetimeDB
-- **SpacetimeDB** — connects to a running SpacetimeDB 2.0 server via the official `spacetimedb-sdk` Rust crate; uses the `links` table defined in the `spacetime-module` WebAssembly module
+- **SpacetimeDB** — connects to a running SpacetimeDB 2.10.1 server via its official Rust or C# client SDK; uses the `links` table defined in the `spacetime-module` WebAssembly module
 
-The benchmark uses the official SpacetimeDB Rust client SDK, calling reducers to mutate data and reading from the client-side subscription cache.
+The benchmark uses the official SpacetimeDB client SDKs, calling reducers to mutate data and reading from the client-side subscription cache.
 
 ### Doublets
 - **Doublets United Volatile** — in-memory store; links stored as contiguous `(index, source, target)` units
@@ -40,7 +40,11 @@ Each benchmark iteration pre-populates the database with background links to sim
 
 ## Results
 
-The numbers below represent the amount of time (ns) a single benchmark iteration takes.
+The numbers below represent the time a single benchmark iteration takes, with
+three significant digits and human-readable units. Doublets cells compare to
+SpacetimeDB: `N× faster`, `N× slower`, or `≈ same` when medians differ by less than
+5% of the SpacetimeDB median or their ±1 standard deviation ranges overlap.
+These ranges describe measurement variability, not a significance test.
 
 - The first chart shows time in a pixel (linear) scale. Doublets bars are drawn with a
   minimum visible width, otherwise they would not be visible next to SpacetimeDB.
@@ -48,7 +52,7 @@ The numbers below represent the amount of time (ns) a single benchmark iteration
   because it is around 3-5 orders of magnitude.
 
 Charts and the table are recalculated by the
-[Rust Benchmark workflow](.github/workflows/rust-benchmark.yml) on every push to `main`
+[Benchmark workflow](.github/workflows/rust-benchmark.yml) on every push to `main`
 and committed back to this repository, so the results are visible here without running
 the benchmark locally.
 
@@ -57,24 +61,50 @@ the benchmark locally.
 ![Image of Rust benchmark (pixel scale)](https://github.com/linksplatform/Comparisons.SpacetimeDBVSDoublets/blob/main/docs/benchmarks/bench_rust.png?raw=true)
 ![Image of Rust benchmark (log scale)](https://github.com/linksplatform/Comparisons.SpacetimeDBVSDoublets/blob/main/docs/benchmarks/bench_rust_log_scale.png?raw=true)
 
-### Raw benchmark results (all numbers are in nanoseconds)
+### Rust results
 
 <!--BENCHMARK_RESULTS_START-->
-_Generated 2026-09-16 09:20 UTC by [GitHub Actions run 35075414684](https://github.com/linksplatform/Comparisons.SpacetimeDBVSDoublets/actions/runs/35075414684) — 1000 benchmarked links, 3000 background links._
+The committed Rust measurements below are historical (2026-09-16), before the
+query dataset and optimizer fixes in issue #16. Their CPU was not recorded.
+A full run on the default branch replaces them with current measurements.
+
+_Generated 2026-09-16 09:20 UTC by [GitHub Actions run 35075414684](https://github.com/linksplatform/Comparisons.SpacetimeDBVSDoublets/actions/runs/35075414684) — 1000 benchmarked links, 3000 background links. SpacetimeDB server/CLI unknown (not recorded); Rust SDK 2.10.1 (lockfile); Doublets (patched) 0.1.0-pre+beta.15; CPU — historical run: unknown (not recorded)._
 
 | Operation       | Doublets United Volatile | Doublets United NonVolatile | Doublets Split Volatile | Doublets Split NonVolatile | SpacetimeDB   |
 |-----------------|--------------------------|-----------------------------|-------------------------|----------------------------|---------------|
-| Create          | 76689 (33385.0x faster)  | 76567 (33438.2x faster)     | 47102 (54355.7x faster) | 47395 (54019.7x faster)    | 2560262853    |
-| Update          | 247101 (10703.3x faster) | 247021 (10706.8x faster)    | 35819 (73838.1x faster) | 36029 (73407.7x faster)    | 2644805261    |
-| Delete          | 180271 (7169.4x faster)  | 181398 (7124.8x faster)     | 94116 (13732.3x faster) | 100143 (12905.9x faster)   | 1292432593    |
-| Query All       | 21580 (1.0x faster)      | 21592 (1.0x faster)         | 28388 (1.3x slower)     | 28312 (1.3x slower)        | 22126         |
-| Query by Id     | 55 (198863.3x faster)    | 59 (185381.0x faster)       | 1018 (10744.1x faster)  | 1018 (10744.1x faster)     | 10937480      |
-| Query by Source | 1476 (110.8x faster)     | 1453 (112.5x faster)        | 480 (340.7x faster)     | 478 (342.1x faster)        | 163528        |
-| Query by Target | 1514 (109.3x faster)     | 1478 (111.9x faster)        | 445 (371.8x faster)     | 393 (420.9x faster)        | 165432        |
+| Create          | 76.7 µs (33,385× faster) | 76.6 µs (33,438× faster)    | 47.1 µs (54,356× faster) | 47.4 µs (54,020× faster)   | 2.56 s        |
+| Update          | 247 µs (10,703× faster)  | 247 µs (10,707× faster)     | 35.8 µs (73,838× faster) | 36.0 µs (73,408× faster)   | 2.64 s        |
+| Delete          | 180 µs (7,169× faster)   | 181 µs (7,125× faster)      | 94.1 µs (13,732× faster) | 100 µs (12,906× faster)    | 1.29 s        |
+| Query All       | 21.6 µs (≈ same)         | 21.6 µs (≈ same)            | 28.4 µs (1.28× slower)  | 28.3 µs (1.28× slower)     | 22.1 µs       |
+| Query by Id     | 55.0 ns (198,863× faster) | 59.0 ns (185,381× faster)   | 1.02 µs (10,744× faster) | 1.02 µs (10,744× faster)   | 10.9 ms       |
+| Query by Source | 1.48 µs (111× faster)    | 1.45 µs (113× faster)       | 480 ns (341× faster)    | 478 ns (342× faster)       | 164 µs        |
+| Query by Target | 1.51 µs (109× faster)    | 1.48 µs (112× faster)       | 445 ns (372× faster)    | 393 ns (421× faster)       | 165 µs        |
 <!--BENCHMARK_RESULTS_END-->
 
-Each Doublets cell is annotated with how many times faster (or slower) it is than
-SpacetimeDB for the same operation.
+### C#
+
+The .NET 10 benchmark uses `SpacetimeDB.ClientSDK` 2.10.1 and
+`Platform.Data.Doublets` 0.18.1. It runs all seven operations and the same four
+Doublets layouts, dataset sizes, and setup/reset steps as Rust. Both languages
+wait for reducer completion on writes and materialize subscription-cache query
+results. Rust processes SDK messages on its background thread; C# pumps
+`FrameTick` on the calling thread, following the
+[official C# SDK guidance](https://spacetimedb.com/docs/clients/c-sharp/).
+
+C# sampling follows Criterion's automatic linear/flat schedule (PR: 10 samples,
+1 s warm-up, 2 s measurement; full: 20 samples, 3 s warm-up, 5 s measurement).
+Calibration includes setup/reset wall time; reported samples include only the
+operation. This avoids excessive query sampling when setup involves network calls.
+
+<!--CSHARP_RESULTS_START-->
+_No C# measurements published yet. CI validates the reduced workload on this PR;
+the first full default-branch run publishes this table and both C# charts._
+<!--CSHARP_RESULTS_END-->
+
+Each language/backend runs on a separate VM. The line above each generated table
+records run, time, sizes, versions and the CPU of both backend VMs. Raw data and
+metadata are retained as workflow artifacts. PR reports use reduced sizes and are
+uploaded for review; only full default-branch results are committed.
 
 ## Conclusion
 
@@ -111,98 +141,88 @@ The algorithmic complexity is the same for volatile and non-volatile Doublets va
 ### Prerequisites
 
 - Rust nightly, pinned in `rust/rust-toolchain.toml` (`rustup` installs it automatically)
-- SpacetimeDB CLI: `curl -sSf https://install.spacetimedb.com | sh`
+- .NET 10 SDK for C#
+- Python 3.11+ with `matplotlib` and `numpy` for reports
+- SpacetimeDB CLI: `scripts/install-spacetimedb.sh` (pinned to 2.10.1), then add
+  `$HOME/.local/bin` to `PATH`
 
 ### Start SpacetimeDB server and publish module
 
 ```bash
-# Start the local SpacetimeDB server
-spacetime start &
+(cd rust/spacetime-module && cargo build --locked --release --target wasm32-unknown-unknown)
+scripts/start-spacetimedb.sh
 
-# Build and publish the links module
-spacetime build --project-path rust/spacetime-module
-spacetime publish --project-path rust/spacetime-module --yes benchmark-links
+# Regenerate the committed C# client bindings after module changes:
+spacetime generate --lang csharp --yes \
+  --bin-path rust/spacetime-module/target/wasm32-unknown-unknown/release/spacetime_module.wasm \
+  --out-dir csharp/SpacetimeDBVSDoublets/ModuleBindings
 ```
 
 ### Run benchmarks
 
 ```bash
-cd rust
+# Full Rust run: N=1000, B=3000; choose one backend at a time.
+(cd rust && BENCHMARK_BACKEND=spacetimedb cargo bench --locked --bench bench -- \
+  --output-format bencher --sample-size 20 --nresamples 10000 > ../results-rust-spacetimedb.txt)
+(cd rust && BENCHMARK_BACKEND=doublets cargo bench --locked --bench bench -- \
+  --output-format bencher --sample-size 20 --nresamples 10000 > ../results-rust-doublets.txt)
 
-# Full benchmark run (1000 links, 3000 background)
-SPACETIMEDB_URI=http://localhost:3000 SPACETIMEDB_DB=benchmark-links \
-  cargo bench --bench bench -- --output-format bencher | tee out.txt
+# Full C# run, same defaults and sampling:
+dotnet run --project csharp/SpacetimeDBVSDoublets -c Release -- --backend=spacetimedb > results-csharp-spacetimedb.txt
+dotnet run --project csharp/SpacetimeDBVSDoublets -c Release -- --backend=doublets > results-csharp-doublets.txt
 
-# Quick benchmark run (CI scale)
-BENCHMARK_LINK_COUNT=10 BACKGROUND_LINK_COUNT=100 \
-SPACETIMEDB_URI=http://localhost:3000 SPACETIMEDB_DB=benchmark-links \
-  cargo bench --bench bench
+# Quick checks (N=10, B=30):
+(cd rust && BENCHMARK_BACKEND=doublets BENCHMARK_LINK_COUNT=10 BACKGROUND_LINK_COUNT=30 \
+  cargo bench --locked --bench bench -- --sample-size 10 --warm-up-time 1 --measurement-time 2)
+dotnet run --project csharp/SpacetimeDBVSDoublets -c Release -- --backend=doublets --quick
 
-# Generate the results table and charts from out.txt
-python3 out.py out.txt --results results.md
-
-# Regenerate everything the CI publishes: results.md, docs/benchmarks/ charts
-# and the results section of README.md
-python3 out.py out.txt --results results.md --readme ../README.md \
-  --docs-dir ../docs/benchmarks
+# Record metadata on each backend's machine, with the same size variables:
+python3 scripts/benchmark-metadata.py rust spacetimedb results-rust-spacetimedb.json
+python3 scripts/benchmark-metadata.py rust doublets results-rust-doublets.json
+python3 rust/out.py results-rust-spacetimedb.txt results-rust-doublets.txt \
+  --metadata results-rust-spacetimedb.json results-rust-doublets.json \
+  --results rust/results.md --readme README.md --output-dir docs/benchmarks
+# Use --language csharp, C# input/metadata files and --results csharp/results.md for C#.
 ```
 
-### Run tests
+`BENCHMARK_LINK_COUNT` and `BACKGROUND_LINK_COUNT` configure either language.
+`SPACETIMEDB_URI` and `SPACETIMEDB_DB` select the server and published database.
+Doublets-only runs do not require a server. Run each backend separately to avoid
+competing for CPU during measurement.
+
+Query by source/target uses unique pairs referring to actual background IDs,
+rather than duplicate pairs or hardcoded IDs that differ after SpacetimeDB resets.
+Those operations require at least `10 + ceil(N/10)` background links (both default
+and PR sizes satisfy this). Setup, dataset generation and reset are outside the
+measured interval. Query results are consumed so the optimizer preserves the work.
+
+### Tests and code quality
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for all local checks. In particular:
 
 ```bash
-cd rust
-SPACETIMEDB_URI=http://localhost:3000 SPACETIMEDB_DB=benchmark-links cargo test
+(cd rust && cargo test --locked -- --test-threads=1 --include-ignored)
+SPACETIMEDB_URI=http://localhost:3000 \
+  dotnet run --project csharp/SpacetimeDBVSDoublets.Tests -c Release -- -parallelMode none
+(cd rust && cargo fmt --all -- --check && cargo clippy --locked --all-targets -- -D warnings)
+(cd rust && python3 -m unittest test_out -v)
 ```
 
-### Code quality
-
-```bash
-cd rust
-cargo fmt --all
-cargo clippy --all-targets
-
-# Unit tests for the results reporting pipeline (no benchmark run required)
-python3 -m unittest test_out -v
-```
+The same-behavior tests compare all backends' create, update, delete, counts and
+queries, including repeated source/target datasets. They normalize IDs by creation
+order because SpacetimeDB preserves its sequence and Doublets reuses IDs. CI runs
+the live server tests explicitly; they cannot silently skip an unavailable server.
 
 ## Project Structure
 
-```
-.
-├── docs/
-│   └── benchmarks/             # Benchmark charts published by CI and shown above
-│       ├── bench_rust.png
-│       └── bench_rust_log_scale.png
-├── rust/
-│   ├── spacetime-module/       # SpacetimeDB WASM module (links table + reducers)
-│   │   ├── Cargo.toml
-│   │   └── src/
-│   │       └── lib.rs          # Table definition and reducers using `spacetimedb` crate
-│   ├── Cargo.toml              # Package manifest with pinned dependencies
-│   ├── doublets-patched/       # Local patches to doublets-rs for modern nightly compatibility
-│   │   └── PATCHES.md          # Documents why patches are needed and what was changed
-│   ├── rust-toolchain.toml     # Pinned Rust nightly toolchain
-│   ├── rustfmt.toml            # Rust formatting config
-│   ├── out.py                  # Results table, charts and README update
-│   ├── test_out.py             # Unit tests for out.py
-│   ├── results.md              # Generated results table (committed by CI)
-│   ├── src/
-│   │   ├── lib.rs              # Links trait, constants (BENCHMARK_LINK_COUNT, BACKGROUND_LINK_COUNT)
-│   │   ├── module_bindings/    # spacetimedb-sdk client bindings for the links module
-│   │   ├── spacetimedb_impl.rs # SpacetimeDB SDK client (implements Links)
-│   │   ├── doublets_impl.rs    # Doublets store adapters (implements Links)
-│   │   ├── exclusive.rs        # Exclusive<T> wrapper for interior mutability
-│   │   ├── fork.rs             # Fork<B> — benchmark iteration isolation
-│   │   └── benched/
-│   │       ├── mod.rs          # Benched trait (setup/fork/unfork lifecycle)
-│   │       ├── spacetimedb_benched.rs  # Benched impl for SpacetimeDB
-│   │       └── doublets_benched.rs     # Benched impls for Doublets stores
-│   └── benches/
-│       └── bench.rs            # Criterion benchmark suite (7 operations x 5 backends)
-└── .github/
-    └── workflows/
-        └── rust-benchmark.yml  # CI: test on Linux/macOS, benchmark, publish results
-```
+- `rust/`: Rust benchmark, adapters, tests, pinned toolchain and patched Doublets.
+- `rust/spacetime-module/`: shared server-side WASM module.
+- `csharp/SpacetimeDBVSDoublets/`: C# benchmark and generated SDK bindings.
+- `csharp/SpacetimeDBVSDoublets.Tests/`: differential, iteration and sampling tests.
+- `rust/out.py`, `rust/test_out.py`: shared report generator and regression tests.
+- `scripts/`: pinned server installation/startup, metadata and repository checks.
+- `docs/benchmarks/`: committed full-run charts for both languages.
+- `.github/workflows/rust-benchmark.yml`: tests, isolated backend benchmarks and reporting.
 
 ## License
 
