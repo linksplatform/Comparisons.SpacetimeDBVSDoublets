@@ -9,5 +9,5 @@ description = "SpacetimeDB module defining the links table and reducers for benc
 crate-type = ["cdylib"]
 
 [dependencies]
-spacetimedb = "2"
+spacetimedb = "=2.10.1"
 log = "0.4"

@@ -20,7 +20,7 @@ impl Benched for SpacetimeDbBenched {
         }
     }
 
-    fn fork(&mut self) -> Fork<Self> {
+    fn fork(&mut self) -> Fork<'_, Self> {
         Fork::new(self)
     }
 

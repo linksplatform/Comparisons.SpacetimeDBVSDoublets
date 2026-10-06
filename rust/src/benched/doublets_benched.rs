@@ -25,7 +25,7 @@ impl Benched for DoubletsUnitedVolatileBenched {
         }
     }
 
-    fn fork(&mut self) -> Fork<Self> {
+    fn fork(&mut self) -> Fork<'_, Self> {
         Fork::new(self)
     }
 
@@ -62,7 +62,7 @@ impl Benched for DoubletsSplitVolatileBenched {
         }
     }
 
-    fn fork(&mut self) -> Fork<Self> {
+    fn fork(&mut self) -> Fork<'_, Self> {
         Fork::new(self)
     }
 
@@ -106,7 +106,7 @@ impl Benched for DoubletsUnitedNonVolatileBenched {
         }
     }
 
-    fn fork(&mut self) -> Fork<Self> {
+    fn fork(&mut self) -> Fork<'_, Self> {
         Fork::new(self)
     }
 
@@ -161,7 +161,7 @@ impl Benched for DoubletsSplitNonVolatileBenched {
         }
     }
 
-    fn fork(&mut self) -> Fork<Self> {
+    fn fork(&mut self) -> Fork<'_, Self> {
         Fork::new(self)
     }
 

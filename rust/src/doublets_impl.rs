@@ -67,7 +67,7 @@ impl<S> DoubletsLinks<S> {
 impl<S: Doublets<usize> + DoubletsExt<usize>> Links for DoubletsLinks<S> {
     fn create(&mut self, source: u64, target: u64) -> u64 {
         self.store
-            .create_by([source as usize, target as usize])
+            .create_link(source as usize, target as usize)
             .expect("Failed to create link") as u64
     }
 
@@ -183,6 +183,21 @@ pub fn create_split_non_volatile(
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn create_preserves_endpoints() {
+        for mut db in [
+            Box::new(create_united_volatile()) as Box<dyn Links>,
+            Box::new(create_split_volatile()),
+        ] {
+            let source = db.create_point();
+            let target = db.create_point();
+            let id = db.create(source, target);
+            assert_eq!(db.query_by_id(id), Some(Link::new(id, source, target)));
+            assert_eq!(db.query_by_source(source).len(), 2);
+            assert_eq!(db.query_by_target(target).len(), 2);
+        }
+    }
 
     #[test]
     fn test_create_and_query_united() {

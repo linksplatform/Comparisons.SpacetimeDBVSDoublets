@@ -11,6 +11,7 @@ pub mod exclusive;
 pub mod fork;
 pub mod module_bindings;
 pub mod spacetimedb_impl;
+pub mod workload;
 
 pub use benched::Benched;
 pub use exclusive::Exclusive;

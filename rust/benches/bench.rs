@@ -21,8 +21,6 @@
 //! - `SPACETIMEDB_URI` — SpacetimeDB server URI (default: `http://localhost:3000`)
 //! - `SPACETIMEDB_DB` — database name (default: `benchmark-links`)
 
-#![feature(allocator_api)]
-
 use criterion::{criterion_group, criterion_main, BenchmarkId, Criterion};
 use spacetimedb_vs_doublets::{
     benched::{
@@ -32,6 +30,16 @@ use spacetimedb_vs_doublets::{
     Links, BACKGROUND_LINK_COUNT, BENCHMARK_LINK_COUNT,
 };
 use std::time::{Duration, Instant};
+
+// Select a backend before constructing it, so Doublets VMs need no server.
+fn backend_enabled(backend: &str) -> bool {
+    match std::env::var("BENCHMARK_BACKEND").as_deref() {
+        Ok("all") | Err(_) => true,
+        Ok("spacetimedb") => backend == "spacetimedb",
+        Ok("doublets") => backend == "doublets",
+        Ok(other) => panic!("Unknown BENCHMARK_BACKEND: {other}"),
+    }
+}
 
 // ===================== HELPERS =====================
 
@@ -48,6 +56,9 @@ macro_rules! setup_background {
 // ===================== CREATE =====================
 
 fn spacetimedb_create(c: &mut Criterion) {
+    if !backend_enabled("spacetimedb") {
+        return;
+    }
     let count = *BENCHMARK_LINK_COUNT;
     let mut benched = SpacetimeDbBenched::setup(());
     c.bench_with_input(
@@ -72,6 +83,9 @@ fn spacetimedb_create(c: &mut Criterion) {
 }
 
 fn doublets_united_create(c: &mut Criterion) {
+    if !backend_enabled("doublets") {
+        return;
+    }
     let count = *BENCHMARK_LINK_COUNT;
     let mut benched = DoubletsUnitedVolatileBenched::setup(());
     c.bench_with_input(
@@ -96,6 +110,9 @@ fn doublets_united_create(c: &mut Criterion) {
 }
 
 fn doublets_split_create(c: &mut Criterion) {
+    if !backend_enabled("doublets") {
+        return;
+    }
     let count = *BENCHMARK_LINK_COUNT;
     let mut benched = DoubletsSplitVolatileBenched::setup(());
     c.bench_with_input(
@@ -120,6 +137,9 @@ fn doublets_split_create(c: &mut Criterion) {
 }
 
 fn doublets_united_non_volatile_create(c: &mut Criterion) {
+    if !backend_enabled("doublets") {
+        return;
+    }
     let count = *BENCHMARK_LINK_COUNT;
     let mut benched = DoubletsUnitedNonVolatileBenched::setup(
         "/tmp/bench_united_non_volatile_create.links".to_string(),
@@ -146,6 +166,9 @@ fn doublets_united_non_volatile_create(c: &mut Criterion) {
 }
 
 fn doublets_split_non_volatile_create(c: &mut Criterion) {
+    if !backend_enabled("doublets") {
+        return;
+    }
     let count = *BENCHMARK_LINK_COUNT;
     let mut benched = DoubletsSplitNonVolatileBenched::setup((
         "/tmp/bench_split_non_volatile_create_data.links".to_string(),
@@ -175,6 +198,9 @@ fn doublets_split_non_volatile_create(c: &mut Criterion) {
 // ===================== DELETE =====================
 
 fn spacetimedb_delete(c: &mut Criterion) {
+    if !backend_enabled("spacetimedb") {
+        return;
+    }
     let count = *BENCHMARK_LINK_COUNT;
     let mut benched = SpacetimeDbBenched::setup(());
     c.bench_with_input(
@@ -200,6 +226,9 @@ fn spacetimedb_delete(c: &mut Criterion) {
 }
 
 fn doublets_united_delete(c: &mut Criterion) {
+    if !backend_enabled("doublets") {
+        return;
+    }
     let count = *BENCHMARK_LINK_COUNT;
     let mut benched = DoubletsUnitedVolatileBenched::setup(());
     c.bench_with_input(
@@ -225,6 +254,9 @@ fn doublets_united_delete(c: &mut Criterion) {
 }
 
 fn doublets_split_delete(c: &mut Criterion) {
+    if !backend_enabled("doublets") {
+        return;
+    }
     let count = *BENCHMARK_LINK_COUNT;
     let mut benched = DoubletsSplitVolatileBenched::setup(());
     c.bench_with_input(
@@ -250,6 +282,9 @@ fn doublets_split_delete(c: &mut Criterion) {
 }
 
 fn doublets_united_non_volatile_delete(c: &mut Criterion) {
+    if !backend_enabled("doublets") {
+        return;
+    }
     let count = *BENCHMARK_LINK_COUNT;
     let mut benched = DoubletsUnitedNonVolatileBenched::setup(
         "/tmp/bench_united_non_volatile_delete.links".to_string(),
@@ -277,6 +312,9 @@ fn doublets_united_non_volatile_delete(c: &mut Criterion) {
 }
 
 fn doublets_split_non_volatile_delete(c: &mut Criterion) {
+    if !backend_enabled("doublets") {
+        return;
+    }
     let count = *BENCHMARK_LINK_COUNT;
     let mut benched = DoubletsSplitNonVolatileBenched::setup((
         "/tmp/bench_split_non_volatile_delete_data.links".to_string(),
@@ -307,6 +345,9 @@ fn doublets_split_non_volatile_delete(c: &mut Criterion) {
 // ===================== UPDATE =====================
 
 fn spacetimedb_update(c: &mut Criterion) {
+    if !backend_enabled("spacetimedb") {
+        return;
+    }
     let count = *BENCHMARK_LINK_COUNT;
     let mut benched = SpacetimeDbBenched::setup(());
     c.bench_with_input(
@@ -335,6 +376,9 @@ fn spacetimedb_update(c: &mut Criterion) {
 }
 
 fn doublets_united_update(c: &mut Criterion) {
+    if !backend_enabled("doublets") {
+        return;
+    }
     let count = *BENCHMARK_LINK_COUNT;
     let mut benched = DoubletsUnitedVolatileBenched::setup(());
     c.bench_with_input(
@@ -363,6 +407,9 @@ fn doublets_united_update(c: &mut Criterion) {
 }
 
 fn doublets_split_update(c: &mut Criterion) {
+    if !backend_enabled("doublets") {
+        return;
+    }
     let count = *BENCHMARK_LINK_COUNT;
     let mut benched = DoubletsSplitVolatileBenched::setup(());
     c.bench_with_input(
@@ -391,6 +438,9 @@ fn doublets_split_update(c: &mut Criterion) {
 }
 
 fn doublets_united_non_volatile_update(c: &mut Criterion) {
+    if !backend_enabled("doublets") {
+        return;
+    }
     let count = *BENCHMARK_LINK_COUNT;
     let mut benched = DoubletsUnitedNonVolatileBenched::setup(
         "/tmp/bench_united_non_volatile_update.links".to_string(),
@@ -421,6 +471,9 @@ fn doublets_united_non_volatile_update(c: &mut Criterion) {
 }
 
 fn doublets_split_non_volatile_update(c: &mut Criterion) {
+    if !backend_enabled("doublets") {
+        return;
+    }
     let count = *BENCHMARK_LINK_COUNT;
     let mut benched = DoubletsSplitNonVolatileBenched::setup((
         "/tmp/bench_split_non_volatile_update_data.links".to_string(),
@@ -454,6 +507,9 @@ fn doublets_split_non_volatile_update(c: &mut Criterion) {
 // ===================== QUERY ALL =====================
 
 fn spacetimedb_query_all(c: &mut Criterion) {
+    if !backend_enabled("spacetimedb") {
+        return;
+    }
     let count = *BENCHMARK_LINK_COUNT;
     let mut benched = SpacetimeDbBenched::setup(());
     c.bench_with_input(
@@ -479,6 +535,9 @@ fn spacetimedb_query_all(c: &mut Criterion) {
 }
 
 fn doublets_united_query_all(c: &mut Criterion) {
+    if !backend_enabled("doublets") {
+        return;
+    }
     let count = *BENCHMARK_LINK_COUNT;
     let mut benched = DoubletsUnitedVolatileBenched::setup(());
     c.bench_with_input(
@@ -504,6 +563,9 @@ fn doublets_united_query_all(c: &mut Criterion) {
 }
 
 fn doublets_split_query_all(c: &mut Criterion) {
+    if !backend_enabled("doublets") {
+        return;
+    }
     let count = *BENCHMARK_LINK_COUNT;
     let mut benched = DoubletsSplitVolatileBenched::setup(());
     c.bench_with_input(
@@ -529,6 +591,9 @@ fn doublets_split_query_all(c: &mut Criterion) {
 }
 
 fn doublets_united_non_volatile_query_all(c: &mut Criterion) {
+    if !backend_enabled("doublets") {
+        return;
+    }
     let count = *BENCHMARK_LINK_COUNT;
     let mut benched = DoubletsUnitedNonVolatileBenched::setup(
         "/tmp/bench_united_non_volatile_query_all.links".to_string(),
@@ -556,6 +621,9 @@ fn doublets_united_non_volatile_query_all(c: &mut Criterion) {
 }
 
 fn doublets_split_non_volatile_query_all(c: &mut Criterion) {
+    if !backend_enabled("doublets") {
+        return;
+    }
     let count = *BENCHMARK_LINK_COUNT;
     let mut benched = DoubletsSplitNonVolatileBenched::setup((
         "/tmp/bench_split_non_volatile_query_all_data.links".to_string(),
@@ -586,6 +654,9 @@ fn doublets_split_non_volatile_query_all(c: &mut Criterion) {
 // ===================== QUERY BY ID =====================
 
 fn spacetimedb_query_by_id(c: &mut Criterion) {
+    if !backend_enabled("spacetimedb") {
+        return;
+    }
     let count = *BENCHMARK_LINK_COUNT;
     let mut benched = SpacetimeDbBenched::setup(());
     c.bench_with_input(
@@ -600,7 +671,7 @@ fn spacetimedb_query_by_id(c: &mut Criterion) {
                     let ids: Vec<u64> = (0..n).map(|_| fork.create_point()).collect();
                     let start = Instant::now();
                     for id in ids {
-                        let _ = fork.query_by_id(id);
+                        std::hint::black_box(fork.query_by_id(id));
                     }
                     total += start.elapsed();
                 }
@@ -611,6 +682,9 @@ fn spacetimedb_query_by_id(c: &mut Criterion) {
 }
 
 fn doublets_united_query_by_id(c: &mut Criterion) {
+    if !backend_enabled("doublets") {
+        return;
+    }
     let count = *BENCHMARK_LINK_COUNT;
     let mut benched = DoubletsUnitedVolatileBenched::setup(());
     c.bench_with_input(
@@ -625,7 +699,7 @@ fn doublets_united_query_by_id(c: &mut Criterion) {
                     let ids: Vec<u64> = (0..n).map(|_| fork.create_point()).collect();
                     let start = Instant::now();
                     for id in ids {
-                        let _ = fork.query_by_id(id);
+                        std::hint::black_box(fork.query_by_id(id));
                     }
                     total += start.elapsed();
                 }
@@ -636,6 +710,9 @@ fn doublets_united_query_by_id(c: &mut Criterion) {
 }
 
 fn doublets_split_query_by_id(c: &mut Criterion) {
+    if !backend_enabled("doublets") {
+        return;
+    }
     let count = *BENCHMARK_LINK_COUNT;
     let mut benched = DoubletsSplitVolatileBenched::setup(());
     c.bench_with_input(
@@ -650,7 +727,7 @@ fn doublets_split_query_by_id(c: &mut Criterion) {
                     let ids: Vec<u64> = (0..n).map(|_| fork.create_point()).collect();
                     let start = Instant::now();
                     for id in ids {
-                        let _ = fork.query_by_id(id);
+                        std::hint::black_box(fork.query_by_id(id));
                     }
                     total += start.elapsed();
                 }
@@ -661,6 +738,9 @@ fn doublets_split_query_by_id(c: &mut Criterion) {
 }
 
 fn doublets_united_non_volatile_query_by_id(c: &mut Criterion) {
+    if !backend_enabled("doublets") {
+        return;
+    }
     let count = *BENCHMARK_LINK_COUNT;
     let mut benched = DoubletsUnitedNonVolatileBenched::setup(
         "/tmp/bench_united_non_volatile_query_by_id.links".to_string(),
@@ -677,7 +757,7 @@ fn doublets_united_non_volatile_query_by_id(c: &mut Criterion) {
                     let ids: Vec<u64> = (0..n).map(|_| fork.create_point()).collect();
                     let start = Instant::now();
                     for id in ids {
-                        let _ = fork.query_by_id(id);
+                        std::hint::black_box(fork.query_by_id(id));
                     }
                     total += start.elapsed();
                 }
@@ -688,6 +768,9 @@ fn doublets_united_non_volatile_query_by_id(c: &mut Criterion) {
 }
 
 fn doublets_split_non_volatile_query_by_id(c: &mut Criterion) {
+    if !backend_enabled("doublets") {
+        return;
+    }
     let count = *BENCHMARK_LINK_COUNT;
     let mut benched = DoubletsSplitNonVolatileBenched::setup((
         "/tmp/bench_split_non_volatile_query_by_id_data.links".to_string(),
@@ -705,7 +788,7 @@ fn doublets_split_non_volatile_query_by_id(c: &mut Criterion) {
                     let ids: Vec<u64> = (0..n).map(|_| fork.create_point()).collect();
                     let start = Instant::now();
                     for id in ids {
-                        let _ = fork.query_by_id(id);
+                        std::hint::black_box(fork.query_by_id(id));
                     }
                     total += start.elapsed();
                 }
@@ -718,6 +801,9 @@ fn doublets_split_non_volatile_query_by_id(c: &mut Criterion) {
 // ===================== QUERY BY SOURCE =====================
 
 fn spacetimedb_query_by_source(c: &mut Criterion) {
+    if !backend_enabled("spacetimedb") {
+        return;
+    }
     let count = *BENCHMARK_LINK_COUNT;
     let mut benched = SpacetimeDbBenched::setup(());
     c.bench_with_input(
@@ -728,14 +814,25 @@ fn spacetimedb_query_by_source(c: &mut Criterion) {
                 let mut total = Duration::ZERO;
                 for _ in 0..iters {
                     let mut fork = Benched::fork(&mut benched);
-                    setup_background!(fork);
+                    let background_ids: Vec<u64> = (0..*BACKGROUND_LINK_COUNT)
+                        .map(|_| fork.create_point())
+                        .collect();
+                    assert!(
+                        background_ids.len() >= 10 + n.div_ceil(10),
+                        "query workloads require at least 10 + ceil(N/10) background links"
+                    );
                     // Create links with distributed sources
                     for i in 1..=n as u64 {
-                        fork.create(i % 10 + 1, i % 7 + 1);
+                        let (source, target) = spacetimedb_vs_doublets::workload::distributed_link(
+                            (i - 1) as usize,
+                            &background_ids,
+                            true,
+                        );
+                        fork.create(source, target);
                     }
                     let start = Instant::now();
-                    for src in 1..=(n.min(10) as u64) {
-                        let _ = fork.query_by_source(src);
+                    for &src in background_ids.iter().take(n.min(10)) {
+                        std::hint::black_box(fork.query_by_source(src));
                     }
                     total += start.elapsed();
                 }
@@ -746,6 +843,9 @@ fn spacetimedb_query_by_source(c: &mut Criterion) {
 }
 
 fn doublets_united_query_by_source(c: &mut Criterion) {
+    if !backend_enabled("doublets") {
+        return;
+    }
     let count = *BENCHMARK_LINK_COUNT;
     let mut benched = DoubletsUnitedVolatileBenched::setup(());
     c.bench_with_input(
@@ -756,14 +856,25 @@ fn doublets_united_query_by_source(c: &mut Criterion) {
                 let mut total = Duration::ZERO;
                 for _ in 0..iters {
                     let mut fork = Benched::fork(&mut benched);
-                    setup_background!(fork);
+                    let background_ids: Vec<u64> = (0..*BACKGROUND_LINK_COUNT)
+                        .map(|_| fork.create_point())
+                        .collect();
+                    assert!(
+                        background_ids.len() >= 10 + n.div_ceil(10),
+                        "query workloads require at least 10 + ceil(N/10) background links"
+                    );
                     // Create links with distributed sources
                     for i in 1..=n as u64 {
-                        fork.create(i % 10 + 1, i % 7 + 1);
+                        let (source, target) = spacetimedb_vs_doublets::workload::distributed_link(
+                            (i - 1) as usize,
+                            &background_ids,
+                            true,
+                        );
+                        fork.create(source, target);
                     }
                     let start = Instant::now();
-                    for src in 1..=(n.min(10) as u64) {
-                        let _ = fork.query_by_source(src);
+                    for &src in background_ids.iter().take(n.min(10)) {
+                        std::hint::black_box(fork.query_by_source(src));
                     }
                     total += start.elapsed();
                 }
@@ -774,6 +885,9 @@ fn doublets_united_query_by_source(c: &mut Criterion) {
 }
 
 fn doublets_split_query_by_source(c: &mut Criterion) {
+    if !backend_enabled("doublets") {
+        return;
+    }
     let count = *BENCHMARK_LINK_COUNT;
     let mut benched = DoubletsSplitVolatileBenched::setup(());
     c.bench_with_input(
@@ -784,14 +898,25 @@ fn doublets_split_query_by_source(c: &mut Criterion) {
                 let mut total = Duration::ZERO;
                 for _ in 0..iters {
                     let mut fork = Benched::fork(&mut benched);
-                    setup_background!(fork);
+                    let background_ids: Vec<u64> = (0..*BACKGROUND_LINK_COUNT)
+                        .map(|_| fork.create_point())
+                        .collect();
+                    assert!(
+                        background_ids.len() >= 10 + n.div_ceil(10),
+                        "query workloads require at least 10 + ceil(N/10) background links"
+                    );
                     // Create links with distributed sources
                     for i in 1..=n as u64 {
-                        fork.create(i % 10 + 1, i % 7 + 1);
+                        let (source, target) = spacetimedb_vs_doublets::workload::distributed_link(
+                            (i - 1) as usize,
+                            &background_ids,
+                            true,
+                        );
+                        fork.create(source, target);
                     }
                     let start = Instant::now();
-                    for src in 1..=(n.min(10) as u64) {
-                        let _ = fork.query_by_source(src);
+                    for &src in background_ids.iter().take(n.min(10)) {
+                        std::hint::black_box(fork.query_by_source(src));
                     }
                     total += start.elapsed();
                 }
@@ -802,6 +927,9 @@ fn doublets_split_query_by_source(c: &mut Criterion) {
 }
 
 fn doublets_united_non_volatile_query_by_source(c: &mut Criterion) {
+    if !backend_enabled("doublets") {
+        return;
+    }
     let count = *BENCHMARK_LINK_COUNT;
     let mut benched = DoubletsUnitedNonVolatileBenched::setup(
         "/tmp/bench_united_non_volatile_query_by_source.links".to_string(),
@@ -814,14 +942,25 @@ fn doublets_united_non_volatile_query_by_source(c: &mut Criterion) {
                 let mut total = Duration::ZERO;
                 for _ in 0..iters {
                     let mut fork = Benched::fork(&mut benched);
-                    setup_background!(fork);
+                    let background_ids: Vec<u64> = (0..*BACKGROUND_LINK_COUNT)
+                        .map(|_| fork.create_point())
+                        .collect();
+                    assert!(
+                        background_ids.len() >= 10 + n.div_ceil(10),
+                        "query workloads require at least 10 + ceil(N/10) background links"
+                    );
                     // Create links with distributed sources
                     for i in 1..=n as u64 {
-                        fork.create(i % 10 + 1, i % 7 + 1);
+                        let (source, target) = spacetimedb_vs_doublets::workload::distributed_link(
+                            (i - 1) as usize,
+                            &background_ids,
+                            true,
+                        );
+                        fork.create(source, target);
                     }
                     let start = Instant::now();
-                    for src in 1..=(n.min(10) as u64) {
-                        let _ = fork.query_by_source(src);
+                    for &src in background_ids.iter().take(n.min(10)) {
+                        std::hint::black_box(fork.query_by_source(src));
                     }
                     total += start.elapsed();
                 }
@@ -832,6 +971,9 @@ fn doublets_united_non_volatile_query_by_source(c: &mut Criterion) {
 }
 
 fn doublets_split_non_volatile_query_by_source(c: &mut Criterion) {
+    if !backend_enabled("doublets") {
+        return;
+    }
     let count = *BENCHMARK_LINK_COUNT;
     let mut benched = DoubletsSplitNonVolatileBenched::setup((
         "/tmp/bench_split_non_volatile_query_by_source_data.links".to_string(),
@@ -845,14 +987,25 @@ fn doublets_split_non_volatile_query_by_source(c: &mut Criterion) {
                 let mut total = Duration::ZERO;
                 for _ in 0..iters {
                     let mut fork = Benched::fork(&mut benched);
-                    setup_background!(fork);
+                    let background_ids: Vec<u64> = (0..*BACKGROUND_LINK_COUNT)
+                        .map(|_| fork.create_point())
+                        .collect();
+                    assert!(
+                        background_ids.len() >= 10 + n.div_ceil(10),
+                        "query workloads require at least 10 + ceil(N/10) background links"
+                    );
                     // Create links with distributed sources
                     for i in 1..=n as u64 {
-                        fork.create(i % 10 + 1, i % 7 + 1);
+                        let (source, target) = spacetimedb_vs_doublets::workload::distributed_link(
+                            (i - 1) as usize,
+                            &background_ids,
+                            true,
+                        );
+                        fork.create(source, target);
                     }
                     let start = Instant::now();
-                    for src in 1..=(n.min(10) as u64) {
-                        let _ = fork.query_by_source(src);
+                    for &src in background_ids.iter().take(n.min(10)) {
+                        std::hint::black_box(fork.query_by_source(src));
                     }
                     total += start.elapsed();
                 }
@@ -865,6 +1018,9 @@ fn doublets_split_non_volatile_query_by_source(c: &mut Criterion) {
 // ===================== QUERY BY TARGET =====================
 
 fn spacetimedb_query_by_target(c: &mut Criterion) {
+    if !backend_enabled("spacetimedb") {
+        return;
+    }
     let count = *BENCHMARK_LINK_COUNT;
     let mut benched = SpacetimeDbBenched::setup(());
     c.bench_with_input(
@@ -875,14 +1031,25 @@ fn spacetimedb_query_by_target(c: &mut Criterion) {
                 let mut total = Duration::ZERO;
                 for _ in 0..iters {
                     let mut fork = Benched::fork(&mut benched);
-                    setup_background!(fork);
+                    let background_ids: Vec<u64> = (0..*BACKGROUND_LINK_COUNT)
+                        .map(|_| fork.create_point())
+                        .collect();
+                    assert!(
+                        background_ids.len() >= 10 + n.div_ceil(10),
+                        "query workloads require at least 10 + ceil(N/10) background links"
+                    );
                     // Create links with distributed targets
                     for i in 1..=n as u64 {
-                        fork.create(i % 7 + 1, i % 10 + 1);
+                        let (source, target) = spacetimedb_vs_doublets::workload::distributed_link(
+                            (i - 1) as usize,
+                            &background_ids,
+                            false,
+                        );
+                        fork.create(source, target);
                     }
                     let start = Instant::now();
-                    for tgt in 1..=(n.min(10) as u64) {
-                        let _ = fork.query_by_target(tgt);
+                    for &tgt in background_ids.iter().take(n.min(10)) {
+                        std::hint::black_box(fork.query_by_target(tgt));
                     }
                     total += start.elapsed();
                 }
@@ -893,6 +1060,9 @@ fn spacetimedb_query_by_target(c: &mut Criterion) {
 }
 
 fn doublets_united_query_by_target(c: &mut Criterion) {
+    if !backend_enabled("doublets") {
+        return;
+    }
     let count = *BENCHMARK_LINK_COUNT;
     let mut benched = DoubletsUnitedVolatileBenched::setup(());
     c.bench_with_input(
@@ -903,14 +1073,25 @@ fn doublets_united_query_by_target(c: &mut Criterion) {
                 let mut total = Duration::ZERO;
                 for _ in 0..iters {
                     let mut fork = Benched::fork(&mut benched);
-                    setup_background!(fork);
+                    let background_ids: Vec<u64> = (0..*BACKGROUND_LINK_COUNT)
+                        .map(|_| fork.create_point())
+                        .collect();
+                    assert!(
+                        background_ids.len() >= 10 + n.div_ceil(10),
+                        "query workloads require at least 10 + ceil(N/10) background links"
+                    );
                     // Create links with distributed targets
                     for i in 1..=n as u64 {
-                        fork.create(i % 7 + 1, i % 10 + 1);
+                        let (source, target) = spacetimedb_vs_doublets::workload::distributed_link(
+                            (i - 1) as usize,
+                            &background_ids,
+                            false,
+                        );
+                        fork.create(source, target);
                     }
                     let start = Instant::now();
-                    for tgt in 1..=(n.min(10) as u64) {
-                        let _ = fork.query_by_target(tgt);
+                    for &tgt in background_ids.iter().take(n.min(10)) {
+                        std::hint::black_box(fork.query_by_target(tgt));
                     }
                     total += start.elapsed();
                 }
@@ -921,6 +1102,9 @@ fn doublets_united_query_by_target(c: &mut Criterion) {
 }
 
 fn doublets_split_query_by_target(c: &mut Criterion) {
+    if !backend_enabled("doublets") {
+        return;
+    }
     let count = *BENCHMARK_LINK_COUNT;
     let mut benched = DoubletsSplitVolatileBenched::setup(());
     c.bench_with_input(
@@ -931,14 +1115,25 @@ fn doublets_split_query_by_target(c: &mut Criterion) {
                 let mut total = Duration::ZERO;
                 for _ in 0..iters {
                     let mut fork = Benched::fork(&mut benched);
-                    setup_background!(fork);
+                    let background_ids: Vec<u64> = (0..*BACKGROUND_LINK_COUNT)
+                        .map(|_| fork.create_point())
+                        .collect();
+                    assert!(
+                        background_ids.len() >= 10 + n.div_ceil(10),
+                        "query workloads require at least 10 + ceil(N/10) background links"
+                    );
                     // Create links with distributed targets
                     for i in 1..=n as u64 {
-                        fork.create(i % 7 + 1, i % 10 + 1);
+                        let (source, target) = spacetimedb_vs_doublets::workload::distributed_link(
+                            (i - 1) as usize,
+                            &background_ids,
+                            false,
+                        );
+                        fork.create(source, target);
                     }
                     let start = Instant::now();
-                    for tgt in 1..=(n.min(10) as u64) {
-                        let _ = fork.query_by_target(tgt);
+                    for &tgt in background_ids.iter().take(n.min(10)) {
+                        std::hint::black_box(fork.query_by_target(tgt));
                     }
                     total += start.elapsed();
                 }
@@ -949,6 +1144,9 @@ fn doublets_split_query_by_target(c: &mut Criterion) {
 }
 
 fn doublets_united_non_volatile_query_by_target(c: &mut Criterion) {
+    if !backend_enabled("doublets") {
+        return;
+    }
     let count = *BENCHMARK_LINK_COUNT;
     let mut benched = DoubletsUnitedNonVolatileBenched::setup(
         "/tmp/bench_united_non_volatile_query_by_target.links".to_string(),
@@ -961,14 +1159,25 @@ fn doublets_united_non_volatile_query_by_target(c: &mut Criterion) {
                 let mut total = Duration::ZERO;
                 for _ in 0..iters {
                     let mut fork = Benched::fork(&mut benched);
-                    setup_background!(fork);
+                    let background_ids: Vec<u64> = (0..*BACKGROUND_LINK_COUNT)
+                        .map(|_| fork.create_point())
+                        .collect();
+                    assert!(
+                        background_ids.len() >= 10 + n.div_ceil(10),
+                        "query workloads require at least 10 + ceil(N/10) background links"
+                    );
                     // Create links with distributed targets
                     for i in 1..=n as u64 {
-                        fork.create(i % 7 + 1, i % 10 + 1);
+                        let (source, target) = spacetimedb_vs_doublets::workload::distributed_link(
+                            (i - 1) as usize,
+                            &background_ids,
+                            false,
+                        );
+                        fork.create(source, target);
                     }
                     let start = Instant::now();
-                    for tgt in 1..=(n.min(10) as u64) {
-                        let _ = fork.query_by_target(tgt);
+                    for &tgt in background_ids.iter().take(n.min(10)) {
+                        std::hint::black_box(fork.query_by_target(tgt));
                     }
                     total += start.elapsed();
                 }
@@ -979,6 +1188,9 @@ fn doublets_united_non_volatile_query_by_target(c: &mut Criterion) {
 }
 
 fn doublets_split_non_volatile_query_by_target(c: &mut Criterion) {
+    if !backend_enabled("doublets") {
+        return;
+    }
     let count = *BENCHMARK_LINK_COUNT;
     let mut benched = DoubletsSplitNonVolatileBenched::setup((
         "/tmp/bench_split_non_volatile_query_by_target_data.links".to_string(),
@@ -992,14 +1204,25 @@ fn doublets_split_non_volatile_query_by_target(c: &mut Criterion) {
                 let mut total = Duration::ZERO;
                 for _ in 0..iters {
                     let mut fork = Benched::fork(&mut benched);
-                    setup_background!(fork);
+                    let background_ids: Vec<u64> = (0..*BACKGROUND_LINK_COUNT)
+                        .map(|_| fork.create_point())
+                        .collect();
+                    assert!(
+                        background_ids.len() >= 10 + n.div_ceil(10),
+                        "query workloads require at least 10 + ceil(N/10) background links"
+                    );
                     // Create links with distributed targets
                     for i in 1..=n as u64 {
-                        fork.create(i % 7 + 1, i % 10 + 1);
+                        let (source, target) = spacetimedb_vs_doublets::workload::distributed_link(
+                            (i - 1) as usize,
+                            &background_ids,
+                            false,
+                        );
+                        fork.create(source, target);
                     }
                     let start = Instant::now();
-                    for tgt in 1..=(n.min(10) as u64) {
-                        let _ = fork.query_by_target(tgt);
+                    for &tgt in background_ids.iter().take(n.min(10)) {
+                        std::hint::black_box(fork.query_by_target(tgt));
                     }
                     total += start.elapsed();
                 }

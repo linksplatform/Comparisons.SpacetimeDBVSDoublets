@@ -748,6 +748,11 @@ impl<
         let new_target = change[2];
 
         let link = self.try_get_link(index)?;
+        // Classify endpoints while the link is still indexed. Detaching a point
+        // temporarily sets its target-tree size to zero, which is_unused treats
+        // as a free link. A self-reference must stay in the internal trees.
+        let virtual_source = self.is_virtual(new_source);
+        let virtual_target = self.is_virtual(new_target);
 
         if link.source != T::funty(0) {
             // SAFETY: Here index attach to source
@@ -774,8 +779,6 @@ impl<
             }
         }
 
-        let virtual_source = self.is_virtual(new_source);
-        let virtual_target = self.is_virtual(new_target);
         let place = self.mut_data_part(index);
         place.source = new_source;
         place.target = new_target;
