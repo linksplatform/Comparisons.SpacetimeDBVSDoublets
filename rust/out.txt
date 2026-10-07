@@ -1,70 +1,70 @@
-test create/SpacetimeDB/1000 ... bench: 2,560,262,853 ns/iter (+/- 39,281,063)
+test create/SpacetimeDB/1000 ... bench: 2,566,821,746 ns/iter (+/- 16,532,817)
 
-test create/Doublets_United_Volatile/1000 ... bench:      76,689 ns/iter (+/- 483)
+test delete/SpacetimeDB/1000 ... bench: 1,293,021,876 ns/iter (+/- 15,746,587)
 
-test create/Doublets_Split_Volatile/1000 ... bench:      47,102 ns/iter (+/- 139)
+test update/SpacetimeDB/1000 ... bench: 2,584,017,985 ns/iter (+/- 15,820,394)
 
-test create/Doublets_United_NonVolatile/1000 ... bench:      76,567 ns/iter (+/- 709)
+test query_all/SpacetimeDB/1000 ... bench:      28,898 ns/iter (+/- 8,009)
 
-test create/Doublets_Split_NonVolatile/1000 ... bench:      47,395 ns/iter (+/- 118)
+test query_by_id/SpacetimeDB/1000 ... bench:  11,206,415 ns/iter (+/- 386,271)
 
-test delete/SpacetimeDB/1000 ... bench: 1,292,432,593 ns/iter (+/- 15,749,065)
+test query_by_source/SpacetimeDB/1000 ... bench:     205,057 ns/iter (+/- 43,172)
 
-test delete/Doublets_United_Volatile/1000 ... bench:     180,271 ns/iter (+/- 988)
+test query_by_target/SpacetimeDB/1000 ... bench:     189,647 ns/iter (+/- 32,138)
 
-test delete/Doublets_Split_Volatile/1000 ... bench:      94,116 ns/iter (+/- 384)
+test create/Doublets_United_Volatile/1000 ... bench:      76,891 ns/iter (+/- 599)
 
-test delete/Doublets_United_NonVolatile/1000 ... bench:     181,398 ns/iter (+/- 589)
+test create/Doublets_Split_Volatile/1000 ... bench:      49,933 ns/iter (+/- 157)
 
-test delete/Doublets_Split_NonVolatile/1000 ... bench:     100,143 ns/iter (+/- 291)
+test create/Doublets_United_NonVolatile/1000 ... bench:      76,531 ns/iter (+/- 457)
 
-test update/SpacetimeDB/1000 ... bench: 2,644,805,261 ns/iter (+/- 31,483,975)
+test create/Doublets_Split_NonVolatile/1000 ... bench:      51,218 ns/iter (+/- 280)
 
-test update/Doublets_United_Volatile/1000 ... bench:     247,101 ns/iter (+/- 596)
+test delete/Doublets_United_Volatile/1000 ... bench:     178,524 ns/iter (+/- 361)
 
-test update/Doublets_Split_Volatile/1000 ... bench:      35,819 ns/iter (+/- 127)
+test delete/Doublets_Split_Volatile/1000 ... bench:      99,906 ns/iter (+/- 589)
 
-test update/Doublets_United_NonVolatile/1000 ... bench:     247,021 ns/iter (+/- 655)
+test delete/Doublets_United_NonVolatile/1000 ... bench:     177,456 ns/iter (+/- 545)
 
-test update/Doublets_Split_NonVolatile/1000 ... bench:      36,029 ns/iter (+/- 243)
+test delete/Doublets_Split_NonVolatile/1000 ... bench:     133,588 ns/iter (+/- 364)
 
-test query_all/SpacetimeDB/1000 ... bench:      22,126 ns/iter (+/- 4,150)
+test update/Doublets_United_Volatile/1000 ... bench:     244,223 ns/iter (+/- 439)
 
-test query_all/Doublets_United_Volatile/1000 ... bench:      21,580 ns/iter (+/- 2,029)
+test update/Doublets_Split_Volatile/1000 ... bench:      40,376 ns/iter (+/- 1,343)
 
-test query_all/Doublets_Split_Volatile/1000 ... bench:      28,388 ns/iter (+/- 164)
+test update/Doublets_United_NonVolatile/1000 ... bench:     241,573 ns/iter (+/- 477)
 
-test query_all/Doublets_United_NonVolatile/1000 ... bench:      21,592 ns/iter (+/- 131)
+test update/Doublets_Split_NonVolatile/1000 ... bench:      41,535 ns/iter (+/- 116)
 
-test query_all/Doublets_Split_NonVolatile/1000 ... bench:      28,312 ns/iter (+/- 161)
+test query_all/Doublets_United_Volatile/1000 ... bench:      21,562 ns/iter (+/- 134)
 
-test query_by_id/SpacetimeDB/1000 ... bench:  10,937,480 ns/iter (+/- 345,780)
+test query_all/Doublets_Split_Volatile/1000 ... bench:      28,335 ns/iter (+/- 206)
 
-test query_by_id/Doublets_United_Volatile/1000 ... bench:          55 ns/iter (+/- 6)
+test query_all/Doublets_United_NonVolatile/1000 ... bench:      21,487 ns/iter (+/- 123)
 
-test query_by_id/Doublets_Split_Volatile/1000 ... bench:       1,018 ns/iter (+/- 17)
+test query_all/Doublets_Split_NonVolatile/1000 ... bench:      28,534 ns/iter (+/- 136)
 
-test query_by_id/Doublets_United_NonVolatile/1000 ... bench:          59 ns/iter (+/- 2)
+test query_by_id/Doublets_United_Volatile/1000 ... bench:       2,435 ns/iter (+/- 28)
 
-test query_by_id/Doublets_Split_NonVolatile/1000 ... bench:       1,018 ns/iter (+/- 34)
+test query_by_id/Doublets_Split_Volatile/1000 ... bench:       2,672 ns/iter (+/- 39)
 
-test query_by_source/SpacetimeDB/1000 ... bench:     163,528 ns/iter (+/- 21,738)
+test query_by_id/Doublets_United_NonVolatile/1000 ... bench:       2,446 ns/iter (+/- 50)
 
-test query_by_source/Doublets_United_Volatile/1000 ... bench:       1,476 ns/iter (+/- 89)
+test query_by_id/Doublets_Split_NonVolatile/1000 ... bench:       3,069 ns/iter (+/- 21)
 
-test query_by_source/Doublets_Split_Volatile/1000 ... bench:         480 ns/iter (+/- 10)
+test query_by_source/Doublets_United_Volatile/1000 ... bench:      11,822 ns/iter (+/- 124)
 
-test query_by_source/Doublets_United_NonVolatile/1000 ... bench:       1,453 ns/iter (+/- 29)
+test query_by_source/Doublets_Split_Volatile/1000 ... bench:      11,660 ns/iter (+/- 329)
 
-test query_by_source/Doublets_Split_NonVolatile/1000 ... bench:         478 ns/iter (+/- 10)
+test query_by_source/Doublets_United_NonVolatile/1000 ... bench:      11,636 ns/iter (+/- 90)
 
-test query_by_target/SpacetimeDB/1000 ... bench:     165,432 ns/iter (+/- 25,670)
+test query_by_source/Doublets_Split_NonVolatile/1000 ... bench:      11,759 ns/iter (+/- 375)
 
-test query_by_target/Doublets_United_Volatile/1000 ... bench:       1,514 ns/iter (+/- 38)
+test query_by_target/Doublets_United_Volatile/1000 ... bench:      11,634 ns/iter (+/- 104)
 
-test query_by_target/Doublets_Split_Volatile/1000 ... bench:         445 ns/iter (+/- 9)
+test query_by_target/Doublets_Split_Volatile/1000 ... bench:      11,496 ns/iter (+/- 106)
 
-test query_by_target/Doublets_United_NonVolatile/1000 ... bench:       1,478 ns/iter (+/- 48)
+test query_by_target/Doublets_United_NonVolatile/1000 ... bench:      11,756 ns/iter (+/- 72)
 
-test query_by_target/Doublets_Split_NonVolatile/1000 ... bench:         393 ns/iter (+/- 8)
+test query_by_target/Doublets_Split_NonVolatile/1000 ... bench:      11,485 ns/iter (+/- 125)
 

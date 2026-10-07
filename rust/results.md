@@ -1,11 +1,11 @@
-_Generated 2026-09-16 09:20 UTC by [GitHub Actions run 35075414684](https://github.com/linksplatform/Comparisons.SpacetimeDBVSDoublets/actions/runs/35075414684) — 1000 benchmarked links, 3000 background links. SpacetimeDB server/CLI unknown (not recorded); Rust SDK 2.10.1 (lockfile); Doublets (patched) 0.1.0-pre+beta.15; CPU — historical run: unknown (not recorded)._
+_Generated 2026-10-07 00:04 UTC by [GitHub Actions run 37549640595](https://github.com/linksplatform/Comparisons.SpacetimeDBVSDoublets/actions/runs/37549640595) — 1000 benchmarked links, 3000 background links. Rust SDK 2.10.1; Doublets (patched) 0.1.0-pre+beta.15; SpacetimeDB module 2.10.1; SpacetimeDB server/CLI 2.10.1; CPU — spacetimedb: AMD EPYC 7763 64-Core Processor; doublets: AMD EPYC 7763 64-Core Processor._
 
 | Operation       | Doublets United Volatile | Doublets United NonVolatile | Doublets Split Volatile | Doublets Split NonVolatile | SpacetimeDB   |
 |-----------------|--------------------------|-----------------------------|-------------------------|----------------------------|---------------|
-| Create          | 76.7 µs (33,385× faster) | 76.6 µs (33,438× faster)    | 47.1 µs (54,356× faster) | 47.4 µs (54,020× faster)   | 2.56 s        |
-| Update          | 247 µs (10,703× faster)  | 247 µs (10,707× faster)     | 35.8 µs (73,838× faster) | 36.0 µs (73,408× faster)   | 2.64 s        |
-| Delete          | 180 µs (7,169× faster)   | 181 µs (7,125× faster)      | 94.1 µs (13,732× faster) | 100 µs (12,906× faster)    | 1.29 s        |
-| Query All       | 21.6 µs (≈ same)         | 21.6 µs (≈ same)            | 28.4 µs (1.28× slower)  | 28.3 µs (1.28× slower)     | 22.1 µs       |
-| Query by Id     | 55.0 ns (198,863× faster) | 59.0 ns (185,381× faster)   | 1.02 µs (10,744× faster) | 1.02 µs (10,744× faster)   | 10.9 ms       |
-| Query by Source | 1.48 µs (111× faster)    | 1.45 µs (113× faster)       | 480 ns (341× faster)    | 478 ns (342× faster)       | 164 µs        |
-| Query by Target | 1.51 µs (109× faster)    | 1.48 µs (112× faster)       | 445 ns (372× faster)    | 393 ns (421× faster)       | 165 µs        |
+| Create          | 76.9 µs (33,383× faster) | 76.5 µs (33,540× faster)    | 49.9 µs (51,405× faster) | 51.2 µs (50,116× faster)   | 2.57 s        |
+| Update          | 244 µs (10,581× faster)  | 242 µs (10,697× faster)     | 40.4 µs (63,999× faster) | 41.5 µs (62,213× faster)   | 2.58 s        |
+| Delete          | 179 µs (7,243× faster)   | 177 µs (7,286× faster)      | 99.9 µs (12,942× faster) | 134 µs (9,679× faster)     | 1.29 s        |
+| Query All       | 21.6 µs (≈ same)         | 21.5 µs (≈ same)            | 28.3 µs (≈ same)        | 28.5 µs (≈ same)           | 28.9 µs       |
+| Query by Id     | 2.44 µs (4,602× faster)  | 2.45 µs (4,582× faster)     | 2.67 µs (4,194× faster) | 3.07 µs (3,651× faster)    | 11.2 ms       |
+| Query by Source | 11.8 µs (17.3× faster)   | 11.6 µs (17.6× faster)      | 11.7 µs (17.6× faster)  | 11.8 µs (17.4× faster)     | 205 µs        |
+| Query by Target | 11.6 µs (16.3× faster)   | 11.8 µs (16.1× faster)      | 11.5 µs (16.5× faster)  | 11.5 µs (16.5× faster)     | 190 µs        |
