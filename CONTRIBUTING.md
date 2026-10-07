@@ -1,299 +1,45 @@
-# Contributing to rust-ai-driven-development-pipeline-template
+# Contributing
 
-Thank you for your interest in contributing! This document provides guidelines and instructions for contributing to this project.
+Work in a pull request branch. The repository contains benchmark applications in
+`rust/` and `csharp/`; run Cargo commands from `rust/` to select the pinned nightly.
+Install .NET 10 and Python 3.11 or later, then install `matplotlib` and `numpy`.
 
-## Development Setup
-
-1. **Fork and clone the repository**
-
-   ```bash
-   git clone https://github.com/YOUR-USERNAME/rust-ai-driven-development-pipeline-template.git
-   cd rust-ai-driven-development-pipeline-template
-   ```
-
-2. **Install Rust**
-
-   Install Rust using rustup (if not already installed):
-
-   ```bash
-   curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-   ```
-
-3. **Install development tools**
-
-   ```bash
-   rustup component add rustfmt clippy
-   ```
-
-4. **Install pre-commit hooks** (optional but recommended)
-
-   ```bash
-   pip install pre-commit
-   pre-commit install
-   ```
-
-5. **Build the project**
-
-   ```bash
-   cargo build
-   ```
-
-## Development Workflow
-
-1. **Create a feature branch**
-
-   ```bash
-   git checkout -b feature/my-feature
-   ```
-
-2. **Make your changes**
-
-   - Write code following the project's style guidelines
-   - Add tests for any new functionality
-   - Update documentation as needed
-
-3. **Run quality checks**
-
-   ```bash
-   # Format code
-   cargo fmt
-
-   # Run Clippy lints
-   cargo clippy --all-targets --all-features
-
-   # Check file sizes
-   node scripts/check-file-size.mjs
-
-   # Run all checks together
-   cargo fmt --check && cargo clippy --all-targets --all-features && node scripts/check-file-size.mjs
-   ```
-
-4. **Run tests**
-
-   ```bash
-   # Run all tests
-   cargo test
-
-   # Run tests with verbose output
-   cargo test --verbose
-
-   # Run doc tests
-   cargo test --doc
-
-   # Run a specific test
-   cargo test test_name
-   ```
-
-5. **Add a changelog fragment**
-
-   For any user-facing changes, create a changelog fragment:
-
-   ```bash
-   # Create a new file in changelog.d/
-   # Format: YYYYMMDD_HHMMSS_description.md
-   touch changelog.d/$(date +%Y%m%d_%H%M%S)_my_change.md
-   ```
-
-   Edit the file to document your changes:
-
-   ```markdown
-   ### Added
-   - Description of new feature
-
-   ### Fixed
-   - Description of bug fix
-   ```
-
-   **Why fragments?** This prevents merge conflicts in CHANGELOG.md when multiple PRs are open simultaneously.
-
-6. **Commit your changes**
-
-   ```bash
-   git add .
-   git commit -m "feat: add new feature"
-   ```
-
-   Pre-commit hooks will automatically run and check your code.
-
-7. **Push and create a Pull Request**
-
-   ```bash
-   git push origin feature/my-feature
-   ```
-
-   Then create a Pull Request on GitHub.
-
-## Code Style Guidelines
-
-This project uses:
-
-- **rustfmt** for code formatting
-- **Clippy** for linting with pedantic and nursery lints enabled
-- **cargo test** for testing
-
-### Code Standards
-
-- Follow Rust idioms and best practices
-- Use documentation comments (`///`) for all public APIs
-- Write tests for all new functionality
-- Keep functions focused and reasonably sized
-- Keep files under 1000 lines
-- Use meaningful variable and function names
-
-### Documentation Format
-
-Use Rust documentation comments:
-
-```rust
-/// Brief description of the function.
-///
-/// Longer description if needed.
-///
-/// # Arguments
-///
-/// * `arg1` - Description of arg1
-/// * `arg2` - Description of arg2
-///
-/// # Returns
-///
-/// Description of return value
-///
-/// # Errors
-///
-/// Description of when errors are returned
-///
-/// # Examples
-///
-/// ```
-/// use my_package::example_function;
-/// let result = example_function(1, 2);
-/// assert_eq!(result, 3);
-/// ```
-pub fn example_function(arg1: i32, arg2: i32) -> i32 {
-    arg1 + arg2
-}
-```
-
-## Testing Guidelines
-
-- Write tests for all new features
-- Maintain or improve test coverage
-- Use descriptive test names
-- Organize tests in modules when appropriate
-- Use `#[cfg(test)]` for test-only code
-
-Example test structure:
-
-```rust
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    mod my_feature_tests {
-        use super::*;
-
-        #[test]
-        fn test_basic_functionality() {
-            assert_eq!(my_function(), expected_result);
-        }
-
-        #[test]
-        fn test_edge_case() {
-            assert_eq!(my_function(edge_case_input), expected_result);
-        }
-    }
-}
-```
-
-## Pull Request Process
-
-1. Ensure all tests pass locally
-2. Update documentation if needed
-3. Add a changelog fragment (see step 5 in Development Workflow)
-4. Ensure the PR description clearly describes the changes
-5. Link any related issues in the PR description
-6. Wait for CI checks to pass
-7. Address any review feedback
-
-## Changelog Management
-
-This project uses a fragment-based changelog system similar to [Scriv](https://scriv.readthedocs.io/) (Python) and [Changesets](https://github.com/changesets/changesets) (JavaScript).
-
-### Creating a Fragment
+Before committing:
 
 ```bash
-# Create a new fragment with timestamp
-touch changelog.d/$(date +%Y%m%d_%H%M%S)_description.md
+(cd rust && cargo fmt --all -- --check)
+(cd rust && cargo clippy --locked --all-targets -- -D warnings)
+(cd rust && python3 -m unittest test_out -v)
+node scripts/check-file-size.mjs
+dotnet restore csharp/SpacetimeDBVSDoublets.slnx --locked-mode
+dotnet format csharp/SpacetimeDBVSDoublets.slnx --no-restore --verify-no-changes
+dotnet build csharp/SpacetimeDBVSDoublets.slnx --no-restore -c Release --warnaserror
 ```
 
-### Fragment Categories
+For integration checks, install the pinned CLI using `scripts/install-spacetimedb.sh`,
+add its directory to `PATH`, then build and publish the shared Rust module:
 
-Use these categories in your fragments:
-
-- **Added**: New features
-- **Changed**: Changes to existing functionality
-- **Deprecated**: Features that will be removed in future
-- **Removed**: Features that were removed
-- **Fixed**: Bug fixes
-- **Security**: Security-related changes
-
-### During Release
-
-Fragments are automatically collected into CHANGELOG.md during the release process. The release workflow:
-
-1. Collects all fragments
-2. Updates CHANGELOG.md with the new version entry
-3. Removes processed fragment files
-4. Bumps the version in Cargo.toml
-5. Creates a git tag and GitHub release
-
-## Project Structure
-
-```
-.
-├── .github/workflows/    # GitHub Actions CI/CD
-├── changelog.d/          # Changelog fragments
-│   ├── README.md         # Fragment instructions
-│   └── *.md              # Individual changelog fragments
-├── examples/             # Usage examples
-├── scripts/              # Utility scripts
-├── src/
-│   ├── lib.rs            # Library entry point
-│   └── main.rs           # Binary entry point
-├── tests/                # Integration tests
-├── .gitignore            # Git ignore patterns
-├── .pre-commit-config.yaml  # Pre-commit hooks
-├── Cargo.toml            # Project configuration
-├── CHANGELOG.md          # Project changelog
-├── CONTRIBUTING.md       # This file
-├── LICENSE               # Unlicense (public domain)
-└── README.md             # Project README
+```bash
+(cd rust/spacetime-module && cargo build --locked --release --target wasm32-unknown-unknown)
+scripts/start-spacetimedb.sh
+(cd rust && cargo test --locked -- --test-threads=1 --include-ignored)
+SPACETIMEDB_URI=http://localhost:3000 \
+  dotnet run --project csharp/SpacetimeDBVSDoublets.Tests -c Release -- -parallelMode none
 ```
 
-## Release Process
+Run tests sequentially because they reset the shared database. Without a server,
+run ordinary `cargo test` and the C# tests without `SPACETIMEDB_URI`; those cover
+Doublets and sampling. CI always includes live server tests.
 
-This project uses semantic versioning (MAJOR.MINOR.PATCH):
+Keep operations, setup, reset and dataset sizes equivalent across languages. Add
+regression tests before bug fixes and exercise all four Doublets variants. Generated
+C# bindings come from SpacetimeDB 2.10.1 and the module WASM; regenerate them with the
+command in the README. Keep code formatting consistent and public APIs documented.
 
-- **MAJOR**: Breaking changes
-- **MINOR**: New features (backward compatible)
-- **PATCH**: Bug fixes (backward compatible)
+Add a fragment to `changelog.d/` for user-facing changes. There is no package release
+pipeline: this repository publishes benchmark reports and charts through CI.
 
-Releases are managed through GitHub releases. To trigger a release:
-
-1. Manually trigger the release workflow with a version bump type
-2. Or: Update the version in Cargo.toml and push to main
-
-## Getting Help
-
-- Open an issue for bugs or feature requests
-- Use discussions for questions and general help
-- Check existing issues and PRs before creating new ones
-
-## Code of Conduct
-
-- Be respectful and inclusive
-- Provide constructive feedback
-- Focus on what is best for the community
-- Show empathy towards other community members
-
-Thank you for contributing!
+PR validation uses 10 measured links and 30 background links. Full default-branch
+runs use 1000 and 3000. Each language/backend is measured on a separate VM. Preserve
+raw output and metadata alongside any reported results, and describe validation in
+the pull request.

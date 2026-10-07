@@ -18,10 +18,15 @@ Usage:
 """
 
 import argparse
+import json
+import math
+from dataclasses import dataclass
 import os
 import re
 import shutil
 import sys
+import tomllib
+from pathlib import Path
 from datetime import datetime, timezone
 
 try:
@@ -49,7 +54,7 @@ except ImportError:  # pragma: no cover - exercised only without matplotlib
 BENCHER_PATTERN = re.compile(
     r"test\s+(\w+)/(\w+)/(\d+)\s+\.\.\.\s*"
     r"(?:(?!\btest\s)[\s\S])*?"
-    r"bench:\s+([\d,]+)\s+ns/iter"
+    r"bench:\s+([\d,]+)\s+ns/iter\s+\(\+/-\s+([\d,]+)\)"
 )
 
 # Operations in the order they are reported, mapped to human readable labels.
@@ -79,14 +84,37 @@ README_START_MARKER = "<!--BENCHMARK_RESULTS_START-->"
 README_END_MARKER = "<!--BENCHMARK_RESULTS_END-->"
 
 
+@dataclass(frozen=True)
+class Measurement:
+    """Median and standard deviation, both in nanoseconds."""
+    median: int
+    deviation: int = 0
+
+
+def measurement(value):
+    return value if isinstance(value, Measurement) else Measurement(value)
+
+
 def parse_text(content):
-    """Parse bencher-format text into ``{operation: {variant: ns_per_iter}}``."""
+    """Parse bencher-format text into ``{operation: {variant: Measurement}}``."""
     results = {op: {} for op, _ in OPERATIONS}
 
+    sizes = set()
     for match in BENCHER_PATTERN.finditer(content):
-        operation, variant, _size, ns_str = match.groups()
+        operation, variant, _size, ns_str, deviation = match.groups()
+        sizes.add(_size)
+        if len(sizes) != 1:
+            raise ValueError("Mixed benchmark sizes")
+        if operation not in results:
+            raise ValueError(f"Unknown benchmark operation: {operation}")
         if operation in results:
-            results[operation][variant] = int(ns_str.replace(",", ""))
+            if variant not in {key for key, _, _ in VARIANTS}:
+                raise ValueError(f"Unknown benchmark variant: {variant}")
+            if variant in results[operation]:
+                raise ValueError(f"Duplicate benchmark: {operation}/{variant}")
+            results[operation][variant] = Measurement(
+                int(ns_str.replace(",", "")), int(deviation.replace(",", ""))
+            )
 
     return results
 
@@ -121,19 +149,43 @@ def has_any_results(results):
     return any(measurements for measurements in results.values())
 
 
+def format_duration(value):
+    """Format nanoseconds with three significant digits, promoting rounded units."""
+    value = measurement(value).median
+    units = ("ns", "µs", "ms", "s")
+    index = 0
+    while value >= 1000 and index < len(units) - 1:
+        value /= 1000
+        index += 1
+    if float(f"{value:.3g}") >= 1000 and index < len(units) - 1:
+        value /= 1000
+        index += 1
+    value = float(f"{value:.3g}")
+    decimals = max(0, 2 - math.floor(math.log10(value))) if value > 0 else 2
+    return f"{value:.{decimals}f} {units[index]}"
+
+
 def format_speedup(value, baseline):
-    """Annotate ``value`` with how it compares to the ``baseline`` measurement."""
-    if not value:
+    """Compare medians; differences under 5% or overlapping ±1 SD are noise."""
+    value, baseline = measurement(value), measurement(baseline)
+    if not value.median:
         return "N/A"
-    if not baseline:
-        return f"{value}"
-    if value <= baseline:
-        return f"{value} ({baseline / value:.1f}x faster)"
-    return f"{value} ({value / baseline:.1f}x slower)"
+    duration = format_duration(value)
+    if not baseline.median:
+        return duration
+    overlap = max(value.median - value.deviation, baseline.median - baseline.deviation) <= min(
+        value.median + value.deviation, baseline.median + baseline.deviation
+    )
+    if abs(value.median - baseline.median) / baseline.median < 0.05 or overlap:
+        return f"{duration} (≈ same)"
+    ratio = max(value.median, baseline.median) / min(value.median, baseline.median)
+    factor = f"{ratio:,.0f}" if ratio >= 100 else f"{ratio:.3g}"
+    direction = "faster" if value.median < baseline.median else "slower"
+    return f"{duration} ({factor}× {direction})"
 
 
 def format_results_table(results):
-    """Render the Markdown results table (all numbers in nanoseconds)."""
+    """Render the Markdown results table with readable durations and comparisons."""
     labels = [label for _, label, _ in VARIANTS]
     widths = [max(len(label), 13) for label in labels]
     operation_width = max(len(label) for _, label in OPERATIONS)
@@ -151,7 +203,7 @@ def format_results_table(results):
         for key, _label, _color in VARIANTS:
             value = results[op].get(key, 0)
             if key == BASELINE:
-                cells.append(str(value) if value else "N/A")
+                cells.append(format_duration(value) if value else "N/A")
             else:
                 cells.append(format_speedup(value, baseline))
         row = "| " + op_label.ljust(operation_width) + " | "
@@ -162,13 +214,14 @@ def format_results_table(results):
     return "\n".join(lines)
 
 
-def build_provenance(benchmark_links=None, background_links=None, generated_at=None):
+def build_provenance(benchmark_links=None, background_links=None, generated_at=None, metadata=None):
     """Describe how and when the committed results were produced."""
-    benchmark_links = benchmark_links or os.environ.get("BENCHMARK_LINK_COUNT", "1000")
-    background_links = background_links or os.environ.get(
+    metadata = metadata or {}
+    benchmark_links = metadata.get("benchmark_links") or benchmark_links or os.environ.get("BENCHMARK_LINK_COUNT", "1000")
+    background_links = metadata.get("background_links") or background_links or os.environ.get(
         "BACKGROUND_LINK_COUNT", "3000"
     )
-    generated_at = generated_at or datetime.now(timezone.utc).strftime(
+    generated_at = metadata.get("date") or generated_at or datetime.now(timezone.utc).strftime(
         "%Y-%m-%d %H:%M UTC"
     )
 
@@ -181,10 +234,21 @@ def build_provenance(benchmark_links=None, background_links=None, generated_at=N
             f"(https://github.com/{repository}/actions/runs/{run_id})"
         )
 
+    source = metadata.get("source", source)
+    root = Path(__file__).resolve().parents[1]
+    packages = tomllib.loads((root / "rust/Cargo.lock").read_text())["package"]
+    versions = metadata.get("versions", {
+        "SpacetimeDB server/CLI": "unknown (not recorded)",
+        "Rust SDK": next(p["version"] for p in packages if p["name"] == "spacetimedb-sdk"),
+        "Doublets (patched)": next(p["version"] for p in packages if p["name"] == "doublets"),
+    })
+    cpus = metadata.get("cpus", {"local": "unknown (not recorded)"})
+    details = "; ".join(f"{name} {version}" for name, version in versions.items())
+    cpu_details = "; ".join(f"{backend}: {cpu}" for backend, cpu in cpus.items())
     return (
         f"_Generated {generated_at} by {source} — "
         f"{benchmark_links} benchmarked links, "
-        f"{background_links} background links._"
+        f"{background_links} background links. {details}; CPU — {cpu_details}._"
     )
 
 
@@ -194,7 +258,7 @@ def render_results_section(results, provenance=None):
     return f"{provenance}\n\n{format_results_table(results)}"
 
 
-def update_readme(readme_path, section):
+def update_readme(readme_path, section, language="rust"):
     """Replace the marked results section of the README.
 
     Returns ``True`` when the file was modified.
@@ -202,17 +266,19 @@ def update_readme(readme_path, section):
     with open(readme_path, "r", encoding="utf-8") as handle:
         readme = handle.read()
 
-    if README_START_MARKER not in readme or README_END_MARKER not in readme:
+    start = README_START_MARKER if language == "rust" else "<!--CSHARP_RESULTS_START-->"
+    end = README_END_MARKER if language == "rust" else "<!--CSHARP_RESULTS_END-->"
+    if start not in readme or end not in readme:
         raise ValueError(
             f"{readme_path} does not contain the "
-            f"{README_START_MARKER} / {README_END_MARKER} markers"
+            f"{start} / {end} markers"
         )
 
     pattern = re.compile(
-        re.escape(README_START_MARKER) + r".*?" + re.escape(README_END_MARKER),
+        re.escape(start) + r".*?" + re.escape(end),
         re.DOTALL,
     )
-    replacement = f"{README_START_MARKER}\n{section}\n{README_END_MARKER}"
+    replacement = f"{start}\n{section}\n{end}"
     updated = pattern.sub(lambda _match: replacement, readme, count=1)
 
     if updated == readme:
@@ -225,7 +291,7 @@ def update_readme(readme_path, section):
 
 def _series(results, variant):
     """Measurements of one variant across all operations, 0 when missing."""
-    return [results[op].get(variant, 0) for op, _ in OPERATIONS]
+    return [measurement(results[op].get(variant, 0)).median for op, _ in OPERATIONS]
 
 
 def _ensure_min_visible(values, minimum):
@@ -233,7 +299,7 @@ def _ensure_min_visible(values, minimum):
     return [max(value, minimum) if value > 0 else 0 for value in values]
 
 
-def _plot(results, filename, log_scale, output_dir):
+def _plot(results, filename, log_scale, output_dir, language):
     positions = np.arange(len(OPERATIONS))
     width = 0.15
     figure, axes = plt.subplots(figsize=(12, 8))
@@ -259,7 +325,8 @@ def _plot(results, filename, log_scale, output_dir):
         axes.barh(positions + offset, plotted[key], width, label=label, color=color)
 
     axes.set_xlabel("Time (ns) – log scale" if log_scale else "Time (ns)")
-    axes.set_title("Benchmark Comparison: SpacetimeDB vs Doublets (Rust)")
+    label = "Rust" if language == "rust" else "C#"
+    axes.set_title(f"Benchmark Comparison: SpacetimeDB vs Doublets ({label})")
     axes.set_yticks(positions)
     axes.set_yticklabels([label for _, label in OPERATIONS])
     if log_scale:
@@ -273,18 +340,18 @@ def _plot(results, filename, log_scale, output_dir):
     print(f"Generated {path}")
 
 
-def generate_charts(results, output_dir=""):
+def generate_charts(results, output_dir="", language="rust"):
     """Generate the linear and logarithmic comparison charts."""
     if not HAS_MATPLOTLIB:
         return
-    _plot(results, "bench_rust.png", log_scale=False, output_dir=output_dir)
-    _plot(results, "bench_rust_log_scale.png", log_scale=True, output_dir=output_dir)
+    _plot(results, f"bench_{language}.png", log_scale=False, output_dir=output_dir, language=language)
+    _plot(results, f"bench_{language}_log_scale.png", log_scale=True, output_dir=output_dir, language=language)
 
 
-def copy_charts(docs_dir, output_dir=""):
+def copy_charts(docs_dir, output_dir="", language="rust"):
     """Copy generated charts into the documentation directory."""
     os.makedirs(docs_dir, exist_ok=True)
-    for chart in ("bench_rust.png", "bench_rust_log_scale.png"):
+    for chart in (f"bench_{language}.png", f"bench_{language}_log_scale.png"):
         source = os.path.join(output_dir, chart) if output_dir else chart
         if os.path.exists(source):
             shutil.copyfile(source, os.path.join(docs_dir, chart))
@@ -295,8 +362,8 @@ def parse_args(argv):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
         "input",
-        nargs="?",
-        default="out.txt",
+        nargs="*",
+        default=["out.txt"],
         help="criterion bencher output file (default: out.txt)",
     )
     parser.add_argument(
@@ -319,19 +386,46 @@ def parse_args(argv):
         default="",
         help="directory the charts are written to (default: working directory)",
     )
+    parser.add_argument("--language", choices=["rust", "csharp"], default="rust")
+    parser.add_argument("--metadata", nargs="+", default=[])
     return parser.parse_args(argv)
 
 
 def main(argv=None):
     args = parse_args(argv if argv is not None else sys.argv[1:])
-    results = parse_results(args.input)
+    results = {op: {} for op, _ in OPERATIONS}
+    metadata = {}
+    sizes = set()
+    for filename in args.input:
+        if os.path.exists(filename):
+            sizes.update(match.group(3) for match in BENCHER_PATTERN.finditer(Path(filename).read_text(encoding="utf-8")))
+        if len(sizes) > 1:
+            raise ValueError("Mixed benchmark sizes across input files")
+        for op, variants in parse_results(filename).items():
+            if results[op].keys() & variants.keys():
+                raise ValueError(f"Duplicate results for {op}")
+            results[op].update(variants)
+    for filename in args.metadata:
+        item = json.loads(Path(filename).read_text(encoding="utf-8"))
+        for key in ("benchmark_links", "background_links", "source", "versions"):
+            if key in metadata and metadata[key] != item[key]:
+                raise ValueError(f"Inconsistent metadata: {key}")
+        metadata.update({key: value for key, value in item.items() if key != "cpus"})
+        metadata.setdefault("cpus", {}).update(item["cpus"])
+
 
     if not has_any_results(results):
         print(f"No benchmark data found in {args.input}")
-        print(report_input_excerpt(args.input))
+        print("\n".join(report_input_excerpt(path) for path in args.input))
         return 1
 
-    section = render_results_section(results)
+    missing = [f"{op}/{key}" for op, _ in OPERATIONS for key, _, _ in VARIANTS if key not in results[op]]
+    if missing:
+        raise ValueError("Missing benchmark results: " + ", ".join(missing))
+    size = next(iter(sizes))
+    if "benchmark_links" in metadata and str(metadata["benchmark_links"]) != size:
+        raise ValueError("Benchmark size does not match metadata")
+    section = render_results_section(results, build_provenance(benchmark_links=size, metadata=metadata))
     table = format_results_table(results)
     print(table)
 
@@ -339,13 +433,21 @@ def main(argv=None):
         handle.write(section + "\n")
     print(f"Generated {args.results}")
 
-    generate_charts(results, args.output_dir)
+    generate_charts(results, args.output_dir, args.language)
 
     if args.docs_dir:
-        copy_charts(args.docs_dir, args.output_dir)
+        copy_charts(args.docs_dir, args.output_dir, args.language)
 
     if args.readme:
-        changed = update_readme(args.readme, section)
+        readme_section = section
+        if args.language == "csharp" and HAS_MATPLOTLIB:
+            chart_dir = args.docs_dir or args.output_dir or "."
+            relative = os.path.relpath(chart_dir, Path(args.readme).resolve().parent)
+            readme_section += (
+                f"\n\n![C# benchmark (linear scale)]({relative}/bench_csharp.png)"
+                f"\n![C# benchmark (log scale)]({relative}/bench_csharp_log_scale.png)"
+            )
+        changed = update_readme(args.readme, readme_section, args.language)
         print(
             f"{'Updated' if changed else 'No changes needed in'} {args.readme}",
         )

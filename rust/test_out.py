@@ -10,8 +10,10 @@ Run with:
 """
 
 import os
+import json
 import tempfile
 import unittest
+from pathlib import Path
 
 import out
 
@@ -96,8 +98,8 @@ class ParseResultsTests(unittest.TestCase):
     def test_parses_thousand_separators(self):
         results = out.parse_results(self.path)
 
-        self.assertEqual(results["create"]["SpacetimeDB"], 3_159_452_615)
-        self.assertEqual(results["create"]["Doublets_United_Volatile"], 84_823)
+        self.assertEqual(results["create"]["SpacetimeDB"], out.Measurement(3_159_452_615, 12_345))
+        self.assertEqual(results["create"]["Doublets_United_Volatile"], out.Measurement(84_823, 1_000))
 
     def test_missing_file_yields_empty_results(self):
         results = out.parse_results(os.path.join(self.tmp.name, "absent.txt"))
@@ -133,8 +135,8 @@ class ParseResultsTests(unittest.TestCase):
 
         results = out.parse_results(path)
 
-        self.assertEqual(results["create"]["SpacetimeDB"], 24_992_765)
-        self.assertEqual(results["create"]["Doublets_United_Volatile"], 464)
+        self.assertEqual(results["create"]["SpacetimeDB"], out.Measurement(24_992_765, 1_790_323_177))
+        self.assertEqual(results["create"]["Doublets_United_Volatile"], out.Measurement(464, 12))
 
     def test_measurement_is_not_borrowed_from_the_next_benchmark(self):
         """An aborted benchmark must not take the following benchmark's number."""
@@ -147,7 +149,51 @@ class ParseResultsTests(unittest.TestCase):
         results = out.parse_results(path)
 
         self.assertNotIn("SpacetimeDB", results["create"])
-        self.assertEqual(results["create"]["Doublets_United_Volatile"], 464)
+        self.assertEqual(results["create"]["Doublets_United_Volatile"], out.Measurement(464, 12))
+
+
+class ReportValidationTests(unittest.TestCase):
+    def test_unknown_operation_and_variant_rejected(self):
+        for text in [SAMPLE_OUT_TXT.replace("create/SpacetimeDB", "typo/SpacetimeDB"), SAMPLE_OUT_TXT.replace("create/SpacetimeDB", "create/Typo")]:
+            with self.assertRaises(ValueError):
+                out.parse_text(text)
+
+    def test_duplicates_and_mixed_sizes_rejected(self):
+        for text in [SAMPLE_OUT_TXT + SAMPLE_OUT_TXT, SAMPLE_OUT_TXT.replace("create/SpacetimeDB/1000", "create/SpacetimeDB/10")]:
+            with self.assertRaises(ValueError):
+                out.parse_text(text)
+
+    def test_five_percent_boundary_and_non_overlapping_deviations(self):
+        self.assertIn("slower", out.format_speedup(105, 100))
+        self.assertIn("≈ same", out.format_speedup(104, 100))
+        self.assertIn("faster", out.format_speedup(out.Measurement(100, 1), out.Measurement(140, 1)))
+
+    def test_csharp_update_preserves_rust_section(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path = write(os.path.join(directory, "README.md"), README_TEMPLATE + "\n<!--CSHARP_RESULTS_START-->\nold\n<!--CSHARP_RESULTS_END-->\n")
+            out.update_readme(path, "C# table", "csharp")
+            content = open(path, encoding="utf-8").read()
+            self.assertIn("Benchmark results will be generated", content)
+            self.assertIn("C# table", content)
+
+    def test_recorded_metadata_survives_report_generation(self):
+        provenance = out.build_provenance(metadata={"date": "2026-01-01", "source": "recorded run", "benchmark_links": "10", "background_links": "30", "versions": {"SDK": "2.10.1"}, "cpus": {"doublets": "CPU A", "spacetimedb": "CPU B"}})
+        for value in ["2026-01-01", "recorded run", "10 benchmarked", "30 background", "SDK 2.10.1", "CPU A", "CPU B"]:
+            self.assertIn(value, provenance)
+
+    def test_incomplete_input_cannot_publish(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path = write(os.path.join(directory, "out.txt"), SAMPLE_OUT_TXT.splitlines()[3] + "\n")
+            with self.assertRaisesRegex(ValueError, "Missing benchmark results"):
+                out.main([path])
+
+    def test_separate_backends_with_different_sizes_cannot_publish(self):
+        with tempfile.TemporaryDirectory() as directory:
+            lines = SAMPLE_OUT_TXT.splitlines()
+            baseline = write(os.path.join(directory, "server.txt"), "\n".join(line for line in lines if "/SpacetimeDB/" in line))
+            doublets = write(os.path.join(directory, "doublets.txt"), "\n".join(line.replace("/1000", "/10") for line in lines if "/Doublets_" in line))
+            with self.assertRaisesRegex(ValueError, "Mixed benchmark sizes"):
+                out.main([baseline, doublets, "--results", os.path.join(directory, "results.md"), "--output-dir", directory])
 
 
 class InputExcerptTests(unittest.TestCase):
@@ -180,16 +226,33 @@ class InputExcerptTests(unittest.TestCase):
 
 class SpeedupFormattingTests(unittest.TestCase):
     def test_faster_than_baseline(self):
-        self.assertEqual(out.format_speedup(100, 1000), "100 (10.0x faster)")
+        self.assertEqual(out.format_speedup(100, 1000), "100 ns (10× faster)")
 
     def test_slower_than_baseline(self):
-        self.assertEqual(out.format_speedup(1000, 100), "1000 (10.0x slower)")
+        self.assertEqual(out.format_speedup(1000, 100), "1.00 µs (10× slower)")
 
     def test_missing_measurement(self):
         self.assertEqual(out.format_speedup(0, 1000), "N/A")
 
     def test_missing_baseline_reports_raw_value(self):
-        self.assertEqual(out.format_speedup(100, 0), "100")
+        self.assertEqual(out.format_speedup(100, 0), "100 ns")
+
+
+class NoiseAndUnitsRegressionTests(unittest.TestCase):
+    def test_query_all_difference_within_five_percent_is_same(self):
+        self.assertEqual(out.format_speedup(21580, 22126), "21.6 µs (≈ same)")
+
+    def test_overlapping_standard_deviations_are_same(self):
+        self.assertEqual(out.format_speedup(out.Measurement(100, 25), out.Measurement(140, 20)), "100 ns (≈ same)")
+
+    def test_units_have_three_significant_digits(self):
+        for value, expected in [(55, "55.0 ns"), (76689, "76.7 µs"), (2560262853, "2.56 s"), (999999, "1.00 ms")]:
+            with self.subTest(value=value):
+                self.assertEqual(out.format_duration(value), expected)
+
+    def test_deviation_is_preserved_by_parser(self):
+        result = out.parse_text("test query_all/SpacetimeDB/1000 ... bench: 22,126 ns/iter (+/- 1,250)")
+        self.assertEqual(result["query_all"]["SpacetimeDB"].deviation, 1250)
 
 
 class ResultsTableTests(unittest.TestCase):
@@ -218,8 +281,8 @@ class ResultsTableTests(unittest.TestCase):
         )
 
         # 3_159_452_615 / 84_823 = 37,247.6x
-        self.assertIn("84823 (37247.6x faster)", create_row)
-        self.assertIn("3159452615", create_row)
+        self.assertIn("84.8 µs (37,248× faster)", create_row)
+        self.assertIn("3.16 s", create_row)
 
     def test_missing_measurements_render_as_not_available(self):
         partial = {operation: {} for operation, _label in out.OPERATIONS}
@@ -305,6 +368,32 @@ class MainTests(unittest.TestCase):
         self.readme = write(os.path.join(self.tmp.name, "README.md"), README_TEMPLATE)
         self.results = os.path.join(self.tmp.name, "results.md")
         self.docs = os.path.join(self.tmp.name, "docs", "benchmarks")
+
+    def test_combines_csharp_backends_and_vm_metadata(self):
+        metadata_paths, input_paths = [], []
+        for backend in ("spacetimedb", "doublets"):
+            lines = [line for line in SAMPLE_OUT_TXT.splitlines() if
+                     ("/SpacetimeDB/" if backend == "spacetimedb" else "/Doublets_") in line]
+            input_paths.append(write(os.path.join(self.tmp.name, backend + ".txt"), "\n".join(lines)))
+            item = {"date": "2026-01-01", "source": "recorded CI run", "benchmark_links": "1000", "background_links": "3000",
+                    "versions": {"C# SDK": "2.10.1", "Doublets": "0.18.1"}, "cpus": {backend: backend + " CPU"}}
+            metadata_paths.append(write(os.path.join(self.tmp.name, backend + ".json"), json.dumps(item)))
+        write(self.readme, README_TEMPLATE + "\n<!--CSHARP_RESULTS_START-->\nold\n<!--CSHARP_RESULTS_END-->\n")
+        self.assertEqual(out.main(input_paths + ["--metadata"] + metadata_paths + [
+            "--language", "csharp", "--results", self.results, "--readme", self.readme,
+            "--output-dir", self.tmp.name, "--docs-dir", self.docs]), 0)
+        content = Path(self.readme).read_text(encoding="utf-8")
+        for value in ("spacetimedb CPU", "doublets CPU", "C# SDK 2.10.1", "Doublets 0.18.1", "Benchmark results will be generated"):
+            self.assertIn(value, content)
+        if out.HAS_MATPLOTLIB:
+            self.assertIn("![C# benchmark (linear scale)](docs/benchmarks/bench_csharp.png)", content)
+            self.assertTrue(Path(self.docs, "bench_csharp_log_scale.png").exists())
+
+    def test_recorded_size_must_match_measurements(self):
+        metadata = write(os.path.join(self.tmp.name, "metadata.json"), json.dumps({
+            "benchmark_links": "10", "background_links": "30", "source": "run", "versions": {}, "cpus": {}}))
+        with self.assertRaisesRegex(ValueError, "size does not match metadata"):
+            out.main([self.input, "--metadata", metadata, "--results", self.results])
 
     def test_writes_results_and_updates_readme(self):
         exit_code = out.main(

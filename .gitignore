@@ -54,3 +54,12 @@ doc/
 # Log files
 *.log
 logs/
+ci-logs/
+
+# .NET build output and local benchmark artifacts
+**/bin/
+**/obj/
+results/
+collected/
+.spacetime/
+spacetime-data/

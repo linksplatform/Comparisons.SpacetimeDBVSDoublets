@@ -26,7 +26,7 @@ pub trait Benched: Sized {
     fn setup(builder: Self::Builder) -> Self;
 
     /// Create a fork for a single isolated benchmark iteration.
-    fn fork(&mut self) -> Fork<Self>;
+    fn fork(&mut self) -> Fork<'_, Self>;
 
     /// Reset database state after an iteration (called by `Fork::drop`).
     ///

@@ -11,7 +11,7 @@ harness = false
 
 [dependencies]
 # SpacetimeDB 2.0 official Rust client SDK.
-spacetimedb-sdk = "2"
+spacetimedb-sdk = "=2.10.1"
 # Use patched doublets that is compatible with modern nightly (>= 1.93.0).
 # The pinned git revision uses removed nightly features (generators, const_trait_impl,
 # const_deref, etc.) incompatible with Rust >= 1.80.0. The local patch:

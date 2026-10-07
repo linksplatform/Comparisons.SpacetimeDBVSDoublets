@@ -26,8 +26,20 @@ The `doublets` crate (and its internal dependencies `platform-mem`, `platform-da
 
 The `doublets` crate is not actively maintained for compatibility with current Rust nightly. Attempts to use the published crates.io version (or the upstream git repository) result in compilation failures on Rust nightly ≥ 1.80.0. Upstream issues have been filed but not addressed.
 
-The patches are minimal and surgical — they do not change any algorithmic behavior, data structures, or storage semantics. The only changes are the removal of feature flags and the replacement of removed syntax with equivalent stable alternatives.
+The compatibility patches remove feature flags and replace removed syntax with
+equivalent alternatives. The Split endpoint-classification correction below is
+also required for the shared update workload to behave correctly.
 
 ## Future Resolution
 
 Once the upstream `doublets-rs` crates are updated for modern Rust nightly compatibility, the `doublets-patched/` directory can be removed and the dependency replaced with a direct crates.io reference. This is tracked in the [doublets-rs repository](https://github.com/linksplatform/doublets-rs).
+
+### Split store endpoint classification (issue #16)
+
+`Store::update_links` now classifies the new source and target before detaching
+from the index trees. Detaching a self-referential point temporarily clears its
+target-tree size; `is_unused` then incorrectly classifies that live point as an
+external endpoint. The next update tries to detach from the wrong tree and can
+underflow its size. `rust/tests/same_behavior.rs` reproduces the failure with
+12 points, indexed updates, and resets to `(0, 0)`; it checks both Split layouts
+against United and SpacetimeDB. Optional `BENCHMARK_TRACE=1` prints each update.
